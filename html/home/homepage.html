@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .rm-LandingPage {
+      width: 100% !important;
+      padding: 0 !important;
+      font-family: Inter !important;
+    }
+
+    .rdmd-html {
+      width: 100% !important;
+      font-family: Inter !important;
+      background: linear-gradient(90deg, #F1F1F1 0%, #FFF 100%);
+    }
+
+    .hero {
+
+      .header_container {
+        display: flex;
+        margin: 0 auto;
+        max-width: var(--container-lg);
+        justify-content: start;
+        padding: 80px 30px;
+        gap: 100px;
+
+        .hero_title {
+          margin: 0 !important;
+
+          h1 {
+            align-self: center;
+            font-family: Inter;
+            font-size: 50px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            max-width: 600px;
+            margin: 0;
+          }
+
+          .second_line {
+            color: #E31937;
+          }
+        }
+
+        .hero_content {
+          align-self: center;
+          font-family: Inter;
+          font-size: 15px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 35.376px;
+          max-width: 600px;
+          width: fit-content;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    main {
+      .card_container {
+        display: flex;
+        gap: 10px;
+        margin: 30px auto;
+        padding: 0 30px;
+        justify-content: center;
+        max-width: var(--container-lg);
+        align-items: stretch;
+        width: 100%;
+
+        .card {
+          border: 1px solid transparent;
+          display: inline-flex;
+          flex-direction: column;
+          align-items: flex-start;
+          align-self: stretch !important;
+          transition: all 0.3s ease, border 0.1s ease;
+          border-radius: 5.484px;
+          background: #FFF;
+          box-shadow: 0px 3.656px 27.422px 0px rgba(0, 0, 0, 0.13);
+          text-decoration: none;
+
+          .card_image {
+            height: 120px;
+            flex-shrink: 0;
+            width: 100% !important;
+            background-position: center;
+            background-size: cover;
+            border-radius: 5.484px 5.484px 0 0;
+          }
+
+          .card_content {
+            padding: 22px;
+            font-family: Inter;
+            font-style: normal;
+
+            h3 {
+              color: #000000de;
+              font-size: 16.5px;
+              font-weight: 700;
+              line-height: normal;
+              margin: 0;
+              transition: all 0.3s ease, border 0.1s ease;
+            }
+
+            p {
+              color: #282A30;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 150%;
+              margin: 9px 0 0;
+            }
+          }
+        }
+
+        .card:hover {
+          cursor: pointer;
+          border: 1px solid #E31937 !important;
+          box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
+          transform: translateY(-1px);
+
+          h3 {
+            color: #E31937 !important;
+          }
+        }
+
+        .image1 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/card1.png')
+        }
+
+        .image2 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/card2.png')
+        }
+
+        .image3 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/card3.png')
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1311px) {
+      .hero {
+        .header_container {
+          gap: 40px;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1255px) {
+      .hero {
+        .header_container {
+          gap: 60px;
+
+          .hero_title {
+            h1 {
+              font-size: 40px;
+              /* width: 500px; */
+            }
+          }
+
+          .hero_content {
+            max-width: 500px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1144px) {
+      /* .hero {
+        .header_container {
+          .hero_title {
+            width: 300px !important;
+          }
+        }
+      } */
+
+      main {
+        .card_container {
+          margin: 0;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1062px) {
+      .hero {
+        .header_container {
+          gap: 40px;
+
+          .hero_title {
+            h1 {
+              font-size: 40px;
+              width: 450px;
+            }
+          }
+
+          .hero_content {
+            max-width: 500px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 989px) {
+      .hero {
+        .header_container {
+          gap: 20px;
+          padding: 50px 30px;
+
+          .hero_title {
+            h1 {
+              font-size: 35px;
+              width: 400px;
+            }
+          }
+
+          .hero_content {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 850px) {
+      main {
+        .card_container {
+          flex-wrap: wrap;
+
+          .card {
+            width: 300px;
+            flex-grow: 1;
+            flex-shrink: 1;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 800px) {
+      .hero {
+        .header_container {
+
+          .hero_title {
+            h1 {
+              font-size: 30px;
+              width: 340px;
+            }
+          }
+
+          .hero_content {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      .hero {
+        .header_container {
+          flex-direction: column;
+          gap: 10px;
+          padding: 20px 30px;
+          align-items: start;
+          justify-content: start;
+
+          .hero_title {
+            align-self: flex-start;
+
+            h1 {
+              width: fit-content;
+              font-size: 40px;
+            }
+          }
+
+          .hero_content {
+            align-self: flex-start;
+            font-size: 12px;
+            margin-right: 0;
+            width: 80%;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 614px) {
+      .hero {
+        .header_container {
+
+          .hero_content {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .hero {
+        .header_container {
+          padding: 20px;
+
+          .hero_title {
+            h1 {
+              font-size: 30px;
+            }
+          }
+        }
+      }
+
+      main {
+        .card_container {
+          padding: 0 20px;
+
+          .card {
+            min-width: 90%;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 400px) {
+      .hero {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+        .header_container {
+          padding: 20px;
+        }
+      }
+
+      main {
+        margin: 20px 0;
+
+        .card {
+          width: 100%;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 350px) {
+      .hero {
+
+        .header_container {
+          margin: 0;
+        }
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      [data-color-mode="system"] .rdmd-html {
+        background: #212A2F !important;
+      }
+
+      [data-color-mode="system"] main {
+        .card_container {
+          .card {
+            border: 1px solid #556974;
+            background: #20292e;
+
+            .card_content {
+
+              h3,
+              p {
+                color: #FFF;
+              }
+            }
+          }
+
+          .image1 {
+            background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card1.png')
+          }
+
+          .image2 {
+            background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card2.png')
+          }
+
+          .image3 {
+            background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card3.png')
+          }
+        }
+      }
+    }
+
+    [data-color-mode="dark"] .rdmd-html {
+      background: #212A2F !important;
+    }
+
+    [data-color-mode="dark"] main {
+      .card_container {
+        .card {
+          border: 1px solid #556974;
+          background: #20292e;
+
+          .card_content {
+
+            h3,
+            p {
+              color: #FFF;
+            }
+          }
+        }
+
+        .image1 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card1.png')
+        }
+
+        .image2 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card2.png')
+        }
+
+        .image3 {
+          background-image: url('https://raw.githubusercontent.com/writechoiceorg/ats-docs/main/html/home/imgs/dark_card3.png')
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="header_container">
+      <div class="hero_title">
+        <h1 class="first_line">Learn how to integrate</h1>
+        <h1 class="second_line">Atlas Client Shipping</h1>
+      </div>
+      <p class="hero_content">
+        Welcome to ATS Healthcare's documentation portal. Find comprehensive guides and resources to help
+        you understand our services and integrate with our platform efficiently.
+      </p>
+    </div>
+  </header>
+  <main>
+    <div class="card_container">
+      <a class="card" href="/docs/overview">
+        <div class="card_image image1">
+        </div>
+        <div class="card_content">
+          <h3>Getting Started</h3>
+          <p>Get an overview of ATS Healthcare's services and how to set up your account.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/docs/how-to-overview">
+        <div class="card_image image2">
+        </div>
+        <div class="card_content">
+          <h3>How to Ship Your Packages</h3>
+          <p>Discover how to ship packages using our Frontend App or integrating with our API.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/reference/api-overview">
+        <div class="card_image image3">
+        </div>
+        <div class="card_content">
+          <h3>API Reference</h3>
+          <p>Explore detailed API documentation for integrating ATS Healthcare into your applications.</p>
+        </div>
+      </a>
+    </div>
+  </main>
+</body>
+
+</html>
