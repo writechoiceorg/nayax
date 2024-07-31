@@ -56,6 +56,10 @@
 
         .hero_img {
           margin-top: 10px;
+
+          .dark_img {
+            display: none;
+          }
         }
       }
     }
@@ -245,6 +249,100 @@
         }
       }
     }
+
+    @media (prefers-color-scheme: dark) {
+      [data-color-mode="system"] .rdmd-html {
+        background-image: url('https://raw.githubusercontent.com/writechoiceorg/nayax-docs/main/html/home/imgs/background-dark.png');
+      }
+
+      [data-color-mode="system"] .hero {
+        .header_container {
+          .hero_content {
+
+            h1 {
+              color: #FFF;
+            }
+
+            p {
+              color: #FFF;
+            }
+          }
+
+          .hero_img {
+            .light_img {
+              display: none;
+            }
+
+            .dark_img {
+              display: block;
+            }
+          }
+        }
+      }
+
+      [data-color-mode="system"] main {
+        .card_container {
+          .card {
+            border: 1px solid #5F5F5F;
+            background: #2A2A2A;
+
+            .card_content {
+
+              h3,
+              p {
+                color: #FFF;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    [data-color-mode="dark"] .rdmd-html {
+      background-image: url('https://raw.githubusercontent.com/writechoiceorg/nayax-docs/main/html/home/imgs/background-dark.png');
+    }
+
+    [data-color-mode="dark"] .hero {
+      .header_container {
+        .hero_content {
+
+          h1 {
+            color: #FFF;
+          }
+
+          p {
+            color: #FFF;
+          }
+        }
+
+        .hero_img {
+          .light_img {
+            display: none;
+          }
+
+          .dark_img {
+            display: block;
+          }
+        }
+      }
+    }
+
+    [data-color-mode="dark"] main {
+      .card_container {
+        .card {
+          border: 1px solid #5F5F5F;
+          background: #2A2A2A;
+
+          .card_content {
+
+            h3,
+            p {
+              color: #FFF;
+            }
+          }
+        }
+      }
+    }
   </style>
 </head>
 
@@ -258,7 +356,10 @@
         </p>
       </div>
       <div class="hero_img">
-        <img src="https://raw.githubusercontent.com/writechoiceorg/nayax-docs/main/html/home/imgs/nayax-logo.png"
+        <img class="light_img"
+          src="https://raw.githubusercontent.com/writechoiceorg/nayax-docs/main/html/home/imgs/nayax-logo.png" alt="">
+        <img class="dark_img"
+          src="https://raw.githubusercontent.com/writechoiceorg/nayax-docs/main/html/home/imgs/nayax-logo-dark.png.png"
           alt="">
       </div>
     </div>
