@@ -5,281 +5,6 @@ info:
 servers:
 - url: "/Operational"
 paths:
-  "/v1/cards":
-    get:
-      tags:
-      - Cards
-      summary: Get cards
-      parameters:
-      - name: CardID
-        in: query
-        schema:
-          type: integer
-          format: int64
-      - name: CardUniqueIdentifier
-        in: query
-        schema:
-          type: string
-      - name: CardDisplayNumber
-        in: query
-        schema:
-          type: string
-      - name: CardMobileNumber
-        in: query
-        schema:
-          type: string
-      - name: ExternalApplicationUserID
-        in: query
-        schema:
-          type: string
-      - name: CardEmail
-        in: query
-        schema:
-          type: string
-      - name: CardHolderName
-        in: query
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/CardGetDto"
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/CardGetDto"
-            text/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/CardGetDto"
-    post:
-      tags:
-      - Cards
-      summary: creates a new virtual card
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              "$ref": "#/components/schemas/CardsWithActorId"
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CardsWithActorId"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/CardsWithActorId"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/CardsWithActorId"
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-    put:
-      tags:
-      - Cards
-      summary: Update Card Detail By CardUniqueIdentifier
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              "$ref": "#/components/schemas/Cards"
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/Cards"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/Cards"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/Cards"
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-  "/v1/cards/{CardUniqueIdentifier}/credit":
-    get:
-      tags:
-      - Cards
-      summary: Get the credit
-      parameters:
-      - name: CardUniqueIdentifier
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-  "/v1/cards/uniqueIdentifier/{CardUniqueIdentifier}":
-    get:
-      tags:
-      - Cards
-      summary: Get Cards by CardUniqueIdentifier
-      parameters:
-      - name: CardUniqueIdentifier
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-  "/v1/cards/{CardUniqueIdentifier}/revalue":
-    get:
-      tags:
-      - Cards
-      summary: Get the revalue
-      parameters:
-      - name: CardUniqueIdentifier
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/CardValue"
-  "/v1/cards/displayNumber/{CardDisplayNumber}":
-    get:
-      tags:
-      - Cards
-      summary: Get Cards by CardDisplayNumber
-      parameters:
-      - name: CardDisplayNumber
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/Cards"
-  "/v1/cards/{CardId}/prepaid":
-    get:
-      tags:
-      - Cards
-      summary: Get prepaid card
-      parameters:
-      - name: CardId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
-    put:
-      tags:
-      - Cards
-      summary: Update prepaid card
-      parameters:
-      - name: CardId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              "$ref": "#/components/schemas/PrepaidCardDbEntity"
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/PrepaidCardDbEntity"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/PrepaidCardDbEntity"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/PrepaidCardDbEntity"
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
-            text/json:
-              schema:
-                "$ref": "#/components/schemas/PrepaidCard"
   "/v1/cards/validate-machine/{machineId}":
     get:
       tags:
@@ -9144,6 +8869,67 @@ components:
       - 2
       type: integer
       format: int32
+    KeyDataLynxModelResponse:
+      type: object
+      properties:
+        KeyID:
+          type: integer
+          format: int64
+          nullable: true
+        ActorId:
+          type: integer
+          format: int64
+          nullable: true
+        KeyTypeId:
+          type: integer
+          format: int32
+          nullable: true
+        KeyValue:
+          type: string
+          format: byte
+          nullable: true
+        StatusId:
+          type: integer
+          format: int32
+          nullable: true
+        KeyVersionNumber:
+          type: integer
+          format: int32
+          nullable: true
+        EncVersionNumber:
+          type: integer
+          format: int32
+          nullable: true
+        CreatedDt:
+          type: string
+          format: date-time
+          nullable: true
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+      additionalProperties: false
+    KeyDataRequestLynxModel:
+      type: object
+      properties:
+        ActorId:
+          type: integer
+          format: int64
+        UserId:
+          type: integer
+          format: int64
+        KeyValue:
+          type: string
+          nullable: true
+      additionalProperties: false
     Lookup:
       type: object
       properties:
