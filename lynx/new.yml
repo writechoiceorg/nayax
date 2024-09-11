@@ -11,6 +11,8 @@ paths:
     get:
       summary: Get Actor Details by ActorID
       operationId: get-actor-by-actorid
+      tags:
+      - Actors
       description: This endpoint retrieves comprehensive information about a single actor. You must specify the actor's unique identifier, `ActorID`, in the request path to obtain their full profile, including attributes.
       parameters:
         - name: ActorID
@@ -582,6 +584,128 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActorGroupResponseDTO'
+  /v1/actors/{ActorID}/bankInfo:
+    get:
+      tags:
+        - BankInformation
+      summary: Get Bank Information for Actor
+      description: Retrieves the bank information associated with a specific actor, identified by `ActorID`.
+      operationId: get-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The bank information was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+
+    post:
+      tags:
+        - BankInformation
+      summary: Add Bank Information for Actor
+      description: Adds new bank information for a specific actor, identified by `ActorID`.
+      operationId: add-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being posted.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The bank information to be posted.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantBankInfo'
+      responses:
+        '200':
+          description: The bank information was added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+
+    put:
+      tags:
+        - BankInformation
+      summary: Update Bank Information for Actor
+      description: Updates the bank information for a specific actor, identified by `ActorID`.
+      operationId: update-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The bank information to be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantBankInfo'
+      responses:
+        '200':
+          description: The bank information was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+  /v1/reports/{actor_id}/{start_date}/{end_date}:
+    get:
+      tags:
+        - BillingReport
+      summary: Get Report Files by ActorID and Date Range
+      description: Retrieves billing report files for a specific actor within a given date range, optionally filtered by report file type.
+      operationId: get-report-files-by-actor-and-date-range
+      parameters:
+        - name: actor_id
+          in: path
+          description: The unique identifier of the actor for whom the report files are being retrieved.
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: start_date
+          in: path
+          description: The start date of the report file range.
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: path
+          description: The end date of the report file range.
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: report_file_type
+          in: query
+          description: The type of report file to retrieve, if filtering by type.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Report files retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingReportsResponse'
+
 
 components:
   schemas:
@@ -1834,8 +1958,161 @@ components:
           nullable: true
           description: The date and time when the role group was last updated.
       additionalProperties: false
-
-
+    MerchantBankInfo:
+      type: object
+      description: Represents the bank information associated with an actor, including account details, bank details, and contact information.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with this bank information.
+        AccountHolder:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the account holder, if applicable.
+        CompanyName:
+          type: string
+          nullable: true
+          description: The name of the company associated with the bank account.
+        PhoneNumber:
+          type: string
+          nullable: true
+          description: The phone number associated with the bank account.
+        MobileNumber:
+          type: string
+          nullable: true
+          description: The mobile number associated with the bank account.
+        CurrencyId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the currency used in the bank account.
+        CountryId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country associated with the bank account.
+        SWIFT / BIC:
+          type: string
+          nullable: true
+          description: The SWIFT or BIC code of the bank.
+        IBAN:
+          type: string
+          nullable: true
+          description: The International Bank Account Number (IBAN).
+        RoutingNumber:
+          type: string
+          nullable: true
+          description: The routing number of the bank.
+        AccountType:
+          type: string
+          nullable: true
+          description: The type of bank account (e.g., savings, checking).
+        BankName:
+          type: string
+          nullable: true
+          description: The name of the bank.
+        AccountName:
+          type: string
+          nullable: true
+          description: The name on the bank account.
+        AccountNumber:
+          type: string
+          nullable: true
+          description: The account number of the bank account.
+        BankCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The code of the bank.
+        BranchCode:
+          type: string
+          nullable: true
+          description: The code of the bank branch.
+        CompanyEmail:
+          type: string
+          nullable: true
+          description: The email address associated with the company.
+        PhoneCountryCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The country code for the phone number.
+        MobileCountryCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The country code for the mobile number.
+        FirstName:
+          type: string
+          nullable: true
+          description: The first name of the individual associated with the bank account.
+        LastName:
+          type: string
+          nullable: true
+          description: The last name of the individual associated with the bank account.
+        Refs:
+          type: object
+          nullable: true
+          readOnly: true
+          description: Additional references or metadata associated with the bank information.
+          additionalProperties:
+            type: string
+            nullable: true
+      additionalProperties: false
+    BillingReportsResponse:
+      type: object
+      description: Represents the response containing billing reports for a specified actor, including any failure reasons if applicable.
+      properties:
+        BillingReports:
+          type: array
+          nullable: true
+          description: A list of billing reports associated with the specified actor and date range.
+          items:
+            $ref: '#/components/schemas/SingleBillingReportResponse'
+        FailReason:
+          type: string
+          nullable: true
+          description: The reason for any failure in retrieving the billing reports, if applicable.
+      additionalProperties: false
+    SingleBillingReportResponse:
+      type: object
+      description: Represents a single billing report, including the report's date range, frequency, and associated files.
+      properties:
+        StartDate:
+          type: string
+          format: date-time
+          description: The start date of the billing report's coverage period.
+        EndDate:
+          type: string
+          format: date-time
+          description: The end date of the billing report's coverage period.
+        Frequency:
+          type: string
+          nullable: true
+          description: The frequency of the billing report (e.g., daily, weekly, monthly).
+        Reports:
+          type: array
+          nullable: true
+          description: A list of report file paths associated with this billing report.
+          items:
+            $ref: '#/components/schemas/ReportPath'
+      additionalProperties: false
+    ReportPath:
+      type: object
+      description: Represents the path and type of a specific billing report file.
+      properties:
+        Type:
+          type: string
+          nullable: true
+          description: The type of the report file (e.g., PDF, CSV).
+        Path:
+          type: string
+          nullable: true
+          description: The file path where the report can be accessed.
+      additionalProperties: false
 
 
 
