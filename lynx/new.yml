@@ -606,7 +606,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MerchantBankInfo'
-
     post:
       tags:
         - BankInformation
@@ -635,7 +634,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MerchantBankInfo'
-
     put:
       tags:
         - BankInformation
@@ -705,6 +703,236 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BillingReportsResponse'
+  /v1/cards:
+    get:
+      tags:
+        - Cards
+      summary: Get Cards
+      description: Retrieves card details based on various query parameters.
+      operationId: get-cards
+      parameters:
+        - name: CardID
+          in: query
+          description: The unique identifier of the card.
+          schema:
+            type: integer
+            format: int64
+        - name: CardUniqueIdentifier
+          in: query
+          description: The unique identifier assigned to the card.
+          schema:
+            type: string
+        - name: CardDisplayNumber
+          in: query
+          description: The display number of the card.
+          schema:
+            type: string
+        - name: CardMobileNumber
+          in: query
+          description: The mobile number associated with the card.
+          schema:
+            type: string
+        - name: ExternalApplicationUserID
+          in: query
+          description: The external application user ID associated with the card.
+          schema:
+            type: string
+        - name: CardEmail
+          in: query
+          description: The email address associated with the card.
+          schema:
+            type: string
+        - name: CardHolderName
+          in: query
+          description: The name of the cardholder.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Card details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardGetDto'
+    post:
+      tags:
+        - Cards
+      summary: Create Virtual Card
+      description: Creates a new virtual card with the provided details.
+      operationId: create-virtual-card
+      requestBody:
+        required: true
+        description: The details of the card to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardsWithActorId'
+      responses:
+        '200':
+          description: The virtual card was created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+    put:
+      tags:
+        - Cards
+      summary: Update Card Details
+      description: Updates the details of an existing card.
+      operationId: update-card-detail
+      requestBody:
+        required: true
+        description: The updated details of the card.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cards'
+      responses:
+        '200':
+          description: The card details were updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+  /v1/cards/{CardUniqueIdentifier}/credit:
+    get:
+      tags:
+        - Cards
+      summary: Get the Credit from a Card
+      description: Retrieves the credit value associated with a specific card, identified by its unique identifier.
+      operationId: get-card-credit
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card for which the credit value is being retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Credit value retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardValue'
+  /v1/cards/uniqueIdentifier/{CardUniqueIdentifier}:
+    get:
+      tags:
+        - Cards
+      summary: Get Card by ID
+      description: Retrieves card details associated with a specific unique identifier.
+      operationId: get-cards-by-unique-identifier
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card to be retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Card details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+  /v1/cards/{CardUniqueIdentifier}/revalue:
+    get:
+      tags:
+        - Cards
+      summary: Get the Card's Revalue
+      description: Retrieves the revalue amount associated with a specific card, identified by the card's unique identifier.
+      operationId: get-card-revalue
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card for which the revalue amount is being retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Revalue amount retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardValue'
+  /v1/cards/displayNumber/{CardDisplayNumber}:
+    get:
+      tags:
+        - Cards
+      summary: Get Card by the Cards Display Number
+      description: Retrieves card details associated with a specific display number.
+      operationId: get-cards-by-display-number
+      parameters:
+        - name: CardDisplayNumber
+          in: path
+          required: true
+          description: The display number of the card to be retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Card details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+  /v1/cards/{CardId}/prepaid:
+    get:
+      tags:
+        - Cards
+      summary: Get prepaid card
+      description: Retrieves details of a prepaid card associated with a specific card ID.
+      operationId: get-prepaid-card
+      parameters:
+        - name: CardId
+          in: path
+          required: true
+          description: The unique identifier of the card to be retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Prepaid card details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrepaidCard'
+    put:
+      tags:
+        - Cards
+      summary: Update prepaid card
+      description: Updates the details of a prepaid card associated with a specific card ID.
+      operationId: update-prepaid-card
+      parameters:
+        - name: CardId
+          in: path
+          required: true
+          description: The unique identifier of the card to be updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The updated details of the prepaid card.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrepaidCardDbEntity'
+      responses:
+        '200':
+          description: Prepaid card details updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrepaidCard'
+
+
+
 
 
 components:
@@ -2113,6 +2341,955 @@ components:
           nullable: true
           description: The file path where the report can be accessed.
       additionalProperties: false
+    CardGetDto:
+      type: object
+      description: Represents the comprehensive details of a card, including its attributes, limits, usage, and associated rewards and location limits.
+      properties:
+        CardDetails:
+          $ref: '#/components/schemas/CardDetailsGet'
+          description: Detailed information about the card.
+        CardHolderDetails:
+          $ref: '#/components/schemas/CardHolderDetailsGet'
+          description: Information about the cardholder.
+        CardCreditAttributes:
+          $ref: '#/components/schemas/CardCreditAttributes'
+          description: Credit attributes associated with the card.
+        CardCreditLimits:
+          $ref: '#/components/schemas/CardCreditLimits'
+          description: Credit limits associated with the card.
+        CardDateRules:
+          $ref: '#/components/schemas/CardDateRules'
+          description: Date-related rules applied to the card.
+        CardCreditUsage:
+          $ref: '#/components/schemas/CardCreditUsageGet'
+          description: Information on the credit usage of the card.
+        CardRevalueRewardRules:
+          type: array
+          nullable: true
+          description: A list of revalue reward rules associated with the card.
+          items:
+            $ref: '#/components/schemas/CardRevalueRewardRuleGet'
+        GroupLocationLimits:
+          type: array
+          nullable: true
+          description: A list of location limits associated with the card's group.
+          items:
+            $ref: '#/components/schemas/CardGroupLocationLimitGet'
+      additionalProperties: false
+    CardDetailsGet:
+      type: object
+      description: Represents the detailed information of a card.
+      properties:
+        CardID:
+          type: integer
+          format: int64
+          description: The unique identifier of the card.
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the card.
+        CardUniqueIdentifier:
+          type: string
+          nullable: true
+          description: The unique identifier assigned to the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        CardTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the card.
+        PhysicalTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        Notes:
+          type: string
+          nullable: true
+          description: Any additional notes associated with the card.
+        Status:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the card.
+        ExternalApplicationUserID:
+          type: string
+          nullable: true
+          description: The external application user ID associated with the card.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the card.
+        CreatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the card.
+        UpdatedDT:
+          type: string
+          format: date-time
+          description: The date and time when the card was last updated.
+      additionalProperties: false
+    CardHolderDetailsGet:
+      type: object
+      description: Represents the details of the cardholder, including personal information and contact details.
+      properties:
+        CardHolderName:
+          type: string
+          nullable: true
+          description: The name of the cardholder.
+        UserIdentity:
+          type: string
+          nullable: true
+          description: The unique identity or user ID of the cardholder.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country associated with the cardholder.
+        MobileNumber:
+          type: string
+          nullable: true
+          description: The mobile number of the cardholder.
+        Email:
+          type: string
+          nullable: true
+          description: The email address of the cardholder.
+        MemberTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier representing the type of membership the cardholder has.
+        ImageUrl:
+          type: string
+          nullable: true
+          description: The URL of the cardholder's image.
+      additionalProperties: false
+    CardCreditAttributes:
+      type: object
+      description: Represents the credit attributes associated with a card, including currency, credit amounts, and revalue options.
+      properties:
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the currency used for the card's credit.
+        Credit:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit available on the card.
+        RevalueCredit:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit added to the card during a revalue operation.
+        CreditTypeMoneyBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit type is money.
+        CreditAccumulateBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit on the card can accumulate over time.
+        CreditSingleUseBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit on the card is for single-use only.
+        RevalueCashBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the card can be revalued with cash.
+        RevalueCreditCardBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the card can be revalued with a credit card.
+        AmountMonthlyReload:
+          type: number
+          format: double
+          nullable: true
+          description: The monthly reload amount for the card.
+        TransactionsMonthlyReload:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions allowed per month for reloading the card.
+        DiscountTypeBit:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates the type of discount applied to the card.
+        DiscountValue:
+          type: number
+          format: double
+          nullable: true
+          description: The value of the discount applied to the card.
+      additionalProperties: false
+    CardCreditLimits:
+      type: object
+      description: Represents the credit limits associated with a card, including daily, weekly, and monthly limits.
+      properties:
+        AmountDailyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The daily limit on the amount of credit that can be used.
+        AmountWeeklyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The weekly limit on the amount of credit that can be used.
+        TransactionsDailyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily limit on the number of transactions that can be performed.
+        TransactionsWeeklyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The weekly limit on the number of transactions that can be performed.
+        AmountMonthlyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The monthly limit on the amount of credit that can be used.
+        TransactionsMonthlyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The monthly limit on the number of transactions that can be performed.
+        DiscountTransactionsTotalLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The total limit on discount transactions.
+        MaxRevalueAmountLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum limit for revalue amounts.
+        WeekDayLimitEnabledBit:
+          type: boolean
+          description: Indicates whether weekday limits are enabled.
+        WeekDayAmountLimit:
+          type: string
+          nullable: true
+          description: The amount limit applied on specific weekdays.
+        WeekDayTransactionLimit:
+          type: string
+          nullable: true
+          description: The transaction limit applied on specific weekdays.
+      additionalProperties: false
+    CardDateRules:
+      type: object
+      description: Represents the date rules associated with a card, including activation, expiration, and single-use dates.
+      properties:
+        ActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card becomes active.
+        ExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card expires.
+        RevalueExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the revalue credit on the card expires.
+        SetSingleUseDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card is set for single-use.
+        RemoveSingleUseDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the single-use restriction is removed from the card.
+      additionalProperties: false
+    CardCreditUsageGet:
+      type: object
+      description: Represents the usage details of a card, including daily, weekly, monthly, and total usage amounts and transactions.
+      properties:
+        AmountDailyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used daily.
+        AmountWeeklyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used weekly.
+        TransactionsDailyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The number of transactions performed daily.
+        TransactionsWeeklyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The number of transactions performed weekly.
+        AmountMonthlyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used monthly.
+        TransactionsMonthlyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The number of transactions performed monthly.
+        AmountTotalUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The total amount of credit used.
+        TransactionsTotalUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The total number of transactions performed.
+        AmountCapture:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit captured.
+        TransactionsCapture:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions captured.
+        CaptureDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last capture.
+      additionalProperties: false
+    CardRevalueRewardRuleGet:
+      type: object
+      description: Represents the revalue reward rule associated with a card, including reward details and status.
+      properties:
+        RuleID:
+          type: integer
+          format: int32
+          description: The unique identifier of the reward rule.
+        RewardActorID:
+          type: integer
+          format: int64
+          description: The identifier of the actor receiving the reward.
+        Status:
+          type: boolean
+          description: The current status of the reward rule.
+        RevalueAmount:
+          type: number
+          format: double
+          description: The amount required to trigger the reward.
+        RewardValueTypeBit:
+          type: boolean
+          description: Indicates whether the reward value is a fixed amount or a percentage.
+        RewardValue:
+          type: number
+          format: double
+          description: The value of the reward.
+        UpdatedDT:
+          type: string
+          format: date-time
+          description: The date and time when the reward rule was last updated.
+        UpdatedBy:
+          type: integer
+          format: int32
+          description: The identifier of the user who last updated the reward rule.
+      additionalProperties: false
+    CardGroupLocationLimitGet:
+      type: object
+      description: Represents the location limits associated with a card group, including daily limits and update information.
+      properties:
+        CardGroupEnabledBit:
+          type: boolean
+          description: Indicates whether the card group location limit is enabled.
+        GroupName:
+          type: string
+          nullable: true
+          description: The name of the card group.
+        CardGroupId:
+          type: integer
+          format: int64
+          description: The unique identifier of the card group.
+        GroupDailyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily limit for the card group.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the location limit.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the location limit was last updated.
+      additionalProperties: false
+    CardsWithActorId:
+      type: object
+      description: Represents the details required to create or update a card associated with an actor, including card attributes and contact information.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the card.
+        CardUniqueIdentifier:
+          type: string
+          nullable: true
+          description: The unique identifier assigned to the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        CardHolderName:
+          type: string
+          nullable: true
+          description: The name of the cardholder.
+        CardStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the card.
+        CardType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the card.
+        CardUserIdentity:
+          type: string
+          nullable: true
+          description: The unique identity or user ID associated with the card.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country associated with the card.
+        Currency:
+          type: integer
+          format: int32
+          nullable: true
+          description: The currency identifier used for the card.
+        MobileNumber:
+          type: string
+          nullable: true
+          description: The mobile number associated with the card.
+        Email:
+          type: string
+          nullable: true
+          description: The email address associated with the card.
+        CardPhysicalType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        MemberType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The membership type identifier associated with the card.
+        CardActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card becomes active.
+        CardExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card expires.
+        CardImageUrl:
+          type: string
+          nullable: true
+          description: The URL of the image associated with the card.
+        CardNote:
+          type: string
+          nullable: true
+          description: Any additional notes associated with the card.
+        wd_limits_money:
+          type: string
+          nullable: true
+          description: The monetary limits applied to the card on specific weekdays.
+        wd_limits_trans:
+          type: string
+          nullable: true
+          description: The transaction limits applied to the card on specific weekdays.
+        use_wd_limit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the weekday limits are enabled for the card.
+      additionalProperties: false
+    Cards:
+      type: object
+      description: Represents the details of a card, including its attributes, status, and associated actor information.
+      properties:
+        MobileNumber:
+          type: string
+          nullable: true
+          description: The mobile number associated with the card.
+        CardID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the card.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the card.
+        CardUniqueIdentifier:
+          type: string
+          nullable: true
+          description: The unique identifier assigned to the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        CardHolderName:
+          type: string
+          nullable: true
+          description: The name of the cardholder.
+        CardStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the card.
+        CardType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the card.
+        CardUserIdentity:
+          type: string
+          nullable: true
+          description: The unique identity or user ID associated with the card.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was last updated.
+        CreatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was created.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the card.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the card.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country associated with the card.
+        Email:
+          type: string
+          nullable: true
+          description: The email address associated with the card.
+        CardPhysicalType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        MemberType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The membership type identifier associated with the card.
+        CardActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card becomes active.
+        CardExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card expires.
+        CardImageUrl:
+          type: string
+          nullable: true
+          description: The URL of the image associated with the card.
+        CardNote:
+          type: string
+          nullable: true
+          description: Any additional notes associated with the card.
+        wd_limits_money:
+          type: string
+          nullable: true
+          description: The monetary limits applied to the card on specific weekdays.
+        wd_limits_trans:
+          type: string
+          nullable: true
+          description: The transaction limits applied to the card on specific weekdays.
+        use_wd_limit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the weekday limits are enabled for the card.
+        CardExternalApplicationUserID:
+          type: string
+          nullable: true
+          description: The external application user ID associated with the card.
+        Refs:
+          type: object
+          nullable: true
+          description: Additional references or metadata associated with the card.
+          additionalProperties:
+            type: string
+            nullable: true
+      additionalProperties: false
+    CardValue:
+      type: object
+      description: Represents the credit value associated with a card.
+      properties:
+        value:
+          type: number
+          format: double
+          description: The credit value of the card.
+      additionalProperties: false
+    PrepaidCard:
+      type: object
+      description: Represents a prepaid card, including its associated details and entity data.
+      properties:
+        PrepaidCard:
+          $ref: '#/components/schemas/PrepaidCardDbEntity'
+          description: Detailed properties of the prepaid card.
+        Card:
+          $ref: '#/components/schemas/CardsDbEntity'
+          description: The entity data associated with the card.
+      additionalProperties: false
+    PrepaidCardDbEntity:
+      type: object
+      description: Represents the detailed properties of a prepaid card, including credit attributes, usage limits, and revalue options.
+      properties:
+        CardID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the card.
+        CardDiscountTypeBit:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates the type of discount applied to the card.
+        CardDiscountAmount:
+          type: number
+          format: double
+          nullable: true
+          description: The discount amount applied to the card.
+        CardCreditTypeMoneyBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit type is money.
+        CardCreditAccumulateBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit on the card can accumulate over time.
+        CardCreditSingleUseBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the credit on the card is for single-use only.
+        CardRevalueCashBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the card can be revalued with cash.
+        CardRevalueCreditCardBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the card can be revalued with a credit card.
+        CardCredit:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit available on the card.
+        CardRevalueCredit:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit added to the card during a revalue operation.
+        CardMaxRevalueAmountLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum limit for revalue amounts.
+        CreditAmountDailyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The daily limit on the amount of credit that can be used.
+        CreditAmountWeeklyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The weekly limit on the amount of credit that can be used.
+        CreditAmountMonthlyLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The monthly limit on the amount of credit that can be used.
+        CreditTransactionsDailyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily limit on the number of transactions that can be performed.
+        CreditTransactionsWeeklyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The weekly limit on the number of transactions that can be performed.
+        CreditTransactionsMonthlyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The monthly limit on the number of transactions that can be performed.
+        CreditTransactionsMonthlyReload:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions allowed per month for reloading the card.
+        CreditAmountCapture:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit captured.
+        CreditTransactionsCapture:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions captured.
+        CreditCaptureDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last capture.
+        CreditAmountDailyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used daily.
+        CreditAmountWeeklyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used weekly.
+        CreditAmountMonthlyUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The amount of credit used monthly.
+        CreditAmountTotalUsage:
+          type: number
+          format: double
+          nullable: true
+          description: The total amount of credit used.
+        CreditTransactionsDailyUsage:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions performed daily.
+        CreditTransactionsWeeklyUsage:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions performed weekly.
+        CreditTransactionsMonthlyUsage:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions performed monthly.
+        TransactionsTotalUsage:
+          type: integer
+          format: int64
+          nullable: true
+          description: The total number of transactions performed.
+        CardRevalueExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the revalue credit on the card expires.
+        CardSetSingleUseDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card is set for single-use.
+        RemoveSingleUseDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the single-use restriction is removed from the card.
+        CreditAmountMonthlyReload:
+          type: number
+          format: double
+          nullable: true
+          description: The monthly reload amount for the card.
+        CreditTransactionsTotalUsage:
+          type: integer
+          format: int32
+          nullable: true
+          description: The total number of credit transactions performed.
+        CardCustomerTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The customer type identifier associated with the card.
+        CardLastUpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the card.
+        CardLastUpdatedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was last updated.
+        final_wd_limit_money:
+          type: number
+          format: double
+          nullable: true
+          description: The final weekday limit on the amount of money that can be used.
+      additionalProperties: false
+    CardsDbEntity:
+      type: object
+      description: Represents the entity details of a card, including its attributes, status, and associated actor information.
+      properties:
+        CardID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the card.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the card.
+        CardUniqueIdentifier:
+          type: string
+          nullable: true
+          description: The unique identifier assigned to the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        CardHolderName:
+          type: string
+          nullable: true
+          description: The name of the cardholder.
+        CardStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the card.
+        CardType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the card.
+        CardUserIdentity:
+          type: string
+          nullable: true
+          description: The unique identity or user ID associated with the card.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was last updated.
+        CreatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card was created.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the card.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the card.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country associated with the card.
+        Email:
+          type: string
+          nullable: true
+          description: The email address associated with the card.
+        CardPhysicalType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        MemberType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The membership type identifier associated with the card.
+        CardActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card becomes active.
+        CardExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the card expires.
+        CardImageUrl:
+          type: string
+          nullable: true
+          description: The URL of the image associated with the card.
+        CardNote:
+          type: string
+          nullable: true
+          description: Any additional notes associated with the card.
+        wd_limits_money:
+          type: string
+          nullable: true
+          description: The monetary limits applied to the card on specific weekdays.
+        wd_limits_trans:
+          type: string
+          nullable: true
+          description: The transaction limits applied to the card on specific weekdays.
+        use_wd_limit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the weekday limits are enabled for the card.
+        CardExternalApplicationUserID:
+          type: string
+          nullable: true
+          description: The external application user ID associated with the card.
+      additionalProperties: false
+
 
 
 
