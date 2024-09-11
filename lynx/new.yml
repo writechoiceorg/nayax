@@ -1,0 +1,1844 @@
+openapi: 3.0.1
+info:
+  title: Nayax Operational Lynx API
+  version: v1
+servers:
+- url: "/Operational"
+security:
+- Authorization: []
+paths:
+  /v1/actors/{ActorID}:
+    get:
+      summary: Get Actor Details by ActorID
+      operationId: get-actor-by-actorid
+      description: This endpoint retrieves comprehensive information about a single actor. You must specify the actor's unique identifier, `ActorID`, in the request path to obtain their full profile, including attributes.
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor whose details are to be retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Actor details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Actors"
+    put:
+      tags:
+        - Actors
+      summary: Update Operator/Sub-Operator
+      operationId: update-actor
+      description: Updates the details of an existing actor (operator or sub-operator) identified by `ActorID`. The request body must contain the updated attributes for the actor.
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor to be updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActorsDbEntity'
+      responses:
+        '200':
+          description: Actor updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actors'
+        '404':
+          description: Actor not found.
+        '400':
+          description: Invalid input provided.
+  /v1/actors:
+    get:
+      tags:
+        - Actors
+      summary: Get Actor by ActorCode
+      operationId: get-actor-by-actorcode
+      description: Retrieves the details of an actor using their unique `ActorCode`. This is useful for fetching information about a specific actor when only their code is known.
+      parameters:
+        - name: ActorCode
+          in: query
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: The unique code assigned to the actor. This code is used to identify and retrieve the actor's details.
+      responses:
+        '200':
+          description: Actor details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actors'
+  /v1/actors/{ParentActorID}:
+    post:
+      tags:
+        - Actors
+      summary: Create a New Actor
+      operationId: create-new-actor
+      description: Creates a new actor under the specified parent actor. The parent actor is identified by the `ParentActorID` provided in the path. The request body must contain the details of the new actor.
+      parameters:
+        - name: ParentActorID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The unique identifier of the parent actor under which the new actor will be created.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActorsDbEntity'
+      responses:
+        '200':
+          description: Actor created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actors'
+  /v2/actors/{ParentActorID}:
+    post:
+      tags:
+        - Actors
+      summary: Create a New Actor
+      operationId: create-new-actor-v2
+      description: Creates a new actor under the specified parent actor. The parent actor is identified by the `ParentActorID` provided in the path. The request body must contain the details of the new actor.
+      parameters:
+        - name: ParentActorID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The unique identifier of the parent actor under which the new actor will be created.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActorCreateRequest'
+      responses:
+        '200':
+          description: Actor created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActorCreateResponse'
+  /v1/actors/{ActorID}/paymentMethods:
+    get:
+      tags:
+        - Actors
+      summary: Get payment methods by ActorID
+      operationId: get-payment-methods-by-actorid
+      description: Retrieves a list of payment methods associated with a specific actor, identified by the `ActorID`.
+      parameters:
+        - name: ActorID
+          in: path
+          description: The unique identifier of the actor whose payment methods are being requested.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A list of payment methods associated with the actor was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorPaymentResponse'
+    put:
+      tags:
+        - Actors
+      summary: Update Actor's Payment Methods
+      description: Updates the payment methods associated with a specific actor, identified by the `ActorID`.
+      operationId: update-actor-payment-methods
+      parameters:
+        - name: ActorID
+          in: path
+          description: The unique identifier of the actor whose payment methods are being updated.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The payment methods to be updated.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ActorPaymentResponse'
+      responses:
+        '200':
+          description: The payment methods were updated successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorPaymentResponse'
+    post:
+      tags:
+        - Actors
+      summary: Create Actor's Payment Methods
+      description: Creates new payment methods for a specific actor, identified by the `ActorID`.
+      operationId: create-actor-payment-methods
+      parameters:
+        - name: ActorID
+          in: path
+          description: The unique identifier of the actor for whom the payment methods are being created.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The payment methods to be created.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ActorPaymentResponse'
+      responses:
+        '200':
+          description: The payment methods were created successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorPaymentResponse'
+  /v1/actors/{ActorID}/paymentMethods/{paymentMethodID}:
+    delete:
+      tags:
+        - Actors
+      summary: Delete a Payment Method
+      description: Deletes a specific payment method associated with a given actor, identified by `ActorID` and `paymentMethodID`.
+      operationId: delete-actor-payment-method
+      parameters:
+        - name: ActorID
+          in: path
+          description: The unique identifier of the actor whose payment method is being deleted.
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: paymentMethodID
+          in: path
+          description: The unique identifier of the payment method to be deleted.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The payment method was deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResult'
+  /v1/actors/{ActorID}/evDashboard:
+    get:
+      tags:
+        - Actors
+      summary: Get Operator EV Meter Dashboard
+      description: Retrieves the EV meter dashboard for a specific operator, identified by `ActorID`. Optional query parameters allow filtering by date range, machine ID, time period, and machine number.
+      operationId: get-operator-ev-meter-dashboard
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The unique identifier of the actor (operator) for whom the EV meter dashboard is being retrieved.
+        - name: StartDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: The start date for filtering the EV meter dashboard data.
+        - name: EndDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: The end date for filtering the EV meter dashboard data.
+        - name: MachineID
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: The unique identifier of the machine for which the EV meter data is being retrieved.
+        - name: TimePeriod
+          in: query
+          schema:
+            type: integer
+            format: int32
+          description: The time period for which the EV meter data is being retrieved.
+        - name: MachineNumber
+          in: query
+          schema:
+            type: string
+          description: The number of the machine for which the EV meter data is being retrieved.
+      responses:
+        '200':
+          description: The EV meter dashboard data was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvMeterDashBoard'
+  /v1/actors/GetEncKeys:
+    get:
+      tags:
+        - Actors
+      summary: Get Encryption Keys by ActorID
+      description: Retrieves the encryption keys associated with a specific actor, identified by the `actorID` query parameter.
+      operationId: get-encryption-keys-by-actor-id
+      parameters:
+        - name: actorID
+          in: query
+          description: The unique identifier of the actor for whom encryption keys are being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Encryption keys retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DispatchActorEncKeysDbEntity'
+  /v1/actors/hierarchy:
+    get:
+      tags:
+        - Actors
+      summary: Get Actor Hierarchy for Current User
+      description: Retrieves the actor hierarchy for the current user. Optionally, you can specify an `ActorID` to get the hierarchy for a specific actor, filter by `StatusID`, or limit the hierarchy levels returned.
+      operationId: get-actor-hierarchy
+      parameters:
+        - name: ActorID
+          in: query
+          description: Specify the unique identifier of an actor to retrieve its hierarchy instead of the current user's hierarchy.
+          schema:
+            type: integer
+            format: int64
+        - name: StatusID
+          in: query
+          description: Filter the hierarchy to only include actors with a specific status identifier.
+          schema:
+            type: integer
+            format: int32
+        - name: HierarchyLevelLimit
+          in: query
+          description: The maximum number of hierarchy levels to retrieve.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The actor hierarchy was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActorHirarchyDto'
+  /v1/actors/GenarateEncKey:
+    put:
+      tags:
+        - Actors
+      summary: Generate Encryption Key
+      description: Generates a new encryption key for the specified actor, identified by `actorID`.
+      operationId: generate-encryption-key
+      parameters:
+        - name: actorID
+          in: query
+          description: The unique identifier of the actor for whom the encryption key is being generated.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Encryption key generated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DispatchActorEncKeysDbEntity'
+  /v1/actors/DecryptionMessageByVer:
+    put:
+      tags:
+        - Actors
+      summary: Decrypt message by encryption version
+      description: Decrypts a message using a specific encryption version for a given actor, identified by `actorID` and `encVer`.
+      operationId: decrypt-message-by-encryption-version
+      parameters:
+        - name: actorID
+          in: query
+          description: The unique identifier of the actor whose message is being decrypted.
+          schema:
+            type: integer
+            format: int64
+        - name: encVer
+          in: query
+          description: The version of the encryption used to decrypt the message.
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        description: The encrypted message to be decrypted.
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: The message was decrypted successfully.
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /v1/actor/{ActorID}/machineGroups:
+    get:
+      tags:
+        - Actors
+      summary: List All Machine Groups for Actor
+      description: Retrieves all machine groups associated with a specific actor, identified by `ActorID`.
+      operationId: get-all-machine-groups-for-actor
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the machine groups are being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A list of machine groups associated with the actor was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MachineGroupResponseDTO'
+    post:
+      tags:
+        - Actors
+      summary: Add Machine Group
+      description: Adds a new machine group for a specific actor, identified by `ActorID`.
+      operationId: add-machine-group
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the machine group is being added.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The details of the machine group to be added.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MachineGroupRequestDTO'
+      responses:
+        '200':
+          description: The machine group was added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineGroupResponseDTO'
+    put:
+      tags:
+        - Actors
+      summary: Update Machine Group
+      description: Updates the details of a machine group associated with a specific actor, identified by `ActorID`.
+      operationId: update-machine-group
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the machine group is being updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The machine group details to be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MachineGroupRequestDTO'
+      responses:
+        '200':
+          description: The machine group was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MachineGroupResponseDTO'
+  /v1/actors/{ActorID}/roleGroups:
+    get:
+      tags:
+        - Actors
+      summary: Get All Actor Groups by ActorID
+      description: Retrieves all actor groups associated with a specific actor, identified by `ActorID`.
+      operationId: get-all-actor-groups-for-actor
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the role groups are being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A list of actor groups associated with the actor was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorGroupResponseDTO'
+    post:
+      tags:
+        - Actors
+      summary: Add Actor Group
+      description: Adds a new actor group for a specific actor, identified by `ActorID`.
+      operationId: add-actor-group
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the role group is being added.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The details of the actor group to be added.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ActorGroupRequestDTO'
+      responses:
+        '200':
+          description: The actor group was added successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorGroupResponseDTO'
+    delete:
+      tags:
+        - Actors
+      summary: Delete actor group
+      description: Deletes an actor group associated with a specific actor, identified by `ActorID`.
+      operationId: delete-actor-group
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the role group is being deleted.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The details of the actor group to be deleted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ActorGroupRequestDTO'
+      responses:
+        '200':
+          description: The actor group was deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActorGroupResponseDTO'
+
+components:
+  schemas:
+    Actors:
+      type: object
+      properties:
+        ParentActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the parent actor, if applicable.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier for this actor.
+        ActorDescription:
+          type: string
+          nullable: true
+          description: A brief description of the actor.
+        ActorCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A unique code assigned to the actor.
+        ActorAddress:
+          type: string
+          nullable: true
+          description: The address associated with the actor.
+        ActorContact:
+          type: string
+          nullable: true
+          description: The contact details for the actor.
+        ActorTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the type of actor, defining the actor's role or category.
+        ActorStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the actor, represented by a status code.
+        ActorHierarchyLevel:
+          type: integer
+          format: int32
+          nullable: true
+          description: The level of hierarchy where the actor is positioned within the organizational structure.
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the currency used by the actor.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the actor's information was last updated.
+        RouteManagerName:
+          type: string
+          nullable: true
+          description: The name of the route manager associated with the actor.
+        RouteManagerMobile:
+          type: string
+          nullable: true
+          description: The mobile number of the route manager associated with the actor.
+        TimeZoneKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The key representing the time zone in which the actor operates.
+        DayLightSavingsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether daylight saving time is observed by the actor.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country in which the actor is located.
+        DailyCCTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily credit card transaction limit per card for the actor.
+        DailyPPTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily prepaid card transaction limit per card for the actor.
+        DailyExternalPPTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily external prepaid card transaction limit per card for the actor.
+        DailyCCTransLimitPerCardPerOperator:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily credit card transaction limit per card per operator for the actor.
+        OperatorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the operator managing this actor.
+        DistributorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the distributor associated with the actor.
+        AreaActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the area actor that encompasses this actor.
+        RouteActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the route actor associated with this actor.
+        ActorHierarchy:
+          type: string
+          nullable: true
+          description: The hierarchical structure to which the actor belongs.
+        ActorHasChildrenBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor has child entities.
+        ActorHasMachinesBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor is associated with any machines.
+        ActorImageURL:
+          type: string
+          nullable: true
+          description: The URL to an image representing the actor.
+        ActorContractInfo:
+          type: string
+          nullable: true
+          description: Contractual information related to the actor.
+        ActorSQSID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the actor's SQS (Simple Queue Service) system, if applicable.
+        UseProductGroupVATBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether VAT is applied based on the product group for this actor.
+        EreceiptTransactionEndEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether e-receipts are enabled for transactions ending with this actor.
+        MaximumRevalueAmountLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum amount limit for revaluing transactions for this actor.
+        ActorCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created this actor's record.
+        ActorCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when this actor was created.
+        UpdateBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated this actor's record.
+        CultureID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the culture or locale associated with the actor.
+        RevaluePayoutByDistributor:
+          type: boolean
+          nullable: true
+          description: Indicates whether the revalue payout is handled by the distributor.
+        FiscalizationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether fiscalization is enabled for this actor.
+        GeoCountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country based on the actor's geographic information.
+        GeoState:
+          type: string
+          nullable: true
+          description: The state or region based on the actor's geographic information.
+        GeoCity:
+          type: string
+          nullable: true
+          description: The city based on the actor's geographic information.
+        GeoAddress:
+          type: string
+          nullable: true
+          description: The address based on the actor's geographic information.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number based on the actor's geographic information.
+        GeoLongitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude of the actor's location.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude of the actor's location.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The zip code based on the actor's geographic information.
+        GeoZoom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The zoom level for map-based services relevant to the actor's geographic location.
+        ActorLanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the language preference of the actor.
+        ActorMerchantBit:
+          type: string
+          nullable: true
+          description: Indicates whether the actor is associated with a merchant.
+        ActorMerchantNameForDescriptor:
+          type: string
+          nullable: true
+          description: The merchant name used for transaction descriptors related to this actor.
+        OverrideGeoInherritcanceBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor overrides inherited geographic settings.
+        AirportID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the airport associated with the actor, if applicable.
+        VerticalCustomJSON:
+          type: string
+          nullable: true
+          description: Custom JSON data specific to the vertical market or industry the actor operates in.
+        FiscalizationActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the actor responsible for fiscalization.
+        SupportIncrementalAuth:
+          type: boolean
+          nullable: true
+          description: Indicates whether incremental authorization is supported by this actor.
+        MaximumDefaultCredit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum default credit limit allowed for this actor.
+        Refs:
+          type: object
+          nullable: true
+          description: A key-value pair object containing additional references associated with the actor.
+          additionalProperties:
+            type: string
+            nullable: true
+      additionalProperties: false
+    ActorsDbEntity:
+      type: object
+      description: Schema representing the database entity for an actor, used for creating or updating actor details.
+      properties:
+        ParentActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the parent actor, if this actor is a sub-entity.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier for the actor.
+        ActorDescription:
+          type: string
+          nullable: true
+          description: A brief description of the actor.
+        ActorCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A code representing the actor, often used for identification or categorization.
+        ActorAddress:
+          type: string
+          nullable: true
+          description: The physical address associated with the actor.
+        ActorContact:
+          type: string
+          nullable: true
+          description: Contact information for the actor, such as a phone number or email.
+        ActorTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier representing the type of actor, which could indicate their role or classification.
+        ActorStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status of the actor, represented by a status code.
+        ActorHierarchyLevel:
+          type: integer
+          format: int32
+          nullable: true
+          description: The level of hierarchy at which the actor operates within the organizational structure.
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The currency identifier used by the actor for transactions.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the actor's information was last updated.
+        RouteManagerName:
+          type: string
+          nullable: true
+          description: The name of the route manager associated with the actor.
+        RouteManagerMobile:
+          type: string
+          nullable: true
+          description: The mobile contact of the route manager.
+        TimeZoneKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The time zone key indicating the actor's local time zone.
+        DayLightSavingsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor observes daylight saving time.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country in which the actor is located.
+        DailyCCTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily credit card transaction limit per card for the actor.
+        DailyPPTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily prepaid card transaction limit per card for the actor.
+        DailyExternalPPTransLimitPerCard:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily external prepaid card transaction limit per card for the actor.
+        DailyCCTransLimitPerCardPerOperator:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily credit card transaction limit per card per operator.
+        OperatorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the operator managing this actor.
+        DistributorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the distributor associated with the actor.
+        AreaActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the area actor that encompasses this actor.
+        RouteActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the route actor associated with this actor.
+        ActorHierarchy:
+          type: string
+          nullable: true
+          description: The hierarchical structure or path to which the actor belongs.
+        ActorHasChildrenBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor has any child entities.
+        ActorHasMachinesBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor is associated with any machines.
+        ActorImageURL:
+          type: string
+          nullable: true
+          description: URL of an image representing the actor.
+        ActorContractInfo:
+          type: string
+          nullable: true
+          description: Contract information related to the actor.
+        ActorSQSID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the actor's SQS (Simple Queue Service) system, if applicable.
+        UseProductGroupVATBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether VAT is applied based on the product group for this actor.
+        EreceiptTransactionEndEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether e-receipts are enabled for transactions ending with this actor.
+        MaximumRevalueAmountLimit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum amount limit for revaluing transactions for this actor.
+        ActorCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created this actor's record.
+        ActorCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when this actor was created.
+        UpdateBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated this actor's record.
+        CultureID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the culture or locale associated with the actor.
+        RevaluePayoutByDistributor:
+          type: boolean
+          nullable: true
+          description: Indicates whether the revalue payout is handled by the distributor.
+        FiscalizationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether fiscalization is enabled for this actor.
+        GeoCountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country based on the actor's geographic information.
+        GeoState:
+          type: string
+          nullable: true
+          description: The state or region based on the actor's geographic information.
+        GeoCity:
+          type: string
+          nullable: true
+          description: The city based on the actor's geographic information.
+        GeoAddress:
+          type: string
+          nullable: true
+          description: The address based on the actor's geographic information.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number based on the actor's geographic information.
+        GeoLongitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude of the actor's location.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude of the actor's location.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The zip code based on the actor's geographic information.
+        GeoZoom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The zoom level for map-based services relevant to the actor's geographic location.
+        ActorLanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the language preference of the actor.
+        ActorMerchantBit:
+          type: string
+          nullable: true
+          description: Indicates whether the actor is associated with a merchant.
+        ActorMerchantNameForDescriptor:
+          type: string
+          nullable: true
+          description: The merchant name used for transaction descriptors related to this actor.
+        OverrideGeoInherritcanceBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the actor overrides inherited geographic settings.
+        AirportID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the airport associated with the actor, if applicable.
+        VerticalCustomJSON:
+          type: string
+          nullable: true
+          description: Custom JSON data specific to the vertical market or industry the actor operates in.
+        FiscalizationActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the actor responsible for fiscalization.
+        SupportIncrementalAuth:
+          type: boolean
+          nullable: true
+          description: Indicates whether incremental authorization is supported by this actor.
+        MaximumDefaultCredit:
+          type: number
+          format: double
+          nullable: true
+          description: The maximum default credit limit allowed for this actor.
+      additionalProperties: false
+    ActorCreateRequest:
+      type: object
+      description: Request schema for creating a new actor, including details and billing gateways.
+      properties:
+        ActorDetails:
+          $ref: '#/components/schemas/ActorDetailsRequest'
+          description: Detailed information about the actor.
+        ActorBillingGateways:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActorBillingGatewaysRequest'
+          nullable: true
+          description: A list of billing gateways associated with the actor.
+        ActorBillingPlanID:
+          type: integer
+          format: int32
+          description: The identifier for the billing plan assigned to the actor.
+      additionalProperties: false
+    ActorDetailsRequest:
+      type: object
+      description: Detailed information about the actor, including geographic and contact details.
+      properties:
+        ActorDescription:
+          type: string
+          nullable: true
+          description: A brief description of the actor.
+        ActorCode:
+          type: integer
+          format: int64
+          description: A unique code representing the actor.
+        ActorContact:
+          type: string
+          nullable: true
+          description: Contact information for the actor, such as a phone number or email.
+        ActorTypeID:
+          type: integer
+          format: int32
+          description: The identifier representing the type of actor, defining their role or category.
+        StatusID:
+          type: integer
+          format: int32
+          description: The status identifier of the actor.
+        CurrencyID:
+          type: integer
+          format: int32
+          description: The identifier for the currency used by the actor.
+        TimeZoneKey:
+          type: integer
+          format: int32
+          description: The key representing the actor's time zone.
+        CountryID:
+          type: integer
+          format: int32
+          description: The identifier for the country in which the actor is located.
+        CultureID:
+          type: integer
+          format: int32
+          description: The identifier for the culture or locale associated with the actor.
+        GeoOverrideInheritanceBit:
+          type: boolean
+          description: Indicates whether geographic inheritance settings are overridden for this actor.
+        GeoSearchAddress:
+          type: string
+          nullable: true
+          description: A full address string used for geographic search purposes.
+        GeoCountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country based on the actor's geographic location.
+        GeoStateName:
+          type: string
+          nullable: true
+          description: The state or region name based on the actor's geographic location.
+        GeoCityName:
+          type: string
+          nullable: true
+          description: The city name based on the actor's geographic location.
+        GeoStreetName:
+          type: string
+          nullable: true
+          description: The street name based on the actor's geographic location.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number based on the actor's geographic location.
+        GeoLogitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude of the actor's location.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude of the actor's location.
+        GeoZoom:
+          type: integer
+          format: int32
+          description: The zoom level for map-based services relevant to the actor's geographic location.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The zip code based on the actor's geographic location.
+        LanguageID:
+          type: integer
+          format: int32
+          description: The identifier for the language preference of the actor.
+        MCCCode:
+          type: string
+          nullable: true
+          description: The merchant category code (MCC) associated with the actor, if applicable.
+      additionalProperties: false
+    ActorBillingGatewaysRequest:
+      type: object
+      description: Information about billing gateways associated with the actor.
+      properties:
+        BillingProviderID:
+          type: integer
+          format: int32
+          description: The identifier for the billing provider.
+        TerminalID:
+          type: integer
+          format: int64
+          description: The terminal identifier used for transactions.
+        ShvaZField:
+          type: string
+          nullable: true
+          description: An optional field for SHVA (Shva Payment Service Provider) Z information.
+        TransactionKey:
+          type: string
+          nullable: true
+          description: A key used for securing transactions.
+        ZFieldAllowedBit:
+          type: boolean
+          description: Indicates whether the Z field is allowed for transactions.
+        MerchantID:
+          type: string
+          nullable: true
+          description: The merchant identifier associated with the actor.
+        SubMerchantID:
+          type: string
+          nullable: true
+          description: The sub-merchant identifier, if applicable.
+        Username:
+          type: string
+          nullable: true
+          description: The username used for authentication with the billing provider.
+        Password:
+          type: string
+          nullable: true
+          description: The password used for authentication with the billing provider.
+        WithZipCodeBit:
+          type: boolean
+          description: Indicates whether the zip code is required for transactions.
+        SupportForcedTransactionsBit:
+          type: boolean
+          description: Indicates whether forced transactions are supported.
+        ForcedTransactionTerminalID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The terminal identifier used for forced transactions.
+        AVSOnlyBit:
+          type: boolean
+          description: Indicates whether only AVS (Address Verification System) transactions are supported.
+        PartialConfirmationBit:
+          type: boolean
+          description: Indicates whether partial confirmations are supported for transactions.
+        DisableDebitCards:
+          type: boolean
+          description: Indicates whether debit cards are disabled for this billing gateway.
+        DebitCardPrefix:
+          type: string
+          nullable: true
+          description: A prefix used for identifying debit cards, if applicable.
+        DisableMagStripeBit:
+          type: boolean
+          description: Indicates whether magnetic stripe cards are disabled.
+        FiscalBit:
+          type: boolean
+          description: Indicates whether fiscal requirements are enforced for this billing gateway.
+        OverrideURL:
+          type: string
+          nullable: true
+          description: A custom URL to override the default billing gateway URL.
+        RemoteStartID:
+          type: integer
+          format: int32
+          description: The identifier used for remote start transactions.
+        EnableMultiBillingProvidersBit:
+          type: boolean
+          description: Indicates whether multiple billing providers are enabled for this actor.
+        RuleSetID:
+          type: integer
+          format: int32
+          description: The identifier for the set of rules governing transactions for this billing gateway.
+        CustomData:
+          type: object
+          nullable: true
+          description: Custom data specific to the billing gateway.
+          additionalProperties:
+            nullable: true
+      additionalProperties: false
+    ActorCreateResponse:
+      type: object
+      description: Response schema returned after successfully creating a new actor, containing the actor's details.
+      properties:
+        ParentActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the parent actor, if applicable.
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the newly created actor.
+        ActorDescription:
+          type: string
+          nullable: true
+          description: A brief description of the actor.
+        ActorCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A code assigned to the actor, often used for identification or categorization.
+        ActorContact:
+          type: string
+          nullable: true
+          description: Contact information for the actor, such as a phone number or email.
+        ActorTypeID:
+          type: integer
+          format: int32
+          description: The identifier representing the type of actor, defining their role or category.
+        ActorStatus:
+          type: integer
+          format: int32
+          description: The status identifier of the actor, indicating their current status.
+        ActorHierarchyLevel:
+          type: integer
+          format: int32
+          description: The level of hierarchy where the actor is positioned within the organizational structure.
+        CurrencyID:
+          type: integer
+          format: int32
+          description: The identifier for the currency used by the actor.
+        LastUpdated:
+          type: string
+          format: date-time
+          description: The date and time when the actor's information was last updated.
+        TimeZoneKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The key representing the time zone in which the actor operates.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country in which the actor is located.
+        OperatorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the operator managing this actor, if applicable.
+        DistributorActorID:
+          type: integer
+          format: int64
+          description: The identifier for the distributor associated with the actor.
+        ActorHierarchy:
+          type: string
+          nullable: true
+          description: The hierarchical structure to which the actor belongs.
+        ActorCreatedBy:
+          type: integer
+          format: int64
+          description: The identifier of the user who created this actor's record.
+        ActorCreationDate:
+          type: string
+          format: date-time
+          description: The date and time when this actor was created.
+        UpdateBy:
+          type: integer
+          format: int64
+          description: The identifier of the user who last updated this actor's record.
+        CultureID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the culture or locale associated with the actor.
+        GeoCountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country based on the actor's geographic information.
+        GeoState:
+          type: string
+          nullable: true
+          description: The state or region based on the actor's geographic information.
+        GeoCity:
+          type: string
+          nullable: true
+          description: The city based on the actor's geographic information.
+        GeoAddress:
+          type: string
+          nullable: true
+          description: The address based on the actor's geographic information.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number based on the actor's geographic information.
+        GeoLongitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude of the actor's location.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude of the actor's location.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The zip code based on the actor's geographic information.
+        GeoZoom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The zoom level for map-based services relevant to the actor's geographic location.
+        ActorLanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the language preference of the actor.
+        OverrideGeoInherritcanceBit:
+          type: boolean
+          description: Indicates whether the actor overrides inherited geographic settings.
+      additionalProperties: false
+    ActorPaymentResponse:
+      type: object
+      description: Schema representing the payment methods associated with an actor, including details on external payment providers and extra charges.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor.
+        PaymentMethodID:
+          type: integer
+          format: int32
+          description: The identifier of the payment method associated with the actor.
+        ExtraChargePercentageBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether an extra charge is calculated as a percentage of the transaction.
+        ExtraChargeValue:
+          type: number
+          format: double
+          description: The value of the extra charge applied to transactions.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the payment method details were last updated.
+        ExternalPaymentProviderURL:
+          type: string
+          nullable: true
+          description: The URL of the external payment provider, if applicable.
+        ExternalPaymentProviderID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the external payment provider.
+        ExternalPaymentProviderModeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The mode identifier of the external payment provider (e.g., test, production).
+        ExternalPaymentProviderUsername:
+          type: string
+          nullable: true
+          description: The username used for authentication with the external payment provider.
+        ExternalPaymentProviderPassword:
+          type: string
+          nullable: true
+          description: The password used for authentication with the external payment provider.
+        ExternalPaymentProviderMerchantID:
+          type: string
+          nullable: true
+          description: The merchant identifier used by the external payment provider.
+        ExternalPaymentProviderKey:
+          type: string
+          nullable: true
+          description: The key used by the external payment provider for transaction processing.
+        ExternalPaymentProviderAppID:
+          type: string
+          nullable: true
+          description: The application identifier used by the external payment provider.
+        ExternalPaymentProviderCertificatePath:
+          type: string
+          nullable: true
+          description: The file path to the certificate used by the external payment provider.
+        ExternalPaymentProviderCertificatePassword:
+          type: string
+          nullable: true
+          description: The password for the external payment provider's certificate.
+        ExternalPaymentProviderApiKey:
+          type: string
+          nullable: true
+          description: The API key used by the external payment provider.
+        ExternalPaymentProviderLocationIdentifier:
+          type: string
+          nullable: true
+          description: The location identifier used by the external payment provider.
+        PaymentMethodWorkingDays:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkDay'
+          nullable: true
+          description: The working days and hours during which the payment method is available.
+        PaymentMethodCustomData:
+          type: string
+          nullable: true
+          description: Custom data associated with the payment method, if any.
+        ExtraChargeBackupValue:
+          type: number
+          format: double
+          description: The backup value of the extra charge applied to transactions.
+        ChargeMachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the machine where charges are processed, if applicable.
+      additionalProperties: false
+    WorkDay:
+      type: object
+      description: Schema representing the working days and hours for a specific payment method.
+      properties:
+        name:
+          type: string
+          nullable: true
+          description: The name of the workday (e.g., Monday, Holiday).
+        week_day:
+          type: integer
+          format: int32
+          nullable: true
+          description: The day of the week represented as an integer (e.g., 1 for Monday, 7 for Sunday).
+        start_time:
+          type: string
+          format: date-span
+          nullable: true
+          description: The start time of the working hours for the payment method.
+        end_time:
+          type: string
+          format: date-span
+          nullable: true
+          description: The end time of the working hours for the payment method.
+        work_hour_lut_id:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup identifier for the work hours associated with the payment method.
+      additionalProperties: false
+    ApiResult:
+      type: object
+      description: Schema representing the result of an API operation, including status and messages.
+      properties:
+        Ok:
+          type: boolean
+          description: Indicates whether the API operation was successful (`true`) or not (`false`).
+        Message:
+          type: string
+          nullable: true
+          description: A user-friendly message describing the result of the operation, if applicable.
+        SystemMessage:
+          type: string
+          nullable: true
+          description: A system-level message providing additional details about the operation's result, often used for debugging or logging.
+        code:
+          type: string
+          nullable: true
+          description: An optional code representing the result of the operation, which can be used for more granular handling of responses.
+      additionalProperties: false
+    EvMeterDashBoard:
+      type: object
+      description: Represents the EV meter dashboard data for an operator, including aggregated data at both the operator and machine levels.
+      properties:
+        OperatorDashboard:
+          $ref: '#/components/schemas/OperatorLevelAggregation'
+          description: Aggregated data at the operator level, summarizing the status of all machines under the operator.
+        MachineDashboard:
+          $ref: '#/components/schemas/MachineLevelAggregation'
+          description: Aggregated data at the machine level, providing detailed metrics for individual machines.
+        TimePeriod:
+          type: integer
+          format: int32
+          nullable: true
+          description: The time period over which the dashboard data is aggregated.
+      additionalProperties: false
+    OperatorLevelAggregation:
+      type: object
+      description: Aggregated data at the operator level, summarizing the number and status of machines under the operator's management.
+      properties:
+        TotalOperatorMachines:
+          type: integer
+          format: int32
+          description: The total number of machines managed by the operator.
+        TotalCommunicatingMachines:
+          type: integer
+          format: int32
+          description: The number of machines that are currently communicating and reporting data.
+        TotalActiveMachines:
+          type: integer
+          format: int32
+          description: The number of machines that are currently active and in operation.
+        TotalSilentMachines:
+          type: integer
+          format: int32
+          description: The number of machines that are not communicating or reporting data.
+      additionalProperties: false
+    MachineLevelAggregation:
+      type: object
+      description: Aggregated data at the machine level, providing detailed metrics on the performance and usage of individual machines.
+      properties:
+        UnitOfMeasure:
+          type: string
+          nullable: true
+          description: The unit of measure used for energy consumption and other metrics (e.g., kWh).
+        UnitOfMeasureSymbol:
+          type: string
+          nullable: true
+          description: The symbol representing the unit of measure (e.g., "kWh" for kilowatt-hours).
+        NumberOfChargingSessions:
+          type: number
+          format: double
+          description: The total number of charging sessions recorded during the specified time period.
+        NumberOfTransactionsForTimeInterval:
+          type: number
+          format: double
+          description: The total number of transactions processed during the specified time period.
+        SalesAmountForTimeInterval:
+          type: number
+          format: double
+          description: The total sales amount generated during the specified time period.
+        TotalChargingSessionsDuration:
+          type: number
+          format: double
+          description: The total duration of all charging sessions during the specified time period.
+        TotalEnergyConsumption:
+          type: integer
+          format: int32
+          description: The total energy consumption recorded during the specified time period.
+      additionalProperties: false
+    DispatchActorEncKeysDbEntity:
+      type: object
+      description: Represents the encryption key information associated with an actor, including the encryption version and key details.
+      properties:
+        actor_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with this encryption key.
+        enc_ver:
+          type: integer
+          format: int32
+          nullable: true
+          description: The version of the encryption key.
+        enc_key:
+          type: string
+          nullable: true
+          description: The encryption key used for securing data.
+        created_dt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the encryption key was created.
+      additionalProperties: false
+    ActorHirarchyDto:
+      type: object
+      description: Represents the hierarchy of an actor, including details about the actor and its children in the hierarchy.
+      properties:
+        ParentActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the parent actor, if applicable. This indicates the actor's position within a larger hierarchy.
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor.
+        ActorDescription:
+          type: string
+          nullable: true
+          description: A brief description of the actor.
+        ActorTypeID:
+          type: integer
+          format: int32
+          description: The identifier representing the type of actor, defining their role or classification.
+        ActorStatus:
+          type: integer
+          format: int32
+          description: The status identifier of the actor, indicating their current status.
+        ActorHierarchyLevel:
+          type: integer
+          format: int32
+          description: The level of hierarchy at which the actor is positioned within the organizational structure.
+        ActorChildren:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActorHirarchyDto'
+          nullable: true
+          description: A list of child actors that belong to this actor, representing the next level in the hierarchy.
+      additionalProperties: false
+    MachineGroupResponseDTO:
+      type: object
+      description: Represents the details of a machine group associated with an actor, including identification, status, and audit information.
+      properties:
+        MachineGroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the machine group.
+        ActorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with this machine group.
+        MachineGroupName:
+          type: string
+          nullable: true
+          description: The name of the machine group.
+        MachineGroupCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A code assigned to the machine group for identification or categorization.
+        MachineGroupStatus:
+          type: integer
+          format: int32
+          description: The status identifier of the machine group, indicating its current state.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who created this machine group.
+        CreatedOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine group was created.
+        UpdatedOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine group was last updated.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who last updated this machine group.
+      additionalProperties: false
+    MachineGroupRequestDTO:
+      type: object
+      description: Represents the data required to create or update a machine group associated with an actor.
+      properties:
+        MachineGroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the machine group. This is typically provided when updating an existing machine group.
+        MachineGroupName:
+          type: string
+          nullable: true
+          description: The name of the machine group.
+        MachineGroupCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A code assigned to the machine group for identification or categorization.
+        MachineGroupStatus:
+          type: integer
+          format: int32
+          description: The status identifier of the machine group, indicating its current state.
+      additionalProperties: false
+    ActorGroupRequestDTO:
+      type: object
+      description: Represents the data required to add or delete an actor group associated with an actor.
+      properties:
+        RoleGroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the role group. This is typically provided when adding or deleting a role group associated with an actor.
+      additionalProperties: false
+    ActorGroupResponseDTO:
+      type: object
+      description: Represents the response details of an actor group associated with an actor.
+      properties:
+        RoleGroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the role group.
+        RoleGroupName:
+          type: string
+          nullable: true
+          description: The name of the role group.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the role group was last updated.
+      additionalProperties: false
+
+
+
+
+
+
+
+
