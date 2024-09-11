@@ -884,7 +884,7 @@ paths:
     get:
       tags:
         - Cards
-      summary: Get prepaid card
+      summary: Get Prepaid Card
       description: Retrieves details of a prepaid card associated with a specific card ID.
       operationId: get-prepaid-card
       parameters:
@@ -905,7 +905,7 @@ paths:
     put:
       tags:
         - Cards
-      summary: Update prepaid card
+      summary: Update Prepaid Card
       description: Updates the details of a prepaid card associated with a specific card ID.
       operationId: update-prepaid-card
       parameters:
@@ -930,12 +930,341 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrepaidCard'
-
-
-
-
-
+  /v1/cards/validate-machine/{machineId}:
+    get:
+      tags:
+        - Cards
+      summary: Validates Card for Machine use
+      description: Validates whether a prepaid or discount card can be used with a specific machine.
+      operationId: validate-card-for-machine
+      parameters:
+        - name: machineId
+          in: path
+          required: true
+          description: The unique identifier of the machine to validate the card against.
+          schema:
+            type: integer
+            format: int64
+        - name: cardId
+          in: query
+          description: The unique identifier of the card.
+          schema:
+            type: integer
+            format: int64
+        - name: cardUniqueIdentifier
+          in: query
+          description: The unique identifier of the card.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Validation result retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardsMachineResponseModel'
+  /v1/cards/{cardId}/cardGroups:
+    get:
+      tags:
+        - Cards
+      summary: Get Card Group
+      description: Retrieves the group details associated with a specific card, identified by its card ID.
+      operationId: get-card-group
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          description: The unique identifier of the card for which the group details are being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Card group details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardGroup'
+  /v1/cards/query:
+    post:
+      tags:
+        - Cards
+      summary: Get Credit Card's Latest Transactions
+      description: Retrieves the latest transactions associated with a specific credit card number, identified by the SHA1 hash of the card number in base64 format.
+      operationId: get-latest-transactions
+      parameters:
+        - name: minutes
+          in: query
+          description: The maximum age of transactions to retrieve, in minutes. Default is 1440 minutes (24 hours).
+          schema:
+            type: integer
+            format: int32
+            default: 1440
+      requestBody:
+        required: true
+        description: The SHA1 hash of the credit card number in base64 format.
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Transactions retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardLastTransaction'
+  /v1/cards/{CardUniqueIdentifier}/credit/add:
+    post:
+      tags:
+        - Cards
+      summary: Add Credit to a Card
+      description: Adds a specified amount to the credit of a card, identified by its unique identifier.
+      operationId: add-card-credit
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card to which the credit will be added.
+          schema:
+            type: string
+        - name: CardCredit
+          in: query
+          description: The amount of credit to be added to the card.
+          schema:
+            type: number
+            format: double
+        - name: CreditChangeRemarks
+          in: query
+          description: Remarks or notes regarding the credit change.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Credit added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardValue'
+  /v1/cards/{CardUniqueIdentifier}/revalue/add:
+    post:
+      tags:
+        - Cards
+      summary: Add to the Card's Revalue
+      description: Adds a specified amount to the revalue of a card, identified by its unique identifier.
+      operationId: add-card-revalue
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card to which the revalue will be added.
+          schema:
+            type: string
+        - name: CardCredit
+          in: query
+          description: The amount of credit to be added to the card's revalue.
+          schema:
+            type: number
+            format: double
+        - name: CreditChangeRemarks
+          in: query
+          description: Remarks or notes regarding the credit change.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Revalue added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardValue'
+  /v1/cards/{FromCardUniqueIdentifier}/revalue/send/{ToCardUniqueIdentifier}:
+    post:
+      tags:
+        - Cards
+      summary: Transfer Revalue Between Cards
+      description: Transfers a specified amount of revalue from one card to another, identified by their unique identifiers.
+      operationId: transfer-card-revalue
+      parameters:
+        - name: FromCardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card from which the revalue will be deducted.
+          schema:
+            type: string
+        - name: ToCardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card to which the revalue will be added.
+          schema:
+            type: string
+        - name: CardCredit
+          in: query
+          description: The amount of revalue to be transferred.
+          schema:
+            type: number
+            format: double
+        - name: CreditChangeRemarks
+          in: query
+          description: Remarks or notes regarding the revalue transfer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Revalue transferred successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardValue'
+  /v1/cards/{CardUniqueIdentifier}/status/{CardStatus}:
+    post:
+      tags:
+        - Cards
+      summary: Update card status
+      description: Updates the status of a card, identified by its unique identifier.
+      operationId: update-card-status
+      parameters:
+        - name: CardUniqueIdentifier
+          in: path
+          required: true
+          description: The unique identifier of the card whose status is to be updated.
+          schema:
+            type: string
+        - name: CardStatus
+          in: path
+          required: true
+          description: The new status to be assigned to the card.
+          schema:
+            $ref: '#/components/schemas/CardStatus'
+      responses:
+        '200':
+          description: Card status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResult'
+  /v1/cards/{CardDisplayNumber}:
+    put:
+      tags:
+        - Cards
+      summary: Update Card Details by Display Number
+      description: Updates the details of a card identified by the card's display number.
+      operationId: update-card-by-display-number
+      parameters:
+        - name: CardDisplayNumber
+          in: path
+          required: true
+          description: The display number of the card to be updated.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: The card details to be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cards'
+      responses:
+        '200':
+          description: Card details updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cards'
+  /v1/cards/{CardId}/cardGroups:
+    put:
+      tags:
+        - Cards
+      summary: Update Card Groups
+      description: Updates the group details associated with a card, identified by the card's unique identifier.
+      operationId: update-card-groups
+      parameters:
+        - name: CardId
+          in: path
+          required: true
+          description: The unique identifier of the card whose groups are to be updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The card group details to be updated.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CardGroup'
+      responses:
+        '200':
+          description: Card groups updated successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardGroup'
+  /v2/cards:
+    post:
+      tags:
+        - Cards
+      summary: Create new card
+      description: Creates a new card with the specified details.
+      operationId: create-new-card
+      requestBody:
+        required: true
+        description: The details of the card to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardCreateDto'
+      responses:
+        '200':
+          description: Card created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardGetDto'
+  /v2/cards/{CardID}:
+    put:
+      tags:
+        - Cards
+      summary: Update card by ID
+      description: Updates the details of a card identified by its unique ID.
+      operationId: update-card-by-id
+      parameters:
+        - name: CardID
+          in: path
+          description: The unique identifier of the card to be updated.
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The updated details of the card.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardUpdateDto'
+      responses:
+        '200':
+          description: Card details updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardGetDto'
 components:
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      description: Enter your API key. It's required to authenticate API requests.
+      name: Authorization
+      in: header
   schemas:
     Actors:
       type: object
@@ -3289,6 +3618,326 @@ components:
           nullable: true
           description: The external application user ID associated with the card.
       additionalProperties: false
+    CardsMachineResponseModel:
+      type: object
+      description: Represents the response model for validating a prepaid or discount card for use with a specific machine, including machine and card details.
+      properties:
+        Machine:
+          $ref: '#/components/schemas/MachineForCardResponseModel'
+          description: Details about the machine involved in the validation.
+        PrepaidCard:
+          $ref: '#/components/schemas/PrepaidCardDbEntity'
+          description: Details of the prepaid card being validated.
+        Card:
+          $ref: '#/components/schemas/CardsDbEntity'
+          description: Details of the card being validated.
+    MachineForCardResponseModel:
+      type: object
+      description: Represents the machine details related to the card validation process.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the machine.
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine.
+        PurchaseAllowed:
+          type: boolean
+          description: Indicates whether purchases are allowed on the machine for the validated card.
+      additionalProperties: false
+    CardGroup:
+      type: object
+      description: Represents the group details associated with a card, including daily limits and update information.
+      properties:
+        CardGroupEnabledBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the card group is enabled.
+        GroupName:
+          type: string
+          nullable: true
+          description: The name of the card group.
+        CardGroupId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the card group.
+        GroupDailyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily limit for the card group.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the group.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the group was last updated.
+      additionalProperties: false
+    CardLastTransaction:
+      type: object
+      description: Represents the details of the last transaction made using a card.
+      properties:
+        AmountValue:
+          type: number
+          format: float
+          description: The value of the transaction amount.
+        MachineName:
+          type: string
+          nullable: true
+          description: The name of the machine where the transaction was authorized.
+        AuthorizationDate:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was authorized.
+      additionalProperties: false
+    CardStatus:
+      type: integer
+      format: int32
+      description: Represents the status of a card.
+      enum:
+        - 1 # Active
+        - 2 # Inactive
+      example: 1
+    CardCreateDto:
+      type: object
+      description: Represents the data required to create a new card, including details, holder information, credit attributes, and limits.
+      properties:
+        CardDetails:
+          $ref: '#/components/schemas/CardDetailsCreate'
+          description: Detailed information about the card being created.
+        CardHolderDetails:
+          $ref: '#/components/schemas/CardHolderDetailsUpdate'
+          description: Information about the cardholder.
+        CardCreditAttributes:
+          $ref: '#/components/schemas/CardCreditAttributes'
+          description: Attributes related to the card's credit, such as currency and limits.
+        CardCreditLimits:
+          $ref: '#/components/schemas/CardCreditLimits'
+          description: Credit limits associated with the card.
+        CardDateRules:
+          $ref: '#/components/schemas/CardDateRules'
+          description: Date-related rules for the card, including activation and expiration dates.
+        CardRevalueRewardRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRevalueRewardRuleUpdate'
+          nullable: true
+          description: Rules for revalue rewards associated with the card.
+        GroupLocationLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardGroupLocationLimitUpdate'
+          nullable: true
+          description: Location-based limits for the card groups.
+      additionalProperties: false
+    CardDetailsCreate:
+      type: object
+      description: Represents the basic details required to create a card.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the card.
+        CardUniqueIdentifier:
+          type: string
+          nullable: true
+          description: The unique identifier assigned to the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        CardTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the card.
+        PhysicalTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        Notes:
+          type: string
+          nullable: true
+          description: Any additional notes related to the card.
+        Status:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the card.
+        ExternalApplicationUserID:
+          type: string
+          nullable: true
+          description: The external application user ID associated with the card.
+      additionalProperties: false
+    CardHolderDetailsUpdate:
+      type: object
+      description: Represents the details of the cardholder to be updated or created.
+      properties:
+        CardHolderName:
+          type: string
+          nullable: true
+          description: The name of the cardholder.
+        UserIdentity:
+          type: string
+          nullable: true
+          description: The unique identity or user ID of the cardholder.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The country identifier associated with the cardholder.
+        MobileNumber:
+          type: string
+          nullable: true
+          description: The mobile number of the cardholder.
+        Email:
+          type: string
+          nullable: true
+          description: The email address of the cardholder.
+        MemberTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The membership type identifier associated with the cardholder.
+      additionalProperties: false
+    CardRevalueRewardRuleUpdate:
+      type: object
+      description: Represents the rules for revalue rewards associated with a card.
+      properties:
+        RuleID:
+          type: integer
+          format: int32
+          description: The unique identifier of the reward rule.
+        RewardActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the reward.
+        Status:
+          type: boolean
+          description: The status of the reward rule (e.g., active or inactive).
+        RevalueAmount:
+          type: number
+          format: double
+          description: The amount required to trigger the reward.
+        RewardValueTypeBit:
+          type: boolean
+          description: Indicates whether the reward is a fixed amount or percentage.
+        RewardValue:
+          type: number
+          format: double
+          description: The value of the reward.
+      additionalProperties: false
+    CardGroupLocationLimitUpdate:
+      type: object
+      description: Represents the location-based limits for a card group, including daily limits.
+      properties:
+        CardGroupEnabledBit:
+          type: boolean
+          description: Indicates whether the card group is enabled.
+        GroupName:
+          type: string
+          nullable: true
+          description: The name of the card group.
+        CardGroupId:
+          type: integer
+          format: int64
+          description: The unique identifier of the card group.
+        GroupDailyLimit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The daily limit for the card group.
+      additionalProperties: false
+    CardUpdateDto:
+      type: object
+      description: Represents the data required to update an existing card, including details, holder information, credit attributes, and limits.
+      properties:
+        CardDetails:
+          $ref: '#/components/schemas/CardDetailsUpdate'
+          description: Updated details about the card.
+        CardHolderDetails:
+          $ref: '#/components/schemas/CardHolderDetailsUpdate'
+          description: Updated information about the cardholder.
+        CardCreditAttributes:
+          $ref: '#/components/schemas/CardCreditAttributes'
+          description: Updated credit attributes associated with the card.
+        CardCreditLimits:
+          $ref: '#/components/schemas/CardCreditLimits'
+          description: Updated credit limits associated with the card.
+        CardDateRules:
+          $ref: '#/components/schemas/CardDateRules'
+          description: Updated date-related rules for the card.
+        CardRevalueRewardRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardRevalueRewardRuleUpdate'
+          nullable: true
+          description: Updated rules for revalue rewards associated with the card.
+        GroupLocationLimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardGroupLocationLimitUpdate'
+          nullable: true
+          description: Updated location-based limits for the card groups.
+      additionalProperties: false
+    CardDetailsUpdate:
+      type: object
+      description: Represents the details required to update an existing card.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the card.
+        CardDisplayNumber:
+          type: string
+          nullable: true
+          description: The display number of the card.
+        PhysicalTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The physical type identifier of the card.
+        Notes:
+          type: string
+          nullable: true
+          description: Any additional notes related to the card.
+        Status:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the card.
+        ExternalApplicationUserID:
+          type: string
+          nullable: true
+          description: The external application user ID associated with the card.
+      additionalProperties: false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
