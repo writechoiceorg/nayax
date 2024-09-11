@@ -10052,6 +10052,67 @@ components:
       - 2
       type: integer
       format: int32
+    KeyDataLynxModelResponse:
+      type: object
+      properties:
+        KeyID:
+          type: integer
+          format: int64
+          nullable: true
+        ActorId:
+          type: integer
+          format: int64
+          nullable: true
+        KeyTypeId:
+          type: integer
+          format: int32
+          nullable: true
+        KeyValue:
+          type: string
+          format: byte
+          nullable: true
+        StatusId:
+          type: integer
+          format: int32
+          nullable: true
+        KeyVersionNumber:
+          type: integer
+          format: int32
+          nullable: true
+        EncVersionNumber:
+          type: integer
+          format: int32
+          nullable: true
+        CreatedDt:
+          type: string
+          format: date-time
+          nullable: true
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+      additionalProperties: false
+    KeyDataRequestLynxModel:
+      type: object
+      properties:
+        ActorId:
+          type: integer
+          format: int64
+        UserId:
+          type: integer
+          format: int64
+        KeyValue:
+          type: string
+          nullable: true
+      additionalProperties: false
     Lookup:
       type: object
       properties:
