@@ -1258,6 +1258,431 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CardGetDto'
+  /v1/certificates/{boardSerial}:
+    get:
+      tags:
+        - Certificates
+      summary: Get CA Certificate for Retail Terminal
+      description: Retrieves the CA certificate associated with a retail terminal identified by its board serial number.
+      operationId: get-ca-certificate-for-terminal
+      parameters:
+        - name: boardSerial
+          in: path
+          required: true
+          description: The serial number of the board for which the CA certificate is to be retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: CA certificate retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateResponse'
+    post:
+      tags:
+        - Certificates
+      summary: Create CA Certificate for Retail Terminal
+      description: Generates and assigns a CA certificate for a retail terminal identified by its board serial number.
+      operationId: create-ca-certificate-for-terminal
+      parameters:
+        - name: boardSerial
+          in: path
+          required: true
+          description: The serial number of the board for which the CA certificate is to be created.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: CA certificate created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateResponse'
+  /v1/certificates/{boardSerial}/renew:
+    post:
+      tags:
+        - Certificates
+      summary: Renew CA Certificate for Retail Terminals
+      description: Renews the CA certificate for a retail terminal identified by its board serial number.
+      operationId: renew-ca-certificate-for-terminal
+      parameters:
+        - name: boardSerial
+          in: path
+          required: true
+          description: The serial number of the board for which the CA certificate is to be renewed.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: CA certificate renewed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateResponse'
+  /v1/certificates/{boardSerial}/revoke:
+    post:
+      tags:
+        - Certificates
+      summary: Revoke CA Certificate for Retail Terminals
+      description: Revokes the CA certificate for a retail terminal identified by its board serial number.
+      operationId: revoke-ca-certificate-for-terminal
+      parameters:
+        - name: boardSerial
+          in: path
+          required: true
+          description: The serial number of the board for which the CA certificate is to be revoked.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: CA certificate revoked successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResult'
+  /v1/certificates/installationStatus:
+    post:
+      tags:
+        - Certificates
+      summary: Set device installation status
+      description: Updates the installation status of a device after a CA certificate has been installed.
+      operationId: set-device-installation-status
+      requestBody:
+        required: true
+        description: The installation status details to be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CertificateInstallationRequest'
+      responses:
+        '200':
+          description: Device installation status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResult'
+  /v1/companyInfo:
+    get:
+      tags:
+        - CompanyInfo
+      summary: Get Actor Address Invoice Information
+      description: Retrieves the invoice information for an actor based on specified query parameters, such as `ActorID`, `InvoiceCompanyName`, and `CompanyTaxID`.
+      operationId: get-actor-invoice-info-by-params
+      parameters:
+        - name: ActorID
+          in: query
+          description: The unique identifier of the actor for which the invoice information is being requested.
+          schema:
+            type: integer
+            format: int64
+        - name: InvoiceCompanyName
+          in: query
+          description: The company name associated with the invoice.
+          schema:
+            type: string
+        - name: CompanyTaxID
+          in: query
+          description: The tax ID of the company associated with the invoice.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice information retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActorMerchantInfo'
+  /v1/companyInfo/{ActorID}:
+    post:
+      tags:
+      - CompanyInfo
+      summary: Add Actor Address Information Invoice
+      description: This endpoint allows you to add address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is linked to the actor's invoice.
+      operationId: add-actor-address-info-by-actorid
+      parameters:
+      - name: ActorID
+        in: path
+        required: true
+        description: The unique identifier of the actor whose address information is being added to the invoice.
+        schema:
+          type: string
+      requestBody:
+        description: The address information to be added for the actor's invoice.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ActorMerchantInfo"
+      responses:
+        '200':
+          description: The address information was successfully added to the actor's invoice.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ActorMerchantInfo"
+    put:
+      tags:
+      - CompanyInfo
+      summary: Update Actor Address Information Invoice
+      description: This endpoint allows you to update the existing address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is updated.
+      operationId: update-actor-address-info-by-actorid
+      parameters:
+      - name: ActorID
+        in: path
+        required: true
+        description: The unique identifier of the actor whose address information is being updated for the invoice.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated address information for the actor's invoice.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ActorMerchantInfo"
+      responses:
+        '200':
+          description: The address information was successfully updated for the actor's invoice.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ActorMerchantInfo"
+  /v1/devices/{DeviceID}:
+    get:
+      tags:
+      - Devices
+      summary: Get Device by DeviceID
+      description: Retrieve detailed information about a specific device using its `DeviceID`. The unique identifier of the device is provided in the path to ensure accurate retrieval of the device's data.
+      operationId: get-device-by-deviceid
+      parameters:
+      - name: DeviceID
+        in: path
+        required: true
+        description: The unique identifier of the device to be retrieved.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Device details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DeviceExtra"
+    put:
+      tags:
+      - Devices
+      summary: Update Device
+      description: Update the details of an existing device using its `DeviceID`. The unique identifier of the device is provided in the path to ensure that the correct device is updated.
+      operationId: update-device-by-deviceid
+      parameters:
+      - name: DeviceID
+        in: path
+        required: true
+        description: The unique identifier of the device to be updated.
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The updated details of the device.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DevicesUpdateDto"
+      responses:
+        '200':
+          description: Device details updated successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DeviceExtra"
+  /v1/devices:
+    get:
+      tags:
+      - Devices
+      summary: Get All Devices
+      description: Retrieve a list of devices with optional filters such as actor ID, connection status, serial number, and other device attributes.
+      operationId: get-devices
+      parameters:
+      - name: ActorId
+        in: query
+        description: The unique identifier of the actor associated with the devices.
+        schema:
+          type: integer
+          format: int64
+      - name: isConnected
+        in: query
+        description: Filter devices based on their connection status.
+        schema:
+          type: boolean
+      - name: pageNumber
+        in: query
+        description: The page number for paginated results. Default is 1.
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: pageSize
+        in: query
+        description: The number of results per page. Default is 1000.
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+      - name: nayaxDeviceSerial
+        in: query
+        description: The serial number of the Nayax device.
+        schema:
+          type: string
+      - name: orderId
+        in: query
+        description: Filter devices based on the associated order ID.
+        schema:
+          type: integer
+          format: int32
+      - name: statusId
+        in: query
+        description: Filter devices based on their status ID.
+        schema:
+          type: integer
+          format: int32
+      - name: createdDt
+        in: query
+        description: Filter devices based on their creation date.
+        schema:
+          type: string
+          format: date-time
+      - name: updatedDt
+        in: query
+        description: Filter devices based on the last updated date.
+        schema:
+          type: string
+          format: date-time
+      - name: boardSerial
+        in: query
+        description: The serial number of the device's mainboard.
+        schema:
+          type: string
+      - name: imei
+        in: query
+        description: The International Mobile Equipment Identity number of the device.
+        schema:
+          type: string
+      - name: chipId
+        in: query
+        description: The unique identifier for the chip in the device.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of devices matching the specified filters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DeviceExtra"
+  /v1/devices/history/{serialNumber}:
+    post:
+      tags:
+      - Devices
+      summary: Add RMA to device history
+      description: Add a Return Merchandise Authorization (RMA) entry to the history of a device identified by its serial number.
+      operationId: add-rma-to-device-history
+      parameters:
+      - name: serialNumber
+        in: path
+        required: true
+        description: The serial number of the device to which the RMA entry will be added.
+        schema:
+          type: string
+      requestBody:
+        description: The details of the RMA entry to be added to the device's history.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DevicesInsertHistoryDto"
+      responses:
+        '200':
+          description: The RMA entry was successfully added to the device's history.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DeviceExtra"
+  /v1/devices/move/{actorId}:
+    put:
+      tags:
+      - Devices
+      summary: Move Devices to Actor ID
+      description: Assigns or moves a list of devices to a specified actor identified by `actorId`. The request body should include an array of device identifiers (e.g., serial numbers).
+      operationId: move-devices-to-actor-id
+      parameters:
+      - name: actorId
+        in: path
+        required: true
+        description: The unique identifier of the actor to which the devices will be moved.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: An array of device identifiers to be moved to the specified actor.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: The devices were successfully moved to the specified actor.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DevicesMoveResponse"
+  /v1/DeviceVersions/MainVersion:
+    get:
+      tags:
+      - DeviceVersions
+      summary: Get Firmware Versions
+      description: Retrieves a list of firmware versions, optionally filtered by a specific version identifier.
+      operationId: get-firmware-versions
+      parameters:
+      - name: versionId
+        in: query
+        description: The unique identifier of the firmware version to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of firmware versions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+    post:
+      tags:
+      - DeviceVersions
+      summary: Add Firmware Version
+      description: Adds a new firmware version to the system. The request body should include the details of the firmware version to be added.
+      operationId: add-firmware-version
+      requestBody:
+        description: The details of the firmware version to be added.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FirmwareVersionRequestDTO"
+      responses:
+        '200':
+          description: The firmware version was successfully added.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
 
 
 
@@ -3923,6 +4348,750 @@ components:
           type: string
           nullable: true
           description: The external application user ID associated with the card.
+      additionalProperties: false
+    CertificateResponse:
+      type: object
+      description: Represents the response containing details about a CA certificate for a retail terminal.
+      properties:
+        DeviceSerial:
+          type: string
+          nullable: true
+          description: The serial number of the device associated with the certificate.
+        CertificateStatus:
+          type: boolean
+          description: Indicates whether the certificate is active (true) or inactive (false).
+        PfxBase64:
+          type: string
+          nullable: true
+          description: The CA certificate in Base64-encoded PFX format.
+      additionalProperties: false
+    CertificateInstallationRequest:
+      type: object
+      description: Represents the request to update the installation status of a device's CA certificate.
+      properties:
+        DeviceSerial:
+          type: string
+          nullable: true
+          description: The serial number of the device for which the installation status is being set.
+        CertificateInstallationStatus:
+          type: boolean
+          description: Indicates whether the CA certificate installation was successful (true) or not (false).
+      additionalProperties: false
+    ActorMerchantInfo:
+      type: object
+      description: Contains detailed information about an actor's merchant and invoice details, including contact information, address, and payment settings.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor.
+        InvoiceCompanyName:
+          type: string
+          nullable: true
+          description: The name of the company associated with the invoice.
+        CompanyTaxID:
+          type: string
+          nullable: true
+          description: The tax identification number of the company.
+        IsVat:
+          type: boolean
+          nullable: true
+          description: Indicates if VAT is applicable.
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The currency identifier for transactions.
+        CompanyEmail:
+          type: string
+          nullable: true
+          description: The email address of the company.
+        CompanyContactName:
+          type: string
+          nullable: true
+          description: The name of the company contact person.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The country identifier of the company.
+        StateID:
+          type: string
+          nullable: true
+          description: The state or region identifier of the company.
+        CityID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The city identifier of the company.
+        CityName:
+          type: string
+          nullable: true
+          description: The name of the city where the company is located.
+        CompanyAddress:
+          type: string
+          nullable: true
+          description: The full address of the company.
+        ZipCode:
+          type: string
+          nullable: true
+          description: The postal or zip code of the company's address.
+        ReimbursementFrequency:
+          type: integer
+          format: int32
+          nullable: true
+          description: The frequency at which reimbursements are made.
+        ReimbursementDay:
+          type: integer
+          format: int32
+          nullable: true
+          description: The day of the month for reimbursements.
+        InvoiceMethodOfPayment:
+          type: integer
+          format: int32
+          nullable: true
+          description: The payment method used for invoices.
+        ReimbursementEntity:
+          type: integer
+          format: int32
+          nullable: true
+          description: The entity responsible for reimbursements.
+        ReimburesementEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if reimbursements are enabled.
+        InvoiceEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if invoicing is enabled.
+        ReportFormat:
+          type: string
+          nullable: true
+          description: The format of reports generated for the company.
+        InvoiceLanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The language identifier used for invoices.
+        InvoiceReportType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The report type identifier for invoices.
+        ContactMobilePhoneNumber:
+          type: string
+          nullable: true
+          description: The mobile phone number of the company contact person.
+        ContactPhoneNumber:
+          type: string
+          nullable: true
+          description: The phone number of the company contact person.
+        ShippingCountryID:
+          type: string
+          nullable: true
+          description: The country identifier for the shipping address.
+        ShippingCityID:
+          type: string
+          nullable: true
+          description: The city identifier for the shipping address.
+        ShippingCityName:
+          type: string
+          nullable: true
+          description: The name of the city for the shipping address.
+        ShippingZipCode:
+          type: string
+          nullable: true
+          description: The postal or zip code for the shipping address.
+        ShippingStateID:
+          type: string
+          nullable: true
+          description: The state or region identifier for the shipping address.
+        CountryDialingCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The dialing code for the company's country.
+        MobileCountryDialingCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The dialing code for the company's mobile country.
+        ShippingAddress:
+          type: string
+          nullable: true
+          description: The full shipping address of the company.
+        UseBillingAddressForShippingBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the billing address should be used for shipping.
+        RebateEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if rebates are enabled.
+        CompanyOtherCityName:
+          type: string
+          nullable: true
+          description: The name of the city if different from the main city listed.
+        SAPCustomerID:
+          type: string
+          nullable: true
+          description: The SAP customer ID associated with the company.
+        RemoveServiceVATBit:
+          type: boolean
+          nullable: true
+          description: Indicates if service VAT is removed.
+        KYCPassBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the company has passed KYC (Know Your Customer) checks.
+        InvoiceSAPCustomerID:
+          type: string
+          nullable: true
+          description: The SAP customer ID used for invoicing.
+        ReimburesementSAPCustomerID:
+          type: string
+          nullable: true
+          description: The SAP customer ID used for reimbursements.
+        StopPaymentBit:
+          type: boolean
+          nullable: true
+          description: Indicates if payments are stopped for the company.
+        RemovedStopPaymentDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the stop payment was removed.
+        CustomerStatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the customer.
+        AmexSellerID:
+          type: string
+          nullable: true
+          description: The American Express seller ID associated with the company.
+        AmexSeNumber:
+          type: string
+          nullable: true
+          description: The American Express SE number associated with the company.
+        MCCCode:
+          type: string
+          nullable: true
+          description: The Merchant Category Code (MCC) for the company.
+        PayoutEntityID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The entity identifier responsible for payouts.
+        ServiceReportFormat:
+          type: string
+          nullable: true
+          description: The format of service reports generated for the company.
+        ServicePaymentMethod:
+          type: integer
+          format: int32
+          nullable: true
+          description: The payment method used for services.
+        ReimbursementReportFormat:
+          type: string
+          nullable: true
+          description: The format of reimbursement reports generated for the company.
+        IsMerchantAccount:
+          type: boolean
+          nullable: true
+          description: Indicates if the account is a merchant account.
+        ErpIdentifier:
+          type: string
+          nullable: true
+          description: The ERP identifier associated with the company.
+      additionalProperties: false
+    DeviceExtra:
+      type: object
+      description: Contains detailed information about a device, including hardware, software versions, and operational status.
+      properties:
+        VposChipId:
+          type: string
+          nullable: true
+          description: The unique identifier for the VPOS chip in the device.
+        IsDeviceExists:
+          type: boolean
+          description: Indicates whether the device exists in the system.
+        FWVersionNumber:
+          type: string
+          nullable: true
+          description: The firmware version number of the device.
+        VposVersionNumber:
+          type: string
+          nullable: true
+          description: The VPOSS version number installed on the device.
+        DeviceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the device.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the actor associated with the device.
+        DeviceTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup identifier for the device type.
+        DeviceSerial:
+          type: string
+          nullable: true
+          description: The serial number of the device.
+        IMEI:
+          type: string
+          nullable: true
+          description: The International Mobile Equipment Identity number of the device.
+        DeviceDescription:
+          type: string
+          nullable: true
+          description: A brief description of the device.
+        SimCardID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the SIM card associated with the device.
+        FWVersionID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the firmware version installed on the device.
+        RequestedFwID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the requested firmware update.
+        PollInterval:
+          type: integer
+          format: int64
+          nullable: true
+          description: The polling interval for the device in seconds.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current status identifier of the device.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the device was last updated.
+        IsCollectMultipleParameters:
+          type: boolean
+          nullable: true
+          description: Indicates if the device is set to collect multiple parameters.
+        IsLogged:
+          type: boolean
+          nullable: true
+          description: Indicates if the device activity is logged.
+        FRequestedNewVersionDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when a new firmware version was requested for the device.
+        FTookNewVersionDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the new firmware version was applied to the device.
+        HardwareVersion:
+          type: string
+          nullable: true
+          description: The hardware version of the device.
+        IsRental:
+          type: boolean
+          nullable: true
+          description: Indicates if the device is rented.
+        RentalEndMonth:
+          type: integer
+          format: int32
+          nullable: true
+          description: The month when the device rental period ends.
+        RentalEndYear:
+          type: integer
+          format: int32
+          nullable: true
+          description: The year when the device rental period ends.
+        IsToBeReturned:
+          type: boolean
+          nullable: true
+          description: Indicates if the device is scheduled to be returned.
+        FeeCommunicationThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The communication fee threshold for the device.
+        BillingPlanID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the billing plan associated with the device.
+        BillingPlanActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the billing plan was activated for the device.
+        DeviceCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the device was created in the system.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the device entry.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the device entry.
+        DistributorBillingPlanID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the distributor billing plan associated with the device.
+        ChipID:
+          type: string
+          nullable: true
+          description: The unique identifier for the chip in the device.
+        OrderID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the order associated with the device.
+        ExternalFlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of the external flash memory in the device.
+        BoardSerial:
+          type: string
+          nullable: true
+          description: The serial number of the device's mainboard.
+        FlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of the internal flash memory in the device.
+        DeviceFamily:
+          type: string
+          nullable: true
+          description: The family classification of the device.
+        ModemModel:
+          type: string
+          nullable: true
+          description: The model of the modem installed in the device.
+        TrialEndDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the device's trial period ends.
+        VerticalTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the vertical type associated with the device.
+        VerticalProductTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the vertical product type associated with the device.
+        VerticalTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup identifier for the vertical type.
+        VerticalProductTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup identifier for the vertical product type.
+        Refs:
+          type: object
+          nullable: true
+          description: A collection of additional references associated with the device.
+          additionalProperties:
+            type: string
+            nullable: true
+      additionalProperties: false
+    DevicesUpdateDto:
+      type: object
+      description: Contains data required to update a device's information, including actor and status details.
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the actor associated with the device.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the device.
+      additionalProperties: false
+    DevicesInsertHistoryDto:
+      type: object
+      description: Represents a data transfer object used to insert a history record for a device, detailing changes made to the device.
+      properties:
+        ChangedFrom:
+          type: string
+          nullable: true
+          description: The previous state or value before the change was made.
+        ChangedTo:
+          type: string
+          nullable: true
+          description: The new state or value after the change was made.
+        ChangedByUser:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who made the change.
+        UpdatedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the change was made and recorded.
+      additionalProperties: false
+    DevicesMoveResponse:
+      type: object
+      description: Represents the response returned after moving devices to a specified actor, including details about the device and its new association.
+      properties:
+        HW_serial:
+          type: string
+          nullable: true
+          description: The hardware serial number of the device that was moved.
+        actor_id:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor to which the device is now associated.
+        is_connected:
+          type: boolean
+          description: Indicates whether the device is currently connected after being moved.
+      additionalProperties: false
+    FirmwareVersionResponseDTO:
+      type: object
+      description: Represents the details of a firmware version, including metadata, compatibility information, and file details.
+      properties:
+        FirmwareVersionID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the firmware version.
+        FirmwareVersionNumber:
+          type: string
+          nullable: true
+          description: The version number of the firmware.
+        FirmwareDescription:
+          type: string
+          nullable: true
+          description: A brief description of the firmware version and its features or changes.
+        FirmwareVersionIssueDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the firmware version was issued or released.
+        FirmwareVersionExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The expiration date of the firmware version, if applicable.
+        FirmwareVersionFile:
+          type: string
+          nullable: true
+          description: The file path or name of the firmware version file.
+        FirmwareVersionSizeLutID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The lookup identifier representing the size category of the firmware version.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the firmware version was last updated.
+        SupportDataVolumeBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the firmware version supports data volume management.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the firmware version, indicating its current state (e.g., active, deprecated).
+        SupportedPlatforms:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of platform identifiers that are compatible with the firmware version.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the firmware version record.
+        CreatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the firmware version record was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the firmware version record.
+        SupportFTPBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the firmware version supports FTP for data transfer.
+        MinFlashSizeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum flash size required for this firmware version, represented by a lookup identifier.
+        ExternalFlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of external flash memory required for the firmware version.
+        SupportedPOSVersions:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of POS (Point of Sale) version identifiers that are compatible with this firmware version.
+        MainMCUTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the main MCU (Microcontroller Unit) type that the firmware is compatible with.
+        MainFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the main flash memory type that the firmware is compatible with.
+        FirmwareType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of firmware, represented by an integer identifier.
+        MaxCommunicationSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The maximum communication size supported by this firmware version.
+        MainFilePath:
+          type: string
+          nullable: true
+          description: The file path to the main firmware file.
+        MainFilePassword:
+          type: string
+          nullable: true
+          description: The password required to access the main firmware file, if applicable.
+        MainFileCrc:
+          type: string
+          nullable: true
+          description: The CRC (Cyclic Redundancy Check) value of the main firmware file for integrity verification.
+      additionalProperties: false
+    FirmwareVersionRequestDTO:
+      type: object
+      description: Represents the data required to create or update a firmware version, including metadata, compatibility information, and file details.
+      properties:
+        FirmwareVersionNumber:
+          type: string
+          nullable: true
+          description: The version number assigned to the firmware.
+        FirmwareDescription:
+          type: string
+          nullable: true
+          description: A brief description of the firmware version, detailing its features or changes.
+        FirmwareVersionIssueDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the firmware version was issued or released.
+        FirmwareVersionExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The expiration date for the firmware version, if applicable.
+        FirmwareVersionSizeLutID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The lookup identifier representing the size category of the firmware version.
+        SupportDataVolumeBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the firmware version supports data volume management.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the firmware version, indicating its current state (e.g., active, deprecated).
+        SupportedPlatforms:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of platform identifiers that are compatible with the firmware version.
+        SupportFTPBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the firmware version supports FTP for data transfer.
+        MinFlashSizeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum flash size required for this firmware version, represented by a lookup identifier.
+        ExternalFlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of external flash memory required for the firmware version.
+        SupportedPOSVersions:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of POS (Point of Sale) version identifiers that are compatible with this firmware version.
+        MainMCUTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the main MCU (Microcontroller Unit) type that the firmware is compatible with.
+        MainFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the main flash memory type that the firmware is compatible with.
+        FirmwareType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of firmware, represented by an integer identifier.
+        MaxCommunicationSize:
+          type: integer
+          format: int32
+          description: The maximum communication size supported by this firmware version.
+        MainFilePath:
+          type: string
+          nullable: true
+          description: The file path to the main firmware file.
+        MainFilePassword:
+          type: string
+          nullable: true
+          description: The password required to access the main firmware file, if applicable.
+        MainFileCrc:
+          type: string
+          nullable: true
+          description: The CRC (Cyclic Redundancy Check) value of the main firmware file for integrity verification.
       additionalProperties: false
 
 
