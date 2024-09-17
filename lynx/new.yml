@@ -2646,6 +2646,705 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/PickListLynxModelResponse"
+  /v1/machines/{MachineID}/machineProducts:
+    get:
+      tags:
+      - MachineProducts
+      summary: Get Machine Products
+      description: Retrieves the list of products associated with a specific machine identified by `MachineID`.
+      operationId: get-machine-products
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose products are being retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine products were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineProduct"
+    post:
+      tags:
+      - MachineProducts
+      summary: Create Machine Products
+      description: Creates new products for the specified machine identified by `MachineID`.
+      operationId: create-machine-products
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine for which products are being created.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachineProductPostRequest"
+      responses:
+        '200':
+          description: The machine products were successfully created.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineProduct"
+    put:
+      tags:
+      - MachineProducts
+      summary: Update Machine Products
+      description: Updates the products associated with a specific machine identified by `MachineID`, with an option to avoid deletion.
+      operationId: update-machine-products
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose products are being updated.
+        schema:
+          type: integer
+          format: int64
+      - name: avoidDelete
+        in: query
+        description: If true, avoids deleting existing products during the update.
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachineProductEntity"
+      responses:
+        '200':
+          description: The machine products were successfully updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineProduct"
+  /v1/machines/{MachineID}/machineProducts/{MachineProductID}:
+    get:
+      tags:
+      - MachineProducts
+      summary: Get a Machine Product
+      description: Retrieves details of a specific machine product identified by `MachineProductID` within the machine identified by `MachineID`.
+      operationId: get-machine-product
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine containing the product.
+        schema:
+          type: integer
+          format: int64
+      - name: MachineProductID
+        in: path
+        required: true
+        description: The unique identifier of the machine product to be retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine product was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineProduct"
+    put:
+      tags:
+      - MachineProducts
+      summary: Update a Machine Product
+      description: Updates the details of a specific machine product identified by `MachineProductID` within the machine identified by `MachineID`.
+      operationId: update-machine-product
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine containing the product to be updated.
+        schema:
+          type: integer
+          format: int64
+      - name: MachineProductID
+        in: path
+        required: true
+        description: The unique identifier of the machine product to be updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MachineProductEntity"
+      responses:
+        '200':
+          description: The machine product was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineProduct"
+  /v1/machines/{MachineID}:
+    get:
+      tags:
+      - Machines
+      summary: Get Specific Machine Basic Info
+      description: Retrieves basic information about a specific machine identified by `MachineID`.
+      operationId: get-machine-basic-info
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine to retrieve information for.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine information was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineInfo"
+    put:
+      tags:
+      - Machines
+      summary: Update Specific Machine Basic Info
+      description: Updates the basic information of a specific machine identified by `MachineID`.
+      operationId: update-machine-basic-info
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine to update.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MachineInfo"
+      responses:
+        '200':
+          description: The machine information was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineInfo"
+  /v1/machines:
+    post:
+      tags:
+      - Machines
+      summary: Create New Machine
+      description: Creates a new machine entry with the provided details.
+      operationId: create-new-machine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MachineInfoUpdateModel"
+      responses:
+        '200':
+          description: The machine was successfully created.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineInfo"
+    get:
+      tags:
+      - Machines
+      summary: Get All Machine Basic Info
+      description: Retrieves basic information for all machines, with optional filtering by parameters.
+      operationId: get-all-machine-basic-info
+      parameters:
+      - name: ResultsLimit
+        in: query
+        description: The maximum number of results to return.
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - name: ResultsOffset
+        in: query
+        description: The number of results to skip before starting to return results.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: ActorID
+        in: query
+        description: Filter results by the actor ID associated with the machine.
+        schema:
+          type: integer
+          format: int64
+      - name: OperatorIdentifier
+        in: query
+        description: Filter results by the operator identifier.
+        schema:
+          type: string
+      - name: MachineID
+        in: query
+        description: Filter results by the machine ID.
+        schema:
+          type: integer
+          format: int64
+      - name: MachineSerialNumber
+        in: query
+        description: Filter results by the machine's serial number.
+        schema:
+          type: string
+      - name: MachineName
+        in: query
+        description: Filter results by the machine's name.
+        schema:
+          type: string
+      - name: DeviceID
+        in: query
+        description: Filter results by the device ID associated with the machine.
+        schema:
+          type: integer
+          format: int32
+      - name: VposID
+        in: query
+        description: Filter results by the VPOS ID associated with the machine.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine information was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineInfo"
+  /v1/machines/search:
+    post:
+      tags:
+      - Machines
+      summary: Get All Machine Basic Info
+      description: Retrieves a list of machines based on the search criteria provided in the request body. This allows users to filter and find specific machines or groups of machines by applying various parameters.
+      operationId: get-all-machine-basic-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MachineSearchRequest"
+      responses:
+        '200':
+          description: A list of machines matching the search criteria, including their basic details.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineSearchResult"
+  /v1/machines/changeLogs:
+    get:
+      tags:
+      - Machines
+      summary: Get Machine Change Logs
+      description: Fetches the change logs for machines within a specified date range. Users can filter the logs by various parameters such as ActorID, StartDate, EndDate, MachineID, TimePeriod, and MachineNumber to retrieve the relevant changes.
+      operationId: get-machine-change-logs
+      parameters:
+      - name: ActorID
+        in: query
+        description: The unique identifier of the actor related to the machine changes.
+        schema:
+          type: integer
+          format: int64
+      - name: StartDate
+        in: query
+        description: The start date to filter the change logs, in ISO 8601 format.
+        schema:
+          type: string
+          format: date-time
+      - name: EndDate
+        in: query
+        description: The end date to filter the change logs, in ISO 8601 format.
+        schema:
+          type: string
+          format: date-time
+      - name: MachineID
+        in: query
+        description: The unique identifier of the machine for which the change logs are requested.
+        schema:
+          type: integer
+          format: int64
+      - name: TimePeriod
+        in: query
+        description: The period within which to search for change logs, in seconds.
+        schema:
+          type: integer
+          format: int32
+      - name: MachineNumber
+        in: query
+        description: The machine's serial number used to filter the change logs.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of machine change logs based on the provided parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineChangeLogModel"
+  /v1/devices/{DeviceSerialNumber}/machine:
+    get:
+      tags:
+      - Machines
+      summary: Get Specific Machine Basic Info by Device
+      description: Retrieves the basic information of a specific machine associated with the provided device serial number. This allows users to fetch machine details by referencing the device it is connected to.
+      operationId: get-machine-info-by-device
+      parameters:
+      - name: DeviceSerialNumber
+        in: path
+        required: true
+        description: The unique serial number of the device associated with the machine.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The machine information associated with the provided device serial number.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineInfo"
+  /v1/vpos/{VPOSSerial}/machine:
+    get:
+      tags:
+      - Machines
+      summary: Get Specific Machine Basic Info by VPOS
+      description: Retrieves the basic information of a specific machine associated with the provided VPOS serial number. This allows users to fetch machine details by referencing the VPOS device it is connected to.
+      operationId: get-machine-info-by-vpos
+      parameters:
+      - name: VPOSSerial
+        in: path
+        required: true
+        description: The unique serial number of the VPOS associated with the machine.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The machine information associated with the provided VPOS serial number.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineInfo"
+  /v1/machines/{MachineID}/status:
+    get:
+      tags:
+      - Machines
+      summary: Get Specific Machine Statistics
+      description: Retrieves the current status and statistics of a specific machine identified by the provided MachineID. This includes details like operational status, performance metrics, and other relevant statistics.
+      operationId: get-machine-status
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose status is being requested.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The current status and statistics of the specified machine.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineStatusInfo"
+  /v1/machines/{MachineID}/lastAlerts:
+    get:
+      tags:
+      - Machines
+      summary: Get Machine Last Alerts
+      description: Retrieves the most recent alerts for a specific machine identified by the provided MachineID. This helps in monitoring recent issues or notifications related to the machine's operation.
+      operationId: get-machine-last-alerts
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose last alerts are being requested.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of the most recent alerts for the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineLastAlerts"
+  /v1/machines/{MachineID}/paymentMethods:
+    get:
+      tags:
+      - Machines
+      summary: Get Payment Methods for Machine
+      description: Retrieves the list of payment methods associated with a specific machine, identified by MachineID. This allows users to view the available payment options configured for the machine.
+      operationId: get-payment-methods-for-machine
+      parameters:
+      - name: MachineID
+        in: path
+        description: The unique identifier of the machine.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of payment methods configured for the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachinePaymentResponse"
+    put:
+      tags:
+      - Machines
+      summary: Update Payment Methods for Machine
+      description: Updates the payment methods associated with a specific machine, identified by MachineID. This operation allows users to modify the existing payment options for the machine.
+      operationId: update-payment-methods-for-machine
+      parameters:
+      - name: MachineID
+        in: path
+        description: The unique identifier of the machine.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The payment methods to update for the machine.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachinePaymentResponse"
+      responses:
+        '200':
+          description: The updated list of payment methods for the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachinePaymentResponse"
+    post:
+      tags:
+      - Machines
+      summary: Create Payment Methods for Machine
+      description: Creates new payment methods for a specific machine, identified by MachineID. This operation allows users to add new payment options to the machine.
+      operationId: create-payment-methods-for-machine
+      parameters:
+      - name: MachineID
+        in: path
+        description: The unique identifier of the machine.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The payment methods to create for the machine.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachinePaymentResponse"
+      responses:
+        '200':
+          description: The newly created payment methods for the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachinePaymentResponse"
+  /v1/machines/{MachineID}/lastSales:
+    get:
+      tags:
+      - Machines
+      summary: Get Last Sales for Machine by MachineID
+      description: Retrieves the most recent sales transactions for a specific machine, identified by MachineID. This allows users to view the latest sales activity associated with the machine.
+      operationId: get-last-sales-for-machine
+      parameters:
+      - name: MachineID
+        in: path
+        description: The unique identifier of the machine.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of the most recent sales transactions for the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineLastSales"
+  /v1/machines/{MachineID}/paymentMethods/{paymentMethodID}:
+    delete:
+      tags:
+      - Machines
+      summary: Delete Specific Payment Method for Machine
+      description: Deletes a specific payment method associated with a machine, identified by the provided MachineID and paymentMethodID. This operation allows users to remove a payment option from the machine.
+      operationId: delete-payment-method-for-machine
+      parameters:
+      - name: MachineID
+        in: path
+        description: The unique identifier of the machine.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: paymentMethodID
+        in: path
+        description: The unique identifier of the payment method to be deleted.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The result of the operation, indicating whether the payment method was successfully deleted.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/metadata/upload-picture:
+    post:
+      tags:
+      - Metadata
+      summary: Upload Picture
+      description: Uploads a picture to the server with associated metadata. The picture and its details are provided in the request body.
+      operationId: upload-picture
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UploadPictureRequest"
+      responses:
+        '200':
+          description: The picture was successfully uploaded, and the response contains details about the uploaded picture.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UploadPictureResponse"
+  /v1/metadata/v1/event-rules:
+    get:
+      tags:
+      - Metadata
+      summary: Get Event Rules
+      description: Retrieves the event rules configured in the system. The response contains an array of event rules that are currently active.
+      operationId: get-event-rules
+      responses:
+        '200':
+          description: A list of event rules currently configured in the system.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRulesLynxModelResponse"
+  /v1/payment/refund-request:
+    post:
+      tags:
+      - Payment
+      summary: Request a Payment Refund
+      description: Submits a request to refund a specific payment. The request body includes details such as the refund amount, reason, and transaction ID.
+      operationId: request-payment-refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentRefundRequestLynxModel"
+      responses:
+        '200':
+          description: The refund request was successfully processed, and the response contains the result of the request.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RefundPaymentLynxModelResponse"
+  /v1/payment/refund-decline:
+    post:
+      tags:
+      - Payment
+      summary: Decline a Payment Refund
+      description: Submits a request to decline a previously submitted payment refund request. The request body includes details such as the transaction ID and reason for declining the refund.
+      operationId: decline-payment-refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentRefundDeclineLynxModel"
+      responses:
+        '200':
+          description: The refund decline request was successfully processed, and the response contains the result of the request.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RefundPaymentLynxModelResponse"
+  /v1/payment/refund-approve:
+    post:
+      tags:
+      - Payment
+      summary: Approve Payment Refund
+      description: Approves a previously requested payment refund. The request body includes details such as whether the refund was processed externally and any associated documentation.
+      operationId: approve-payment-refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentRefundApproveLynxModel"
+      responses:
+        '200':
+          description: The refund approval was successfully processed, and the response contains the result of the approval.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RefundPaymentLynxModelResponse"
+  /v1/payment/upload-refund:
+    post:
+      tags:
+      - Payment
+      summary: Upload Refund Documentation
+      description: Uploads a file related to a payment refund. The file could be documentation or other relevant data associated with the refund.
+      operationId: upload-refund-documentation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentUploadFileRequestLynxModel"
+      responses:
+        '200':
+          description: The file was successfully uploaded, and the response contains the URL to access the uploaded file.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UploadFileLynxModelResponse"
 
 
 
@@ -7394,6 +8093,1808 @@ components:
           nullable: true
           description: The group identifier associated with the product.
       additionalProperties: false
+    MachineProduct:
+      type: object
+      description: Represents a product associated with a machine, including pricing, stock levels, and other product-specific data.
+      properties:
+        DexPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The product price according to DEX (Data Exchange) data.
+        ProductRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the product, typically used for informational purposes.
+        MachineProductRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine product, typically used for informational purposes.
+        ProductGroupRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the product group, typically used for informational purposes.
+        MachineRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine, typically used for informational purposes.
+        MachineProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine product.
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the Nayax system.
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine associated with this product.
+        MDBCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The MDB (Multi-Drop Bus) code associated with the product.
+        PAR:
+          type: integer
+          format: int32
+          nullable: true
+          description: The PAR level, indicating the standard quantity of the product that should be stocked in the machine.
+        CashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with cash.
+        CreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a credit card.
+        MachinePrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product as set on the machine.
+        RetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The retail price of the product.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The product name according to DEX data.
+        PACode:
+          type: string
+          nullable: true
+          description: The PA code associated with the product.
+        PCCode:
+          type: string
+          nullable: true
+          description: The PC code associated with the product.
+        ProductMinimumPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum quantity of the product that should be picked during restocking.
+        VendOutAlertThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The stock level at which an alert should be triggered for potential vend out.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product information was last updated.
+        MissingStockByDEX:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock missing according to DEX data.
+        DEXMissingStockLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the missing stock by DEX was last updated.
+        PrePaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a prepaid card.
+        OperatorButtonCode:
+          type: string
+          nullable: true
+          description: The code used by operators for manual selections.
+        LastUpdatedByMobile:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was last updated via mobile.
+        ProductGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product group.
+        MissingStockByMDB:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock missing according to MDB data.
+        MDBMissingStockLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the missing stock by MDB was last updated.
+        SelectionVendOutBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the product selection is marked for vend out.
+        CommissionValue:
+          type: number
+          format: double
+          nullable: true
+          description: The commission value associated with the product.
+        ExternalPrepaidPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with external prepaid methods.
+        product_mark_for_alerts:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates whether the product is marked for alerts.
+        last_sale_dt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last sale of the product.
+        last_sale_mdb_dt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last sale of the product according to MDB data.
+        slow_mover:
+          type: boolean
+          nullable: true
+          description: Indicates whether the product is categorized as a slow mover.
+      additionalProperties: false
+    MachineProductPostRequest:
+      type: object
+      description: Represents the request payload for creating a new machine product, including pricing and stock level details.
+      properties:
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the Nayax system.
+        MDBCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The MDB (Multi-Drop Bus) code associated with the product.
+        PAR:
+          type: integer
+          format: int32
+          nullable: true
+          description: The PAR level, indicating the standard quantity of the product that should be stocked in the machine.
+        CashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with cash.
+        CreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a credit card.
+        MachinePrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product as set on the machine.
+        RetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The retail price of the product.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The product name according to DEX (Data Exchange) data.
+        PACode:
+          type: string
+          nullable: true
+          description: The PA code associated with the product.
+        PCCode:
+          type: string
+          nullable: true
+          description: The PC code associated with the product.
+        ProductMinimumPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum quantity of the product that should be picked during restocking.
+        VendOutAlertThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The stock level at which an alert should be triggered for potential vend out.
+        PrePaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a prepaid card.
+        OperatorButtonCode:
+          type: string
+          nullable: true
+          description: The code used by operators for manual selections.
+        CommissionValue:
+          type: number
+          format: double
+          nullable: true
+          description: The commission value associated with the product.
+        ExternalPrepaidPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with external prepaid methods.
+      additionalProperties: false
+    MachineProductEntity:
+      type: object
+      description: Represents a machine product entity, including detailed product information, pricing, and stock levels.
+      properties:
+        MachineProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine product.
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the Nayax system.
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine associated with this product.
+        MDBCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The MDB (Multi-Drop Bus) code associated with the product.
+        PAR:
+          type: integer
+          format: int32
+          nullable: true
+          description: The PAR level, indicating the standard quantity of the product that should be stocked in the machine.
+        CashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with cash.
+        CreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a credit card.
+        MachinePrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product as set on the machine.
+        RetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The retail price of the product.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The product name according to DEX (Data Exchange) data.
+        PACode:
+          type: string
+          nullable: true
+          description: The PA code associated with the product.
+        PCCode:
+          type: string
+          nullable: true
+          description: The PC code associated with the product.
+        ProductMinimumPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum quantity of the product that should be picked during restocking.
+        VendOutAlertThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The stock level at which an alert should be triggered for potential vend out.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product information was last updated.
+        MissingStockByDEX:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock missing according to DEX data.
+        DEXMissingStockLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the missing stock by DEX was last updated.
+        PrePaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a prepaid card.
+        OperatorButtonCode:
+          type: string
+          nullable: true
+          description: The code used by operators for manual selections.
+        LastUpdatedByMobile:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was last updated via mobile.
+        ProductGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product group.
+        MissingStockByMDB:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock missing according to MDB data.
+        MDBMissingStockLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the missing stock by MDB was last updated.
+        SelectionVendOutBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the product selection is marked for vend out.
+        CommissionValue:
+          type: number
+          format: double
+          nullable: true
+          description: The commission value associated with the product.
+        ExternalPrepaidPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with external prepaid methods.
+        product_mark_for_alerts:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates whether the product is marked for alerts.
+        last_sale_dt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last sale of the product.
+        last_sale_mdb_dt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the last sale of the product according to MDB data.
+        slow_mover:
+          type: boolean
+          nullable: true
+          description: Indicates whether the product is categorized as a slow mover.
+      additionalProperties: false
+    MachineInfo:
+      type: object
+      description: Contains basic information about a machine, including identifiers, location details, and configuration settings.
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the actor associated with the machine.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the country where the machine is located.
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the currency used by the machine.
+        InstituteID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the institute associated with the machine.
+        LocationID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the location where the machine is installed.
+        MachineGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the group to which the machine belongs.
+        MachineModelID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the machine's model.
+        MachineName:
+          type: string
+          nullable: true
+          description: The name of the machine.
+        MachineNumber:
+          type: string
+          nullable: true
+          description: The serial number or unique identifier assigned to the machine by the manufacturer.
+        MachineStatusBit:
+          type: integer
+          format: int32
+          description: A bit field indicating the status of the machine.
+        LanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the language used by the machine.
+        OperatorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the operator managing the machine.
+        DistributorActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the distributor associated with the machine.
+        AreaActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the area actor responsible for the machine.
+        SalesSourceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the sales source associated with the machine.
+        MachineTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the type of machine.
+        SerialNumber:
+          type: string
+          nullable: true
+          description: The serial number of the machine.
+        VPOSSerialNumber:
+          type: string
+          nullable: true
+          description: The VPOS serial number associated with the machine.
+        DeviceSerialNumber:
+          type: string
+          nullable: true
+          description: The serial number of the device installed in the machine.
+        VPOSID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the VPOS device associated with the machine.
+        DeviceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the device installed in the machine.
+        UseLocationFrom:
+          type: integer
+          format: int32
+          nullable: true
+          description: Specifies where the location information is sourced from.
+        GeoCountry:
+          type: integer
+          format: int32
+          nullable: true
+          description: The country identifier based on geographic data.
+        GeoState:
+          type: string
+          nullable: true
+          description: The state or region based on geographic data.
+        GeoCity:
+          type: string
+          nullable: true
+          description: The city based on geographic data.
+        GeoAddress:
+          type: string
+          nullable: true
+          description: The full address based on geographic data.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number based on geographic data.
+        GeoLongitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude where the machine is located.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude where the machine is located.
+        GeoZoom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The zoom level for geographic data representation.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The postal or ZIP code based on geographic data.
+        SearchAddress:
+          type: string
+          nullable: true
+          description: The address used for search purposes.
+        Remarks:
+          type: string
+          nullable: true
+          description: Additional remarks or notes about the machine.
+        DexType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The DEX type identifier.
+        DexMidnightReadsEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if midnight DEX reads are enabled.
+        DexG85CheckEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the G85 check for DEX is enabled.
+        DexDivideBillsBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which DEX bills are divided.
+        DexG85CheckParsingFilterEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the parsing filter for DEX G85 check is enabled.
+        UseCardPriceCorrectCashPriceBit:
+          type: boolean
+          nullable: true
+          description: Indicates if card prices are used to correct cash prices.
+        MachineTimeZoneOffset:
+          type: number
+          format: double
+          nullable: true
+          description: The time zone offset for the machine.
+        DexReadInterval:
+          type: integer
+          format: int32
+          nullable: true
+          description: The interval at which DEX reads occur.
+        LocationType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the location type.
+        ApplyDisplayPickListSelectionsToReportsBit:
+          type: boolean
+          nullable: true
+          description: Indicates if picklist selections should be applied to reports.
+        DisplayPickListSelectionsAs:
+          type: integer
+          format: int32
+          nullable: true
+          description: Specifies how picklist selections are displayed.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine information was last updated.
+        MachineProfile:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the machine profile.
+        CityID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the city where the machine is located.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the region where the machine is located.
+        CountryDialingCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The dialing code for the country where the machine is located.
+        DexIgnoreCRCCheckBit:
+          type: boolean
+          nullable: true
+          description: Indicates if CRC checks are ignored in DEX.
+        DexParseLABit:
+          type: boolean
+          nullable: true
+          description: Indicates if the DEX LA parsing is enabled.
+        ProductMapID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the product map associated with the machine.
+        Longitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude where the machine is located.
+        Latitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude where the machine is located.
+        DexTotalSalesMinusCardSalesBit:
+          type: boolean
+          nullable: true
+          description: Indicates if total sales should exclude card sales in DEX.
+        RouteActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the route actor managing the machine.
+        MachineLogicAlertEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if machine logic alerts are enabled.
+        AlertRuleSetId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the alert rule set associated with the machine.
+        MachineMemberTypePricingEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if member type pricing is enabled for the machine.
+        DexMultiplyCoinsBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which DEX coins are multiplied.
+        DexMultiplyTubesBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which DEX tubes are multiplied.
+        CustomerID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the customer associated with the machine.
+        CommissionType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of commission applied to the machine.
+        CommissionDefaultValue:
+          type: number
+          format: double
+          nullable: true
+          description: The default commission value applied to the machine.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who created the machine entry.
+        CreatedOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine entry was created.
+        UpdateBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who last updated the machine entry.
+        TubeSource:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source of the tube data for the machine.
+        BillSource:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source of the bill data for the machine.
+        SmartStickerId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the smart sticker associated with the machine.
+        EnableRemoveVendBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the remove vend functionality is enabled.
+        EnableEreceiptBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the e-receipt functionality is enabled.
+        ProductMapAutomaticCreationBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the product map is automatically created.
+        Refs:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+          description: Additional references associated with the machine.
+      additionalProperties: false
+    MachineInfoUpdateModel:
+      type: object
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the machine.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country where the machine is located.
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the currency used by the machine.
+        InstituteID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the institute associated with the machine.
+        LocationID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the specific location of the machine.
+        MachineGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the machine group.
+        MachineModelID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the model of the machine.
+        MachineName:
+          type: string
+          nullable: true
+          description: The name assigned to the machine.
+        MachineNumber:
+          type: string
+          nullable: true
+          description: The unique number assigned to the machine.
+        MachineStatusBit:
+          type: integer
+          format: int32
+          description: The status bit representing the current state of the machine.
+        LanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the language used by the machine.
+        SalesSourceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the sales source associated with the machine.
+        MachineTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the type of the machine.
+        SerialNumber:
+          type: string
+          nullable: true
+          description: The serial number of the machine.
+        VPOSSerialNumber:
+          type: string
+          nullable: true
+          description: The serial number of the VPOS device in the machine.
+        DeviceSerialNumber:
+          type: string
+          nullable: true
+          description: The serial number of the device in the machine.
+        UseLocationFrom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source of the location information used by the machine.
+        GeoCountry:
+          type: integer
+          format: int32
+          nullable: true
+          description: The geographic country where the machine is located.
+        GeoState:
+          type: string
+          nullable: true
+          description: The geographic state where the machine is located.
+        GeoCity:
+          type: string
+          nullable: true
+          description: The geographic city where the machine is located.
+        GeoAddress:
+          type: string
+          nullable: true
+          description: The geographic address where the machine is located.
+        GeoStreetNumber:
+          type: string
+          nullable: true
+          description: The street number for the geographic location of the machine.
+        GeoLongitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic longitude of the machine's location.
+        GeoLatitude:
+          type: number
+          format: double
+          nullable: true
+          description: The geographic latitude of the machine's location.
+        GeoZoom:
+          type: integer
+          format: int32
+          nullable: true
+          description: The zoom level used for displaying the machine's location on a map.
+        GeoZipCode:
+          type: string
+          nullable: true
+          description: The ZIP code for the machine's geographic location.
+        SearchAddress:
+          type: string
+          nullable: true
+          description: The search address used for locating the machine.
+        Remarks:
+          type: string
+          nullable: true
+          description: Any remarks or notes associated with the machine.
+        DexType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The DEX type configuration of the machine.
+        DexMidnightReadsEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if midnight reads are enabled for DEX.
+        DexG85CheckEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if G85 checks are enabled for DEX.
+        DexDivideBillsBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which bills are divided for DEX.
+        DexG85CheckParsingFilterEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if parsing filters for G85 checks are enabled.
+        UseCardPriceCorrectCashPriceBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the card price is used to correct the cash price.
+        MachineTimeZoneOffset:
+          type: number
+          format: double
+          nullable: true
+          description: The time zone offset for the machine.
+        DexReadInterval:
+          type: integer
+          format: int32
+          nullable: true
+          description: The interval for DEX reads in minutes.
+        LocationType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of location where the machine is placed.
+        ApplyDisplayPickListSelectionsToReportsBit:
+          type: boolean
+          nullable: true
+          description: Indicates if pick list selections should be applied to reports.
+        DisplayPickListSelectionsAs:
+          type: integer
+          format: int32
+          nullable: true
+          description: The format in which pick list selections are displayed.
+        MachineProfile:
+          type: integer
+          format: int32
+          nullable: true
+          description: The profile assigned to the machine.
+        CityID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the city where the machine is located.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the region where the machine is located.
+        CountryDialingCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The dialing code for the country where the machine is located.
+        DexIgnoreCRCCheckBit:
+          type: boolean
+          nullable: true
+          description: Indicates if CRC checks are ignored for DEX.
+        DexParseLABit:
+          type: boolean
+          nullable: true
+          description: Indicates if LA parsing is enabled for DEX.
+        ProductMapID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier for the product map associated with the machine.
+        Longitude:
+          type: number
+          format: double
+          nullable: true
+          description: The longitude of the machine's location.
+        Latitude:
+          type: number
+          format: double
+          nullable: true
+          description: The latitude of the machine's location.
+        DexTotalSalesMinusCardSalesBit:
+          type: boolean
+          nullable: true
+          description: Indicates if total sales should exclude card sales in DEX.
+        RouteActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the route actor managing the machine.
+        MachineLogicAlertEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if machine logic alerts are enabled.
+        AlertRuleSetId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the alert rule set associated with the machine.
+        MachineMemberTypePricingEnableBit:
+          type: boolean
+          nullable: true
+          description: Indicates if member type pricing is enabled for the machine.
+        DexMultiplyCoinsBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which DEX coins are multiplied.
+        DexMultiplyTubesBy:
+          type: integer
+          format: int32
+          nullable: true
+          description: The value by which DEX tubes are multiplied.
+        CustomerID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the customer associated with the machine.
+        CommissionType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of commission applied to the machine.
+        CommissionDefaultValue:
+          type: number
+          format: double
+          nullable: true
+          description: The default commission value applied to the machine.
+        TubeSource:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source of the tube data for the machine.
+        BillSource:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source of the bill data for the machine.
+        SmartStickerId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the smart sticker associated with the machine.
+        EnableRemoveVendBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the remove vend functionality is enabled.
+        EnableEreceiptBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the e-receipt functionality is enabled.
+        ProductMapAutomaticCreationBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the product map should be created automatically.
+      additionalProperties: false
+    MachineSearchRequest:
+      type: object
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine to search for.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier to filter the machines by status.
+        Search:
+          type: string
+          nullable: true
+          description: The search query string to filter machines by name or number.
+      additionalProperties: false
+    MachineSearchResult:
+      type: object
+      properties:
+        typeID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The type identifier associated with the machine.
+        ID:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The unique identifier for the machine search result.
+        parentID:
+          type: string
+          nullable: true
+          description: The parent identifier associated with the machine, if any.
+        Disabled:
+          type: integer
+          format: int64
+          nullable: true
+          description: Indicator if the machine is disabled (1 for disabled, 0 for enabled).
+        Name:
+          type: string
+          nullable: true
+          description: The name of the machine associated with the search result.
+      additionalProperties: false
+    MachineChangeLogModel:
+      type: object
+      properties:
+        MachineID:
+          type: string
+          nullable: true
+          description: The unique identifier of the machine that was changed.
+        ChangedItem:
+          type: string
+          nullable: true
+          description: The item or property that was changed on the machine.
+        ChangedFrom:
+          type: string
+          nullable: true
+          description: The original value of the changed item before the update.
+        ChangedTo:
+          type: string
+          nullable: true
+          description: The new value of the changed item after the update.
+        Tab:
+          type: string
+          nullable: true
+          description: The tab or section of the machine where the change occurred.
+        ChangedBy:
+          type: string
+          nullable: true
+          description: The user or system that made the change.
+        UpdatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the change was made.
+      additionalProperties: false
+    MachineStatusInfo:
+      type: object
+      properties:
+        CoinTubesChangeSum:
+          type: number
+          format: double
+          nullable: true
+          description: The total amount of money added or removed from the coin tubes.
+        MachineCashBoxLevel:
+          type: number
+          format: double
+          nullable: true
+          description: The current level of cash in the machine's cash box.
+        CancelledTransactionsCount:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of transactions that were canceled.
+        TemperatureFahrenheit:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current temperature inside the machine, measured in Fahrenheit.
+        TemperatureCelcius:
+          type: integer
+          format: int32
+          nullable: true
+          description: The current temperature inside the machine, measured in Celsius.
+        MachineRemarksUpdateDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine remarks were last updated.
+        Machine24HEventCount:
+          type: integer
+          format: int64
+          nullable: true
+          description: The number of events that occurred in the machine within the last 24 hours.
+        CardSalesCounter:
+          type: number
+          format: double
+          nullable: true
+          description: The total count of card-based sales transactions.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the machine.
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          readOnly: true
+          description: The unique identifier of the machine.
+        PickListGeneratedDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the pick list was last generated for this machine.
+        MachineInstallationDate:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the machine was installed.
+        InventoryCountDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the inventory count was last recorded.
+        QTYSoldSinceLastVisitDEXSales:
+          type: integer
+          format: int32
+          nullable: true
+          readOnly: true
+          description: The quantity of items sold since the last visit, recorded via DEX sales.
+        LastCashSaleDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time of the last cash sale.
+        LastCashlessSaleDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time of the last cashless sale.
+        LastDEXReadDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time of the last DEX read.
+        LastGPRSFailureCount:
+          type: integer
+          format: int32
+          nullable: true
+          readOnly: true
+          description: The number of GPRS failures recorded during the last connection attempt.
+        LastKeepAliveDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the last keep-alive signal was received.
+        LastPowerDownDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the machine was last powered down.
+        LastPowerUpDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the machine was last powered up.
+        LastReceptionLevel(RSSI):
+          type: integer
+          format: int32
+          nullable: true
+          readOnly: true
+          description: The last recorded RSSI (Received Signal Strength Indicator) level.
+        LastTransactionDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the last transaction was processed.
+        LastVisitDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time of the last visit to the machine.
+        LastLCDMSISDN(CLI):
+          type: string
+          nullable: true
+          readOnly: true
+          description: The last recorded MSISDN (Mobile Station International Subscriber Directory Number) of the LCD, used for CLI (Caller Line Identification).
+        ReaderStateErrorDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the reader last encountered an error state.
+        ReaderStateEnableDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the reader was last enabled.
+        MachineStockRefilDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the machine was last refilled with stock.
+        MachineRemarks:
+          type: string
+          nullable: true
+          readOnly: true
+          description: Any additional remarks or notes associated with the machine.
+        MachineStatusUpdateDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time when the machine's status was last updated.
+        LastCashlesstransactionID:
+          type: integer
+          format: int32
+          nullable: true
+          readOnly: true
+          description: The ID of the last cashless transaction processed by the machine.
+        DeviceLastIPAddress:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The last known IP address of the device connected to the machine.
+        QTYSoldSinceLastVisitOnlineSales:
+          type: integer
+          format: int32
+          nullable: true
+          readOnly: true
+          description: The quantity of items sold online since the last visit to the machine.
+        LastCashCollectionDateTime(UTC):
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+          description: The date and time (in UTC) when the last cash collection occurred.
+        Href:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The reference URL for the machine.
+        MachineMQTTStatus:
+          type: boolean
+          readOnly: true
+          description: Indicates whether the machine is currently connected via MQTT.
+      additionalProperties: false
+    MachineLastAlerts:
+      type: object
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine associated with the alert.
+        EventDateTimeVMC:
+          type: string
+          format: date-time
+          description: The date and time of the event as recorded by the machine (VMC).
+        TransactionID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the transaction associated with the event, if applicable.
+        EventLogID:
+          type: integer
+          format: int64
+          description: The unique identifier of the event log entry.
+        SiteID:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the machine is located.
+        EntityTypeID:
+          type: integer
+          format: int32
+          description: The unique identifier for the type of entity involved in the event.
+        EntityTypeName:
+          type: string
+          nullable: true
+          description: The name of the entity type involved in the event.
+        DeviceID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the device associated with the event.
+        EntityActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor (e.g., user or machine) associated with the event.
+        EventDateTimeGMT:
+          type: string
+          format: date-time
+          description: The date and time of the event in GMT.
+        EventCode:
+          type: integer
+          format: int32
+          description: A code representing the type of event that occurred.
+        EventSourceID:
+          type: integer
+          format: int32
+          description: The unique identifier of the source from which the event originated.
+        EventSourceName:
+          type: string
+          nullable: true
+          description: The name of the source from which the event originated.
+        EventGroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the group to which the event belongs.
+        EventGroupName:
+          type: string
+          nullable: true
+          description: The name of the group to which the event belongs.
+        EventCategoryId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the category to which the event belongs.
+        EventCategoryName:
+          type: string
+          nullable: true
+          description: The name of the category to which the event belongs.
+        EventDescription:
+          type: string
+          nullable: true
+          description: A textual description of the event.
+        EventData:
+          type: string
+          nullable: true
+          description: Additional data related to the event, provided as a string.
+        JSONData:
+          type: string
+          nullable: true
+          description: The event data in JSON format, if applicable.
+        EventUserID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user associated with the event, if applicable.
+      additionalProperties: false
+    MachinePaymentResponse:
+      type: object
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine associated with the payment method.
+        PaymentMethodID:
+          type: integer
+          format: int32
+          description: The unique identifier of the payment method.
+        ConvenienceFeePercentageBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether a convenience fee is applied as a percentage.
+        ConvenienceFeeValue:
+          type: number
+          format: double
+          description: The value of the convenience fee applied to the payment method.
+        LastUpdated:
+          type: string
+          format: date-time
+          description: The date and time when the payment method was last updated.
+        ExternalPaymentProviderUsername:
+          type: string
+          nullable: true
+          description: The username used to authenticate with an external payment provider.
+        ExternalPaymentProviderPassword:
+          type: string
+          nullable: true
+          description: The password used to authenticate with an external payment provider.
+        ExternalPaymentProviderTerminalID:
+          type: string
+          nullable: true
+          description: The terminal ID provided by the external payment provider.
+        ExternalPaymentProviderLocationIdentifier:
+          type: string
+          nullable: true
+          description: The location identifier used by the external payment provider.
+        PaymentMethodWorkingDays:
+          type: array
+          items:
+            "$ref": "#/components/schemas/WorkDay"
+          nullable: true
+          description: The working days during which the payment method is active.
+        PaymentMethodCustomData:
+          type: string
+          nullable: true
+          description: Custom data related to the payment method, provided as a string.
+        ConvenienceFeeBackupValue:
+          type: number
+          format: double
+          description: A backup value for the convenience fee in case the primary value is unavailable.
+        PaymentMethodQRString:
+          type: string
+          nullable: true
+          description: A QR code string associated with the payment method.
+      additionalProperties: false
+    MachineLastSales:
+      type: object
+      properties:
+        TransactionID:
+          type: integer
+          format: int64
+          description: The unique identifier for the sales transaction.
+        PaymentServiceTransactionID:
+          type: string
+          nullable: true
+          description: The identifier for the transaction as provided by the payment service.
+        PaymentServiceProviderName:
+          type: string
+          nullable: true
+          description: The name of the payment service provider used in the transaction.
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine where the transaction occurred.
+        MachineName:
+          type: string
+          nullable: true
+          description: The name of the machine where the transaction occurred.
+        MachineNumber:
+          type: string
+          nullable: true
+          description: The serial or identification number of the machine.
+        InstituteLocationName:
+          type: string
+          nullable: true
+          description: The name of the location or institute where the machine is installed.
+        AuthorizationValue:
+          type: number
+          format: double
+          description: The authorized amount for the transaction.
+        SettlementValue:
+          type: number
+          format: double
+          description: The settled amount for the transaction.
+        CurrencyCode:
+          type: string
+          nullable: true
+          description: The currency code in which the transaction was conducted.
+        PaymentMethod:
+          type: string
+          nullable: true
+          description: The payment method used for the transaction (e.g., credit card, mobile payment).
+        RecognitionMethod:
+          type: string
+          nullable: true
+          description: The method used to recognize the payment (e.g., card swipe, NFC).
+        CardNumber:
+          type: string
+          nullable: true
+          description: The masked card number used in the transaction, if applicable.
+        CardBrand:
+          type: string
+          nullable: true
+          description: The brand of the card used (e.g., Visa, MasterCard).
+        CLI:
+          type: string
+          nullable: true
+          description: The CLI (Caller Line Identification) or associated identifier for the transaction.
+        ProductName:
+          type: string
+          nullable: true
+          description: The name of the product sold in the transaction.
+        MultivendTransactionBit:
+          type: boolean
+          description: Indicates whether the transaction involved multiple products (multi-vend).
+        MultivendNumverOfProducts:
+          type: integer
+          format: int32
+          description: The number of products involved in a multi-vend transaction.
+        UnitOfMeasurement:
+          type: string
+          nullable: true
+          description: The unit of measurement for the product (e.g., liters, pieces).
+        Quantity:
+          type: number
+          format: double
+          description: The quantity of the product sold in the transaction.
+        EnergyConsumed:
+          type: number
+          format: double
+          description: The amount of energy consumed during the transaction, if applicable.
+        AuthorizationDateTimeGMT:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was authorized, in GMT.
+        MachineAuthorizationTime:
+          type: string
+          format: date-time
+          description: The local date and time when the machine authorized the transaction.
+        SettlementDateTimeGMT:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was settled, in GMT.
+        SiteID:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the machine is located.
+        SiteName:
+          type: string
+          nullable: true
+          description: The name of the site where the machine is located.
+      additionalProperties: false
+    UploadPictureRequest:
+      type: object
+      properties:
+        ImageTypeLutId:
+          type: integer
+          format: int32
+          description: The identifier for the type of image being uploaded.
+        EntityId:
+          type: string
+          nullable: true
+          description: The identifier of the entity to which the image is associated.
+        Image:
+          type: string
+          nullable: true
+          description: The base64-encoded string representing the image to be uploaded.
+        ImageCrop:
+          type: string
+          nullable: true
+          description: Optional cropping instructions for the image, if applicable.
+        IsMonyx:
+          type: boolean
+          description: Indicates whether the image is associated with Monyx (a specific application or service).
+      additionalProperties: false
+    UploadPictureResponse:
+      type: object
+      properties:
+        ImageTypeLutId:
+          type: integer
+          format: int32
+          description: The identifier for the type of image that was uploaded.
+        Key:
+          type: string
+          nullable: true
+          description: A unique key associated with the uploaded image.
+        KeyName:
+          type: string
+          nullable: true
+          description: The name of the key associated with the uploaded image.
+        Urls:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+          description: A map of URLs where the uploaded image can be accessed.
+      additionalProperties: false
+    EventRulesLynxModelResponse:
+      type: object
+      properties:
+        EventRuleId:
+          type: integer
+          format: int64
+          description: The unique identifier for the event rule.
+        EventRuleName:
+          type: string
+          nullable: true
+          description: The name of the event rule.
+        EventCode:
+          type: integer
+          format: int32
+          description: The code representing the type of event associated with this rule.
+        EventSource:
+          type: integer
+          format: int32
+          nullable: true
+          description: The source from which the event originates.
+        EvetnCategoryId:
+          type: integer
+          format: int32
+          description: The category identifier associated with the event.
+        GroupCategoryId:
+          type: integer
+          format: int32
+          description: The group category identifier associated with the event.
+        EventRuleStatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the event rule, indicating whether it is active or inactive.
+        EventDescription:
+          type: string
+          nullable: true
+          description: A textual description of the event rule.
+      additionalProperties: false
+    PaymentRefundRequestLynxModel:
+      type: object
+      properties:
+        RefundAmount:
+          type: number
+          format: double
+          nullable: true
+          description: The amount to be refunded to the customer.
+        RefundEmailList:
+          type: string
+          nullable: true
+          description: A list of email addresses to notify about the refund, separated by commas.
+        RefundReason:
+          type: string
+          nullable: true
+          description: The reason for requesting the refund.
+        TransactionId:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction for which the refund is requested.
+        SiteId:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the transaction occurred.
+        MachineAuTime:
+          type: string
+          format: date-time
+          description: The machine's authorization time associated with the transaction.
+      additionalProperties: false
+    RefundPaymentLynxModelResponse:
+      type: object
+      properties:
+        Result:
+          type: string
+          nullable: true
+          description: The result of the refund request, indicating success or failure.
+        Status:
+          type: string
+          nullable: true
+          description: The current status of the refund request.
+      additionalProperties: false
+    PaymentRefundDeclineLynxModel:
+      type: object
+      properties:
+        DeclineReason:
+          type: string
+          nullable: true
+          description: The reason for declining the refund request.
+        TransactionId:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction for which the refund is being declined.
+        SiteId:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the transaction occurred.
+        MachineAuTime:
+          type: string
+          format: date-time
+          description: The machine's authorization time associated with the transaction.
+      additionalProperties: false
+    PaymentRefundApproveLynxModel:
+      type: object
+      properties:
+        IsRefundedExternally:
+          type: boolean
+          description: Indicates whether the refund was processed by an external system.
+        RefundDocumentUrl:
+          type: string
+          nullable: true
+          description: The URL to the document associated with the refund, if available.
+        TransactionId:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction for which the refund is being approved.
+        SiteId:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the transaction occurred.
+        MachineAuTime:
+          type: string
+          format: date-time
+          description: The machine's authorization time associated with the transaction.
+      additionalProperties: false
+    PaymentUploadFileRequestLynxModel:
+      type: object
+      properties:
+        FileName:
+          type: string
+          nullable: true
+          description: The name of the file being uploaded.
+        FileData:
+          type: string
+          format: byte
+          nullable: true
+          description: The base64-encoded content of the file being uploaded.
+        TransactionId:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction associated with the file.
+        SiteId:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the transaction occurred.
+        MachineAuTime:
+          type: string
+          format: date-time
+          description: The machine's authorization time associated with the transaction.
+      additionalProperties: false
+    UploadFileLynxModelResponse:
+      type: object
+      properties:
+        FileURL:
+          type: string
+          nullable: true
+          description: The URL where the uploaded file can be accessed.
+      additionalProperties: false
+
 
 
 
