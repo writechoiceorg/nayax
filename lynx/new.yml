@@ -2129,9 +2129,9 @@ paths:
     get:
       tags:
       - Lookups
-      summary: Get Regions
+      summary: Get States
       description: Retrieves a list of regions (states or provinces) within a specified country, optionally filtered by `CountryID`.
-      operationId: get-regions
+      operationId: get-states
       parameters:
       - name: CountryID
         in: query
