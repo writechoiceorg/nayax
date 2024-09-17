@@ -1683,6 +1683,541 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+  /v1/DeviceVersions/{FirmwareVersionID}/MainVersion:
+    put:
+      tags:
+      - DeviceVersions
+      summary: Update Firmware Version
+      description: Updates the details of an existing firmware version identified by `FirmwareVersionID`. The request body should include the updated firmware details.
+      operationId: update-firmware-version
+      parameters:
+      - name: FirmwareVersionID
+        in: path
+        required: true
+        description: The unique identifier of the firmware version to be updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated details of the firmware version.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FirmwareVersionRequestDTO"
+      responses:
+        '200':
+          description: The firmware version was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+  /v1/DeviceVersions/PosVersion:
+    get:
+      tags:
+      - DeviceVersions
+      summary: Get Vpos Versions
+      description: Retrieves a list of VPOS versions, optionally filtered by a specific VPOS version identifier.
+      operationId: get-vpos-versions
+      parameters:
+      - name: VPOSVersionID
+        in: query
+        description: The unique identifier of the VPOS version to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of VPOS versions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VposVersionResponseDTO"
+    post:
+      tags:
+      - DeviceVersions
+      summary: Add Vpos Version
+      description: Adds a new VPOS version to the system. The request body should include the details of the VPOS version to be added.
+      operationId: add-vpos-version
+      requestBody:
+        description: The details of the VPOS version to be added.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/VposVersionRequestDTO"
+      responses:
+        '200':
+          description: The VPOS version was successfully added.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VposVersionResponseDTO"
+  /v1/DeviceVersions/{VPOSVersionID}/POSVersion:
+    put:
+      tags:
+      - DeviceVersions
+      summary: Update Vpos Version
+      description: Updates the details of an existing VPOS version identified by `VPOSVersionID`. The request body should include the updated VPOS version details.
+      operationId: update-vpos-version
+      parameters:
+      - name: VPOSVersionID
+        in: path
+        required: true
+        description: The unique identifier of the VPOS version to be updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated details of the VPOS version.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/VposVersionRequestDTO"
+      responses:
+        '200':
+          description: The VPOS version was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VposVersionResponseDTO"
+  /v1/DeviceVersions/version-update:
+    post:
+      tags:
+      - DeviceVersions
+      summary: Post Device Version
+      description: Adds or updates device versions in bulk. The request body should contain an array of device version update requests.
+      operationId: post-device-version
+      requestBody:
+        description: An array of device version update requests.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/VersionUpdateLynxRequest"
+      responses:
+        '200':
+          description: The device versions were successfully processed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VersionUpdateLynxResponse"
+  /v1/ereceipt/generate:
+    post:
+      tags:
+      - EReceipt
+      summary: Generate eReceipt for your Transaction
+      description: Generates an electronic receipt (eReceipt) for a specified transaction. The request body should include the transaction details necessary to generate the eReceipt.
+      operationId: generate-ereceipt
+      requestBody:
+        description: The details of the transaction for which the eReceipt is to be generated.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EReceiptRequest"
+      responses:
+        '200':
+          description: The eReceipt was successfully generated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/EReceiptResponse"
+  /v1/actorTypes:
+    get:
+      tags:
+      - Lookups
+      summary: Get All Actor Types
+      description: Retrieves a list of all actor types, optionally filtered by a specific `ActorTypeID`.
+      operationId: get-actor-types
+      parameters:
+      - name: ActorTypeID
+        in: query
+        description: The unique identifier of the actor type to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of actor types matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ActorType"
+  /v1/lookupTypes:
+    get:
+      tags:
+      - Lookups
+      summary: Get Lookup Types
+      description: Retrieves a list of lookup types, optionally filtered by a specific `LutTypeID`.
+      operationId: get-lookup-types
+      parameters:
+      - name: LutTypeID
+        in: query
+        description: The unique identifier of the lookup type to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of lookup types matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/LookupType"
+  /v1/lookupTypes/machineModels:
+    get:
+      tags:
+      - Lookups
+      summary: Get Machine Models
+      description: Retrieves a list of machine models, optionally filtered by a specific `MachineModeID`.
+      operationId: get-machine-models
+      parameters:
+      - name: MachineModeID
+        in: query
+        description: The unique identifier of the machine model to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of machine models matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineModelsDbEntity"
+  /v1/lookupTypes/{LutTypeID}/values:
+    get:
+      tags:
+      - Lookups
+      summary: Get Lookup Values by Lookup Type ID
+      description: Retrieves a list of lookup values associated with a specific lookup type identified by `LutTypeID`.
+      operationId: get-lookup-values-by-luttypeid
+      parameters:
+      - name: LutTypeID
+        in: path
+        required: true
+        description: The unique identifier of the lookup type for which values are being retrieved.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of lookup values associated with the specified lookup type.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Lookup"
+  /v1/lookups/values/{LutID}:
+    get:
+      tags:
+      - Lookups
+      summary: Get Lookup Value by Lookup ID
+      description: Retrieves a specific lookup value identified by `LutID`.
+      operationId: get-lookup-value-by-lutid
+      parameters:
+      - name: LutID
+        in: path
+        required: true
+        description: The unique identifier of the lookup value to be retrieved.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The lookup value associated with the specified lookup ID.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Lookup"
+  /v1/timeZones:
+    get:
+      tags:
+      - Lookups
+      summary: Get Time Zones by Offset
+      description: Retrieves a list of time zones based on the specified time zone offset.
+      operationId: get-time-zones-by-offset
+      parameters:
+      - name: TimeZoneOffset
+        in: query
+        description: The time zone offset used to filter the time zones.
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: A list of time zones matching the specified offset.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TimeZoneInfo"
+  /v1/timeZones/{TimeZoneKey}:
+    get:
+      tags:
+      - Lookups
+      summary: Get Time Zones by Time Zone Key
+      description: Retrieves a specific time zone identified by `TimeZoneKey`.
+      operationId: get-time-zone-by-key
+      parameters:
+      - name: TimeZoneKey
+        in: path
+        required: true
+        description: The unique identifier (key) of the time zone to be retrieved.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The time zone associated with the specified key.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TimeZoneInfo"
+  /v1/countries:
+    get:
+      tags:
+      - Lookups
+      summary: Get Countries
+      description: Retrieves a list of countries, optionally filtered by `CountryID` or `DialCode`.
+      operationId: get-countries
+      parameters:
+      - name: CountryID
+        in: query
+        description: The unique identifier of the country to filter the results.
+        schema:
+          type: integer
+          format: int32
+      - name: DialCode
+        in: query
+        description: The dialing code of the country to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of countries matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CountryCodes"
+  /v1/countries/{CountryCode}:
+    get:
+      tags:
+      - Lookups
+      summary: Get Country by Code
+      description: Retrieves the details of a specific country identified by `CountryCode`.
+      operationId: get-country-by-code
+      parameters:
+      - name: CountryCode
+        in: path
+        required: true
+        description: The unique code of the country to be retrieved.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The details of the country associated with the specified code.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CountryCodes"
+  /v1/currencies:
+    get:
+      tags:
+      - Lookups
+      summary: Get Currencies
+      description: Retrieves a list of currencies, optionally filtered by `CurrencyID`.
+      operationId: get-currencies
+      parameters:
+      - name: CurrencyID
+        in: query
+        description: The unique identifier of the currency to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of currencies matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Currency"
+  /v1/currencies/{CurrencyCode}:
+    get:
+      tags:
+      - Lookups
+      summary: Get Currency by Code
+      description: Retrieves the details of a specific currency identified by `CurrencyCode`.
+      operationId: get-currency-by-code
+      parameters:
+      - name: CurrencyCode
+        in: path
+        required: true
+        description: The unique code of the currency to be retrieved.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The details of the currency associated with the specified code.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Currency"
+  /v1/billingProviders:
+    get:
+      tags:
+      - Lookups
+      summary: Get Billing Providers
+      description: Retrieves a list of billing providers, optionally filtered by `BillingProviderID`.
+      operationId: get-billing-providers
+      parameters:
+      - name: BillingProviderID
+        in: query
+        description: The unique identifier of the billing provider to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of billing providers matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BillingProvidersDbEntity"
+  /v1/paymentMethods:
+    get:
+      tags:
+      - Lookups
+      summary: Get Payment Methods
+      description: Retrieves a list of payment methods, optionally filtered by `PaymentMethodID`.
+      operationId: get-payment-methods
+      parameters:
+      - name: PaymentMethodID
+        in: query
+        description: The unique identifier of the payment method to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of payment methods matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PaymentMethodDbEntity"
+  /v1/states:
+    get:
+      tags:
+      - Lookups
+      summary: Get Regions
+      description: Retrieves a list of regions (states or provinces) within a specified country, optionally filtered by `CountryID`.
+      operationId: get-regions
+      parameters:
+      - name: CountryID
+        in: query
+        description: The unique identifier of the country to filter the regions.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of regions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RegionsDbEntity"
+  /v1/cities:
+    get:
+      tags:
+      - Lookups
+      summary: Get Cities
+      description: Retrieves a list of cities within a specified country, optionally filtered by `CountryID`.
+      operationId: get-cities
+      parameters:
+      - name: CountryID
+        in: query
+        description: The unique identifier of the country to filter the cities.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of cities matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CitiesDbEntity"
+  /v1/groups:
+    get:
+      tags:
+      - Lookups
+      summary: Get Groups
+      description: Retrieves a list of groups, optionally filtered by `GroupID`.
+      operationId: get-groups
+      parameters:
+      - name: GroupID
+        in: query
+        description: The unique identifier of the group to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of groups matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/GroupsDbEntity"
+  /v1/group/{GroupID}/roles:
+    get:
+      tags:
+      - Lookups
+      summary: Get Group Roles
+      description: Retrieves a list of roles associated with a specific group identified by `GroupID`.
+      operationId: get-group-roles
+      parameters:
+      - name: GroupID
+        in: path
+        required: true
+        description: The unique identifier of the group for which roles are being retrieved.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of roles associated with the specified group.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RolesDbEntity"
 
 
 
@@ -5092,6 +5627,896 @@ components:
           type: string
           nullable: true
           description: The CRC (Cyclic Redundancy Check) value of the main firmware file for integrity verification.
+      additionalProperties: false
+    VposVersionResponseDTO:
+      type: object
+      description: Represents the details of a VPOS (Virtual Point of Sale) version, including metadata, file details, and compatibility information.
+      properties:
+        VPOSVersionID:
+          type: integer
+          format: int64
+          description: The unique identifier of the VPOS version.
+        VPOSVersionNumber:
+          type: string
+          nullable: true
+          description: The version number of the VPOS software.
+        VPOSVersionDescription:
+          type: string
+          nullable: true
+          description: A brief description of the VPOS version, detailing its features or updates.
+        VPOSVersionIssueDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the VPOS version was issued or released.
+        VPOSVersionExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The expiration date of the VPOS version, if applicable.
+        VPOSVersionFile:
+          type: string
+          nullable: true
+          description: The file name or path of the VPOS version file.
+        VPOSVersionSize:
+          type: integer
+          format: int64
+          nullable: true
+          description: The size of the VPOS version file in bytes.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the VPOS version was last updated.
+        MinBlockNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum block number supported by this VPOS version.
+        MaxBlockNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: The maximum block number supported by this VPOS version.
+        FilePath:
+          type: string
+          nullable: true
+          description: The file path where the VPOS version file is stored.
+        FilePassword:
+          type: string
+          nullable: true
+          description: The password required to access the VPOS version file, if applicable.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the VPOS version record.
+        CreatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the VPOS version record was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the VPOS version record.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the VPOS version, indicating its current state (e.g., active, deprecated).
+        PosMCUTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the MCU (Microcontroller Unit) type that the VPOS version is compatible with.
+        FirmwareType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of firmware, represented by an integer identifier.
+        PosCodeFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the code flash memory type used by the VPOS.
+        PosMediaFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the media flash memory type used by the VPOS.
+      additionalProperties: false
+    VposVersionRequestDTO:
+      type: object
+      description: Represents the data required to create or update a VPOS (Virtual Point of Sale) version, including metadata, file details, and compatibility information.
+      properties:
+        VPOSVersionNumber:
+          type: string
+          nullable: true
+          description: The version number assigned to the VPOS software.
+        VPOSVersionDescription:
+          type: string
+          nullable: true
+          description: A brief description of the VPOS version, detailing its features or updates.
+        VPOSVersionIssueDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date when the VPOS version was issued or released.
+        VPOSVersionExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The expiration date for the VPOS version, if applicable.
+        FilePath:
+          type: string
+          nullable: true
+          description: The file path where the VPOS version file is stored.
+        FilePassword:
+          type: string
+          nullable: true
+          description: The password required to access the VPOS version file, if applicable.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the VPOS version, indicating its current state (e.g., active, deprecated).
+        PosMCUTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the MCU (Microcontroller Unit) type that the VPOS version is compatible with.
+        FirmwareType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of firmware, represented by an integer identifier.
+        PosCodeFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the code flash memory type used by the VPOS.
+        PosMediaFlashTypeId:
+          type: string
+          nullable: true
+          description: The identifier for the media flash memory type used by the VPOS.
+      additionalProperties: false
+    VersionUpdateLynxRequest:
+      type: object
+      description: Represents a request to update the version of a set of devices, including scheduling details and notification settings.
+      properties:
+        MachineIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of machine identifiers that are targeted for the version update.
+        MainVersionId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the main version to be applied to the machines.
+        VposVersionId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the VPOS version to be applied to the machines.
+        EmailList:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: A list of email addresses to be notified about the version update.
+        Schedule:
+          type: string
+          format: date-time
+          nullable: true
+          description: The scheduled date and time for the version update.
+        IncludeOfflineMachines:
+          type: boolean
+          description: Indicates whether offline machines should be included in the version update.
+      additionalProperties: false
+    VersionUpdateLynxResponse:
+      type: object
+      description: Represents the response after processing a version update request, including the request details and scheduling information.
+      properties:
+        RequestId:
+          type: integer
+          format: int64
+          description: The unique identifier of the version update request.
+        MachineIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of machine identifiers that were targeted for the version update.
+        MainVersionId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the main version that was applied to the machines.
+        VposVersionId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the VPOS version that was applied to the machines.
+        EmailList:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: A list of email addresses that were notified about the version update.
+        Scheduled:
+          type: string
+          format: date-time
+          nullable: true
+          description: The scheduled date and time for the version update.
+        DistributorId:
+          type: integer
+          format: int64
+          description: The identifier of the distributor associated with the version update.
+        Description:
+          type: string
+          nullable: true
+          description: A brief description of the version update request.
+        IsImmediate:
+          type: boolean
+          description: Indicates whether the version update was scheduled for immediate execution.
+        AvailableWeekdays:
+          type: string
+          nullable: true
+          description: The weekdays on which the version update is allowed to run.
+        StartHour:
+          type: integer
+          format: int32
+          nullable: true
+          description: The starting hour for the version update, used when scheduling updates during specific times of the day.
+        EndHour:
+          type: integer
+          format: int32
+          nullable: true
+          description: The ending hour for the version update, used when scheduling updates during specific times of the day.
+        ActorId:
+          type: integer
+          format: int64
+          description: The identifier of the actor associated with the version update.
+        IncludeOfflineMachines:
+          type: boolean
+          description: Indicates whether offline machines were included in the version update.
+      additionalProperties: false
+    EReceiptRequest:
+      type: object
+      description: Represents the details required to generate an electronic receipt (eReceipt) for a transaction.
+      properties:
+        TrasactionID:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction for which the eReceipt is being generated.
+        TransactionDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the transaction occurred.
+        TrasactionSiteID:
+          type: integer
+          format: int32
+          description: The unique identifier of the site where the transaction took place.
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine involved in the transaction.
+        FullName:
+          type: string
+          nullable: true
+          description: The full name of the individual for whom the eReceipt is being generated.
+        Email:
+          type: string
+          nullable: true
+          description: The email address to which the eReceipt will be sent.
+      additionalProperties: false
+    EReceiptResponse:
+      type: object
+      description: Represents the response after generating an electronic receipt (eReceipt), including the receipt URL and status.
+      properties:
+        ReceiptURL:
+          type: string
+          nullable: true
+          description: The URL where the generated eReceipt can be accessed.
+        EmailSent:
+          type: boolean
+          description: Indicates whether the eReceipt was successfully sent via email.
+        EreceiptID:
+          type: integer
+          format: int64
+          description: The unique identifier of the generated eReceipt.
+      additionalProperties: false
+    ActorType:
+      type: object
+      description: Represents the details of an actor type, including its identifier, name, and additional metadata.
+      properties:
+        ActorTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the actor type.
+        ActorTypeName:
+          type: string
+          nullable: true
+          description: The name of the actor type.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the actor type was last updated.
+        DefaultBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether this actor type is the default type.
+        CKey:
+          type: string
+          nullable: true
+          description: A unique key associated with the actor type for additional identification or reference.
+      additionalProperties: false
+    LookupType:
+      type: object
+      description: Represents the details of a lookup type, including its identifier, description, and additional metadata.
+      properties:
+        LutTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the lookup type.
+        LutTypeDescription:
+          type: string
+          nullable: true
+          description: A brief description of the lookup type.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the lookup type was last updated.
+        LutTypeCode:
+          type: string
+          nullable: true
+          description: A unique code associated with the lookup type for identification or reference.
+        CKey:
+          type: string
+          nullable: true
+          description: A unique key associated with the lookup type for additional identification or reference.
+        RequiredLutCodeBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether a lookup code is required for this type.
+        LutStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status of the lookup type, represented as an integer.
+        LinkedLutTypeId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of a related or linked lookup type.
+      additionalProperties: false
+    MachineModelsDbEntity:
+      type: object
+      description: Represents the details of a machine model, including identifiers, associated types, and metadata.
+      properties:
+        MachineModelID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine model.
+        MachineTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the machine type associated with this model.
+        ProviderID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the provider associated with this machine model.
+        ProtocolTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of the protocol type used by this machine model.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine model was last updated.
+        MachineModelName:
+          type: string
+          nullable: true
+          description: The name of the machine model.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the actor associated with this machine model.
+        CreationDateTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the machine model was created.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the machine model record.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the machine model record.
+        MachineModelStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status of the machine model, represented as an integer.
+      additionalProperties: false
+    Lookup:
+      type: object
+      description: Represents a lookup value, including its identifiers, associated types, and additional metadata.
+      properties:
+        LutTypeRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference to the lookup type, typically used for informational purposes.
+        LutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the lookup value.
+        LutTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the lookup type associated with this value.
+        LutValue:
+          type: string
+          nullable: true
+          description: The actual value of the lookup item.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the lookup value was last updated.
+        OrderKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The order or priority key associated with the lookup value.
+        LutCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: A code associated with the lookup value, typically used for categorization or identification.
+        Ckey:
+          type: string
+          nullable: true
+          description: A unique key associated with the lookup value for additional identification or reference.
+        ServiceLutId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The service-related identifier associated with the lookup value.
+        CreatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the lookup value was created.
+        CreatedBT:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user or system that created the lookup value.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user or system that last updated the lookup value.
+        LinkedLutId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier of a related or linked lookup value.
+      additionalProperties: false
+    TimeZoneInfo:
+      type: object
+      description: Represents detailed information about a time zone, including its identifiers, display names, offset, and geographical coordinates.
+      properties:
+        TimeZoneKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique key identifier for the time zone.
+        TimeZoneID:
+          type: string
+          nullable: true
+          description: The unique identifier string for the time zone.
+        TimeZoneDisplayName:
+          type: string
+          nullable: true
+          description: The display name of the time zone, typically shown to users.
+        TimeZoneStandardName:
+          type: string
+          nullable: true
+          description: The standard name of the time zone, used during non-daylight saving time.
+        TimeZoneDayLightName:
+          type: string
+          nullable: true
+          description: The daylight saving time name of the time zone, used during daylight saving time.
+        TimeZoneOffset:
+          type: number
+          format: double
+          nullable: true
+          description: The time zone offset from Coordinated Universal Time (UTC), measured in hours.
+        CreatedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the time zone record was created.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the time zone record was last updated.
+        DaylightSavingsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the time zone observes daylight saving time.
+        Latitude:
+          type: number
+          format: double
+          nullable: true
+          description: The latitude coordinate of the location associated with the time zone.
+        Longitude:
+          type: number
+          format: double
+          nullable: true
+          description: The longitude coordinate of the location associated with the time zone.
+      additionalProperties: false
+    CountryCodes:
+      type: object
+      description: Represents detailed information about a country, including its identifiers, name, and dialing code.
+      properties:
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the country.
+        CountryCode:
+          type: string
+          nullable: true
+          description: The ISO 3166-1 alpha-2 code of the country (e.g., "US" for the United States).
+        CountryName:
+          type: string
+          nullable: true
+          description: The full name of the country.
+        CountryDialingCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The international dialing code for the country (e.g., 1 for the United States).
+        CountryReference:
+          type: integer
+          format: int32
+          nullable: true
+          description: An internal reference number associated with the country.
+        CountryISONumericCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The ISO 3166-1 numeric code of the country (e.g., 840 for the United States).
+      additionalProperties: false
+    Currency:
+      type: object
+      description: Represents detailed information about a currency, including its identifiers, code, and other relevant details.
+      properties:
+        CurrencyID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the currency.
+        CurrencyCode:
+          type: string
+          nullable: true
+          description: The ISO 4217 code of the currency (e.g., "USD" for US Dollar).
+        CurrencySign:
+          type: string
+          nullable: true
+          description: The symbol used to represent the currency (e.g., "$" for US Dollar).
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the currency information was last updated.
+        ShvaValue:
+          type: string
+          nullable: true
+          description: A value associated with the currency in the Shva system.
+        ShvaCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The Shva system code associated with the currency.
+        CurrencyISONumerical:
+          type: string
+          nullable: true
+          description: The ISO 4217 numeric code of the currency (e.g., "840" for US Dollar).
+      additionalProperties: false
+    BillingProvidersDbEntity:
+      type: object
+      description: Represents detailed information about a billing provider, including identifiers, capabilities, and settings.
+      properties:
+        BillingProviderID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the billing provider.
+        BillingProviderName:
+          type: string
+          nullable: true
+          description: The name of the billing provider.
+        TerminalIDLength:
+          type: integer
+          format: int32
+          nullable: true
+          description: The length of the terminal ID used by the billing provider.
+        BillingProviderComments:
+          type: string
+          nullable: true
+          description: Additional comments or notes about the billing provider.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the billing provider information was last updated.
+        MinimumTransactionAmount:
+          type: string
+          nullable: true
+          description: The minimum transaction amount allowed by the billing provider.
+        RegularAuthorizationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports regular authorizations.
+        CancelAuthorizationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports authorization cancellations.
+        PreSelectionBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports pre-selection of transactions.
+        TransactionVoidBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports transaction voids.
+        ECommerceTransactionsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports e-commerce transactions.
+        ForcedTransactionsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports forced transactions.
+        ConstantPreAuthorizationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports constant pre-authorizations.
+        EMVTransactionsBit:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates whether the billing provider supports EMV transactions.
+        AutomaticTransactionVoidBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports automatic transaction voids.
+        ForceSettlementBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports force settlements.
+        OfflineEMVTransactionsBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports offline EMV transactions.
+        SettlementRetryBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports settlement retries.
+        AutomaticRefund:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports automatic refunds.
+        PartialRefundSupport:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports partial refunds.
+        CKey:
+          type: string
+          nullable: true
+          description: A unique key associated with the billing provider for additional identification or reference.
+        SupportReconciliation:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports reconciliation processes.
+        ReconciliationTimeZoneKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The time zone key associated with the reconciliation process.
+        ReconciliationSourceType:
+          type: string
+          nullable: true
+          description: The source type associated with the reconciliation process.
+        SupportIncrementalAuth:
+          type: boolean
+          nullable: true
+          description: Indicates whether the billing provider supports incremental authorization.
+      additionalProperties: false
+    PaymentMethodDbEntity:
+      type: object
+      description: Represents detailed information about a payment method, including its identifiers, capabilities, and settings.
+      properties:
+        PaymentMethodID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the payment method.
+        PaymentMethodDescription:
+          type: string
+          nullable: true
+          description: A brief description of the payment method.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the payment method information was last updated.
+        PrepaidPaymentBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method supports prepaid payments.
+        PreselectionSupportBit:
+          type: integer
+          format: int32
+          nullable: true
+          description: Indicates whether the payment method supports pre-selection during transactions.
+        TransactionBlockDuration:
+          type: integer
+          format: int32
+          nullable: true
+          description: The duration (in seconds) for which a transaction is blocked or held.
+        AutomaticVoidBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method supports automatic voids of transactions.
+        CKey:
+          type: string
+          nullable: true
+          description: A unique key associated with the payment method for additional identification or reference.
+        ExternalPrepaidBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method supports external prepaid transactions.
+        MobileApplicationBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method is supported by mobile applications.
+        QRPaymentSupportBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method supports QR code payments.
+        ForceSettlementSupportBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the payment method supports forced settlements.
+      additionalProperties: false
+    RegionsDbEntity:
+      type: object
+      description: Represents detailed information about a region (state or province), including its identifiers and name.
+      properties:
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the region.
+        RegionName:
+          type: string
+          nullable: true
+          description: The name of the region.
+        ShortRegion:
+          type: string
+          nullable: true
+          description: The abbreviated name or code for the region.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the country to which the region belongs.
+      additionalProperties: false
+    CitiesDbEntity:
+      type: object
+      description: Represents detailed information about a city, including its identifiers, name, and associated region.
+      properties:
+        CityID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the city.
+        CityName:
+          type: string
+          nullable: true
+          description: The name of the city.
+        ShortCity:
+          type: string
+          nullable: true
+          description: The abbreviated name or code for the city.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the region to which the city belongs.
+        CountryID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the country to which the city belongs.
+      additionalProperties: false
+    GroupsDbEntity:
+      type: object
+      description: Represents detailed information about a group, including its identifiers, name, and management status.
+      properties:
+        RoleGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the role group.
+        RoleGroupName:
+          type: string
+          nullable: true
+          description: The name of the role group.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the group information was last updated.
+        ManagedByAdminBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the group is managed by an administrator.
+      additionalProperties: false
+    RolesDbEntity:
+      type: object
+      description: Represents detailed information about a role, including its identifiers, name, and status.
+      properties:
+        RoleID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the role.
+        RoleName:
+          type: string
+          nullable: true
+          description: The name of the role.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the role information was last updated.
+        CKey:
+          type: string
+          nullable: true
+          description: A unique key associated with the role for additional identification or reference.
+        IsActive:
+          type: boolean
+          nullable: true
+          description: Indicates whether the role is currently active.
+        IsAdminBit:
+          type: boolean
+          nullable: true
+          description: Indicates whether the role has administrative privileges.
       additionalProperties: false
 
 
