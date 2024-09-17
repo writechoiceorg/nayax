@@ -3345,6 +3345,1117 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UploadFileLynxModelResponse"
+  /v1/productGroups/{ProductGroupID}:
+    get:
+      tags:
+      - ProductGroups
+      summary: Get Product Group
+      description: Retrieves details of a specific product group identified by the ProductGroupID. The response includes information such as the product group name, code, and other related details.
+      operationId: get-product-group
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The details of the specified product group.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProductGroup"
+    put:
+      tags:
+      - ProductGroups
+      summary: Update Product Group
+      description: Updates the details of a specific product group identified by the ProductGroupID. The request body should include the updated information such as the product group name, code, and category.
+      operationId: update-product-group
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductGroupUpdateRequest"
+      responses:
+        '200':
+          description: The updated details of the specified product group.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProductGroup"
+  /v1/operators/{ActorID}/productGroups:
+    get:
+      tags:
+      - ProductGroups
+      summary: Get Product Groups by Actor
+      description: Retrieves a list of product groups associated with a specific actor, identified by the ActorID. The response includes details of each product group.
+      operationId: get-product-groups-by-actor
+      parameters:
+      - name: ActorID
+        in: path
+        description: The unique identifier of the actor whose product groups are being requested.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of product groups associated with the specified actor.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProductGroup"
+  /v1/productGroups:
+    post:
+      tags:
+      - ProductGroups
+      summary: Create New Product Groups
+      description: Creates new product groups based on the details provided in the request body. The request includes information such as the product group name, code, and associated actor.
+      operationId: create-product-groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductGroupCreateRequest"
+      responses:
+        '200':
+          description: The product group was successfully created, and the response contains the details of the created product group.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProductGroup"
+    get:
+      tags:
+      - ProductGroups
+      summary: Get All Product Groups
+      description: Retrieves a list of all product groups. The response includes details of each product group such as the name, code, and associated actor.
+      operationId: get-all-product-groups
+      responses:
+        '200':
+          description: A list of all product groups in the system.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProductGroup"
+  /v1/productGroups/{ProductGroupID}/tax:
+    get:
+      tags:
+      - ProductGroups
+      summary: Get Product Group Tax
+      description: Retrieves the tax details associated with a specific product group, identified by the ProductGroupID. Optionally, a specific tax row can be retrieved using the TaxRowID query parameter.
+      operationId: get-product-group-tax
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: TaxRowID
+        in: query
+        description: The unique identifier of the tax row (optional).
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The tax details for the specified product group.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VatDTO"
+    put:
+      tags:
+      - ProductGroups
+      summary: Update Product Group Tax
+      description: Updates the tax details for a specific product group, identified by the ProductGroupID. The request body contains the updated tax information.
+      operationId: update-product-group-tax
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/VatRequestExt"
+      responses:
+        '200':
+          description: The updated tax details for the specified product group.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VatDTO"
+    post:
+      tags:
+      - ProductGroups
+      summary: Create Product Group Tax
+      description: Creates new tax details for a specific product group, identified by the ProductGroupID. The request body contains the tax information to be added.
+      operationId: create-product-group-tax
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/VatRequest"
+      responses:
+        '200':
+          description: The newly created tax details for the specified product group.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VatDTO"
+  /v1/productGroups/{ProductGroupID}/tax/{TaxRowID}:
+    delete:
+      tags:
+      - ProductGroups
+      summary: Delete Product Group Tax
+      description: Deletes a specific tax entry associated with a product group, identified by both ProductGroupID and TaxRowID. This operation removes the specified tax row from the product group.
+      operationId: delete-product-group-tax
+      parameters:
+      - name: ProductGroupID
+        in: path
+        description: The unique identifier of the product group.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: TaxRowID
+        in: path
+        description: The unique identifier of the tax row to be deleted.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The tax row was successfully deleted from the specified product group.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VatDTO"
+  /v1/operators/{OperatorID}/products:
+    get:
+      tags:
+      - Products
+      summary: Get Specific Operator Products
+      description: Retrieves a list of products associated with a specific operator, identified by the OperatorID. The response includes details of each product.
+      operationId: get-operator-products
+      parameters:
+      - name: OperatorID
+        in: path
+        description: The unique identifier of the operator whose products are being requested.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of products associated with the specified operator.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Product"
+    post:
+      tags:
+      - Products
+      summary: Create New Operator Product
+      description: Creates a new product associated with a specific operator, identified by the OperatorID. The request body contains the details of the product to be created.
+      operationId: create-operator-product
+      parameters:
+      - name: OperatorID
+        in: path
+        description: The unique identifier of the operator for whom the product is being created.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductEntity"
+      responses:
+        '200':
+          description: The product was successfully created for the specified operator.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Product"
+  /v1/products/{NayaxProductID}:
+    get:
+      tags:
+      - Products
+      summary: Get Specific Product
+      description: Retrieves the details of a specific product identified by the NayaxProductID. The response includes all relevant information about the product.
+      operationId: get-specific-product
+      parameters:
+      - name: NayaxProductID
+        in: path
+        description: The unique identifier of the product in the Nayax system.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The details of the specified product.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Product"
+    put:
+      tags:
+      - Products
+      summary: Update Specific Product
+      description: Updates the details of a specific product identified by the NayaxProductID. The request body should contain the updated product information.
+      operationId: update-specific-product
+      parameters:
+      - name: NayaxProductID
+        in: path
+        description: The unique identifier of the product in the Nayax system.
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductEntity"
+      responses:
+        '200':
+          description: The updated details of the specified product.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Product"
+  /v1/programmer/devices:
+    get:
+      tags:
+      - Programmer
+      summary: Get Devices
+      description: Retrieves information about a device based on various query parameters such as DeviceId, DeviceSerial, DeviceChipId, and MainBoardSerial. This endpoint can also check if a device exists.
+      operationId: get-device
+      parameters:
+      - name: DeviceId
+        in: query
+        description: The unique identifier of the device.
+        schema:
+          type: integer
+          format: int32
+      - name: DeviceSerial
+        in: query
+        description: The serial number of the device.
+        schema:
+          type: string
+      - name: DeviceChipId
+        in: query
+        description: The chip identifier of the device.
+        schema:
+          type: string
+      - name: MainBoardSerial
+        in: query
+        description: The serial number of the mainboard in the device.
+        schema:
+          type: string
+      - name: CheckExist
+        in: query
+        description: Indicates whether to check if the device exists.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: The details of the specified device.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DeviceExtra"
+  /v1/programmer/devices/{DeviceSerial}:
+    put:
+      tags:
+      - Programmer
+      summary: Update Device for Programmer
+      description: Updates the details of a device identified by its DeviceSerial for programming purposes. The request body contains the updated device information.
+      operationId: update-device-for-programmer
+      parameters:
+      - name: DeviceSerial
+        in: path
+        description: The serial number of the device to be updated.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProgrammerUpdate"
+      responses:
+        '200':
+          description: The updated details of the specified device.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DevicesDbEntity"
+  /v1/programmer/devices/{DeviceSerial}/encryptionKey:
+    get:
+      tags:
+      - Programmer
+      summary: Get Device Encryption Key
+      description: Retrieves the encryption key associated with a specific device, identified by its DeviceSerial.
+      operationId: get-device-encryption-key
+      parameters:
+      - name: DeviceSerial
+        in: path
+        description: The serial number of the device for which the encryption key is requested.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The encryption key for the specified device.
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/users/{UserName}/pushTokens:
+    get:
+      tags:
+      - PushTokens
+      summary: Get All User Push Tokens
+      description: Retrieves all push tokens associated with a specific user, identified by their UserName. The response includes details of each push token.
+      operationId: get-user-push-tokens
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user whose push tokens are being retrieved.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of push tokens associated with the specified user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/UserPushTokenDbEntity"
+    post:
+      tags:
+      - PushTokens
+      summary: Add New Push Token
+      description: Adds a new push token for a specific user, identified by their UserName. The request body should include details of the push token to be added.
+      operationId: add-user-push-token
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user to whom the push token will be added.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenInfo"
+      responses:
+        '200':
+          description: The push token was successfully added for the specified user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserPushTokenDbEntity"
+    delete:
+      tags:
+      - PushTokens
+      summary: Delete Push Token
+      description: Deletes a specific push token for a user, identified by their UserName and the token. This operation removes the specified push token from the user’s account.
+      operationId: delete-user-push-token
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user whose push token is to be deleted.
+        required: true
+        schema:
+          type: string
+      - name: Token
+        in: query
+        description: The push token to be deleted.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The push token was successfully deleted from the specified user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/Scheduling/drivers:
+    get:
+      tags:
+      - Scheduling
+      summary: Get Drivers
+      description: Retrieves a list of drivers based on various query parameters, such as ActorId, DriverStatusId, and multiple search options (e.g., by DriverId, UserId, Fullname, etc.).
+      operationId: get-drivers
+      parameters:
+      - name: ActorId
+        in: query
+        description: The unique identifier of the actor associated with the drivers.
+        schema:
+          type: integer
+          format: int64
+      - name: DriverStatusId
+        in: query
+        description: The status identifier of the drivers to filter the results.
+        schema:
+          type: integer
+          format: int32
+      - name: Search
+        in: query
+        description: A search string used to find drivers based on various fields.
+        schema:
+          type: string
+      - name: SearchByDriverId
+        in: query
+        description: Indicates whether to search by DriverId.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByUserId
+        in: query
+        description: Indicates whether to search by UserId.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByFullname
+        in: query
+        description: Indicates whether to search by the driver's fullname.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByMobile
+        in: query
+        description: Indicates whether to search by the driver's mobile number.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByEmail
+        in: query
+        description: Indicates whether to search by the driver's email address.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByIdNumber
+        in: query
+        description: Indicates whether to search by the driver's identification number.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByDriverLicense
+        in: query
+        description: Indicates whether to search by the driver's license number.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: A list of drivers that match the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DriverResponseDto"
+    post:
+      tags:
+      - Scheduling
+      summary: Add New Driver
+      description: Adds a new driver to the scheduling system. The request body should include the details of the driver to be added.
+      operationId: add-new-driver
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DriverRequestDto"
+      responses:
+        '200':
+          description: The newly added driver details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DriverResponseDto"
+    put:
+      tags:
+      - Scheduling
+      summary: Update Driver
+      description: Updates the details of an existing driver identified by DriverId. The request body should include the updated driver information.
+      operationId: update-driver
+      parameters:
+      - name: DriverId
+        in: query
+        description: The unique identifier of the driver to be updated.
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DriverRequestDto"
+      responses:
+        '200':
+          description: The updated driver details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DriverResponseDto"
+    delete:
+      tags:
+      - Scheduling
+      summary: Delete Driver
+      description: Deletes a driver identified by DriverId from the scheduling system.
+      operationId: delete-driver
+      parameters:
+      - name: DriverId
+        in: query
+        description: The unique identifier of the driver to be deleted.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: The details of the deleted driver.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DriverResponseDto"
+  /v1/Scheduling/routes:
+    get:
+      tags:
+      - Scheduling
+      summary: Get Routes
+      description: Retrieves a list of routes based on various query parameters, such as OperatorId, DriverId, Status, and multiple search options (e.g., by Name, Code, Notes, etc.).
+      operationId: get-routes
+      parameters:
+      - name: OperatorId
+        in: query
+        description: The unique identifier of the operator associated with the routes.
+        schema:
+          type: integer
+          format: int64
+      - name: DriverId
+        in: query
+        description: The unique identifier of the driver assigned to the routes.
+        schema:
+          type: string
+          format: uuid
+      - name: Status
+        in: query
+        description: The status identifier of the routes to filter the results.
+        schema:
+          type: integer
+          format: int32
+      - name: Search
+        in: query
+        description: A search string used to find routes based on various fields.
+        schema:
+          type: string
+      - name: SearchByName
+        in: query
+        description: Indicates whether to search by route name.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByCode
+        in: query
+        description: Indicates whether to search by route code.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByNotes
+        in: query
+        description: Indicates whether to search by route notes.
+        schema:
+          type: boolean
+          default: false
+      - name: SearchByRouteId
+        in: query
+        description: Indicates whether to search by route ID.
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: A list of routes that match the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ActorRouteResponseDto"
+    post:
+      tags:
+      - Scheduling
+      summary: Create New Route
+      description: Creates a new route for the specified operator. The request body should include the details of the route to be created.
+      operationId: create-new-route
+      parameters:
+      - name: OperatorId
+        in: query
+        description: The unique identifier of the operator for whom the route is being created.
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RouteCreateRequestDto"
+      responses:
+        '200':
+          description: The newly created route details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RouteResponseDto"
+    put:
+      tags:
+      - Scheduling
+      summary: Update Route
+      description: Updates the details of an existing route identified by routeId. The request body should include the updated route information.
+      operationId: update-route
+      parameters:
+      - name: routeId
+        in: query
+        description: The unique identifier of the route to be updated.
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RouteUpdateRequestDto"
+      responses:
+        '200':
+          description: The updated route details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RouteResponseDto"
+  /v1/Scheduling/route-machines:
+    get:
+      tags:
+      - Scheduling
+      summary: Get Route Machines
+      description: Retrieves a list of machines assigned to a specific route, identified by RouteId, and optionally filtered by MachineId.
+      operationId: get-route-machines
+      parameters:
+      - name: RouteId
+        in: query
+        description: The unique identifier of the route associated with the machines.
+        schema:
+          type: integer
+          format: int64
+      - name: MachineId
+        in: query
+        description: The unique identifier of the machine to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of machines assigned to the specified route.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RouteMachineResponseDto"
+    post:
+      tags:
+      - Scheduling
+      summary: Assign Machine to Route
+      description: Assigns a machine to a specific route. The request body should include the details of the machine to be assigned.
+      operationId: assign-machine-to-route
+      parameters:
+      - name: RouteId
+        in: query
+        description: The unique identifier of the route to which the machine will be assigned.
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RouteMachineCreateRequestDto"
+      responses:
+        '200':
+          description: The details of the machine assigned to the route.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RouteMachineResponseDto"
+    delete:
+      tags:
+      - Scheduling
+      summary: Remove Machine from Route
+      description: Removes a machine from a specific route, identified by RouteId and MachineId.
+      operationId: remove-machine-from-route
+      parameters:
+      - name: MachineId
+        in: query
+        description: The unique identifier of the machine to be removed from the route.
+        schema:
+          type: integer
+          format: int64
+      - name: RouteId
+        in: query
+        description: The unique identifier of the route from which the machine will be removed.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The details of the machine removed from the route.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RouteMachineResponseDto"
+  /v1/Scheduling/schedule/visit-order:
+    get:
+      tags:
+      - Scheduling
+      summary: Get Visit Orders
+      description: Retrieves a list of visit orders based on various query parameters such as VisitDate, MachineId, DriverId, RouteId, and ActorId.
+      operationId: get-visit-orders
+      parameters:
+      - name: VisitDate
+        in: query
+        description: The date for which the visit orders are requested.
+        schema:
+          type: string
+          format: date-time
+      - name: MachineId
+        in: query
+        description: The unique identifier of the machine associated with the visit order.
+        schema:
+          type: integer
+          format: int64
+      - name: DriverId
+        in: query
+        description: The unique identifier of the driver associated with the visit order.
+        schema:
+          type: string
+          format: uuid
+      - name: RouteId
+        in: query
+        description: The unique identifier of the route associated with the visit order.
+        schema:
+          type: integer
+          format: int64
+      - name: ActorId
+        in: query
+        description: The unique identifier of the actor associated with the visit order.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of visit orders that match the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VisitOrderResponseDto"
+    post:
+      tags:
+      - Scheduling
+      summary: Create Visit Orders
+      description: Creates new visit orders for machines. The request body should include the details of the machines to be visited.
+      operationId: create-visit-orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachineVisitOrderCreateRequestDto"
+      responses:
+        '200':
+          description: The newly created visit orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineVisitOrderCreateResponseDto"
+  /v1/Scheduling/schedule/machine-tasks:
+    get:
+      tags:
+      - Scheduling
+      summary: Get Machine Tasks
+      description: Retrieves a list of scheduled machine tasks based on various query parameters such as date range, machine, driver, route, and other filters.
+      operationId: get-machine-tasks
+      parameters:
+      - name: StartDate
+        in: query
+        description: The start date of the task scheduling period.
+        schema:
+          type: string
+          format: date-time
+      - name: EndDate
+        in: query
+        description: The end date of the task scheduling period.
+        schema:
+          type: string
+          format: date-time
+      - name: SchedulingId
+        in: query
+        description: The unique identifier for the specific scheduling instance.
+        schema:
+          type: integer
+          format: int64
+      - name: ActorId
+        in: query
+        description: The unique identifier for the actor associated with the task.
+        schema:
+          type: integer
+          format: int32
+      - name: MachineId
+        in: query
+        description: The unique identifier for the machine associated with the task.
+        schema:
+          type: integer
+          format: int64
+      - name: DriverId
+        in: query
+        description: The unique identifier for the driver assigned to the task.
+        schema:
+          type: string
+          format: uuid
+      - name: RouteId
+        in: query
+        description: The unique identifier for the route associated with the task.
+        schema:
+          type: integer
+          format: int64
+      - name: TimePeriod
+        in: query
+        description: The time period for which the tasks are requested, with a default of 31 days.
+        schema:
+          type: integer
+          format: int32
+          default: 31
+      - name: IsForlist
+        in: query
+        description: A flag indicating if the tasks are for list view. Default is true.
+        schema:
+          type: boolean
+          default: true
+      - name: IsStatic
+        in: query
+        description: A flag indicating if the tasks are static.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A list of scheduled machine tasks matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TaskSchedulingResponseDto"
+    post:
+      tags:
+      - Scheduling
+      summary: Create Machine Tasks
+      description: Creates new scheduled tasks for machines. The request body should include details of the tasks to be scheduled.
+      operationId: create-machine-tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/TaskSchedulingCreateDto"
+      responses:
+        '200':
+          description: The newly created scheduled tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ScheduleTaskDto"
+    put:
+      tags:
+      - Scheduling
+      summary: Update Machine Tasks
+      description: Updates existing scheduled tasks for machines. The request body should include the updated task details.
+      operationId: update-machine-tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/TaskSchedulingUpdateDto"
+      responses:
+        '200':
+          description: The updated scheduled tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ScheduleTaskDto"
+    delete:
+      tags:
+      - Scheduling
+      summary: Delete Machine Tasks
+      description: Deletes scheduled tasks for machines based on the provided query parameters such as SchedulingIds, MachineID, and date.
+      operationId: delete-machine-tasks
+      parameters:
+      - name: SchedulingIds
+        in: query
+        description: A list of unique identifiers for the specific scheduling instances to be deleted.
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+      - name: MachineID
+        in: query
+        description: The unique identifier of the machine for which the tasks are to be deleted.
+        schema:
+          type: integer
+          format: int64
+      - name: isStatic
+        in: query
+        description: A flag indicating if the tasks are static.
+        schema:
+          type: boolean
+      - name: date
+        in: query
+        description: The date for which the tasks are to be deleted.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The details of the deleted tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ScheduleTaskDto"
+  /v1/signin:
+    post:
+      tags:
+      - SignIn
+      summary: User Sign In
+      description: Authenticates a user with the provided credentials (username and password).
+      operationId: user-sign-in
+      requestBody:
+        description: The user's credentials for authentication.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserPwd"
+      responses:
+        '200':
+          description: The user was successfully authenticated.
+  /signin:
+    get:
+      tags:
+      - SignIn
+      summary: Sign In
+      operationId: sign-in
+      responses:
+        '200':
+          description: The sign-in was successful.
+  /v1/token:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Token
+      description: Creates a new token for the user, invalidating any previously existing tokens. The new token's expiration time can be specified.
+      operationId: create-new-token
+      parameters:
+      - name: ExpirationUTC
+        in: query
+        description: The UTC expiration date and time for the new token.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: The new token was successfully created, and the response contains the details of the token.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+    delete:
+      tags:
+      - Tokens
+      summary: Delete All User Tokens
+      description: Deletes all tokens associated with the user.
+      operationId: delete-all-user-tokens
+      responses:
+        '200':
+          description: All user tokens were successfully deleted.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
 
 
 
@@ -9894,12 +11005,1879 @@ components:
           nullable: true
           description: The URL where the uploaded file can be accessed.
       additionalProperties: false
-
-
-
-
-
-
+    ProductGroup:
+      type: object
+      properties:
+        ProductGroupRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference identifier for the product group.
+        ActorRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference identifier for the actor associated with the product group.
+        ProductGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product group.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the product group.
+        ProductGroupName:
+          type: string
+          nullable: true
+          description: The name of the product group.
+        ProductGroupCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The code associated with the product group.
+        ProductGroupSubCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A sub-code associated with the product group for further categorization.
+        ProductGroupCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the product group.
+        ProductGroupCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product group was created.
+        ProductGroupUpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the product group.
+        ProductGroupLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product group was last updated.
+        ProductGroupPictureURL:
+          type: string
+          nullable: true
+          description: The URL of the picture associated with the product group.
+        ProductGroupCategoryCode:
+          type: string
+          nullable: true
+          description: The category code associated with the product group.
+      additionalProperties: false
+    ProductGroupUpdateRequest:
+      type: object
+      properties:
+        ProductGroupName:
+          type: string
+          nullable: true
+          description: The updated name of the product group.
+        ProductGroupCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The updated code associated with the product group.
+        ProductGroupSubCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The updated sub-code associated with the product group.
+        ProductGroupCategoryCode:
+          type: string
+          nullable: true
+          description: The updated category code associated with the product group.
+      additionalProperties: false
+    ProductGroupCreateRequest:
+      type: object
+      properties:
+        ActorID:
+          type: integer
+          format: int64
+          description: The unique identifier of the actor associated with the product group.
+        ProductGroupName:
+          type: string
+          nullable: true
+          description: The name of the product group to be created.
+        ProductGroupCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The code associated with the product group.
+        ProductGroupSubCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: A sub-code for further categorizing the product group.
+        ProductGroupCategoryCode:
+          type: string
+          nullable: true
+          description: The category code associated with the product group.
+      additionalProperties: false
+    VatDTO:
+      type: object
+      properties:
+        TaxRowID:
+          type: integer
+          format: int32
+          description: The unique identifier of the tax row.
+        ProductGroupID:
+          type: integer
+          format: int32
+          description: The unique identifier of the product group associated with the tax.
+        CountryID:
+          type: integer
+          format: int32
+          description: The unique identifier of the country where the tax applies.
+        CityID:
+          type: integer
+          format: int32
+          description: The unique identifier of the city where the tax applies.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the region where the tax applies (if applicable).
+        TaxValue:
+          type: number
+          format: double
+          nullable: true
+          description: The value or rate of the tax.
+        TaxCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The code associated with the tax.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the tax entry.
+        CreatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the tax entry was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the tax entry.
+        UpdatedDT:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the tax entry was last updated.
+        VatName:
+          type: string
+          nullable: true
+          description: The name of the VAT (Value Added Tax) associated with the tax entry.
+        TaxId:
+          type: string
+          nullable: true
+          description: The tax identification number associated with the tax entry.
+        TaxIncluded:
+          type: boolean
+          nullable: true
+          description: Indicates whether the tax is included in the product price.
+      additionalProperties: false
+    VatRequestExt:
+      type: object
+      properties:
+        TaxRowID:
+          type: integer
+          format: int32
+          description: The unique identifier of the tax row to be updated.
+        CountryID:
+          type: integer
+          format: int32
+          description: The unique identifier of the country where the tax applies.
+        CityID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the city where the tax applies.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the region where the tax applies (if applicable).
+        TaxValue:
+          type: number
+          format: double
+          nullable: true
+          description: The value or rate of the tax to be updated.
+        TaxCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The code associated with the tax to be updated.
+        VatName:
+          type: string
+          nullable: true
+          description: The name of the VAT (Value Added Tax) associated with the tax entry.
+        TaxId:
+          type: string
+          nullable: true
+          description: The tax identification number associated with the tax entry.
+        TaxIncluded:
+          type: boolean
+          nullable: true
+          description: Indicates whether the tax is included in the product price.
+      additionalProperties: false
+    VatRequest:
+      type: object
+      properties:
+        CountryID:
+          type: integer
+          format: int32
+          description: The unique identifier of the country where the tax applies.
+        CityID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the city where the tax applies.
+        RegionID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the region where the tax applies (if applicable).
+        TaxValue:
+          type: number
+          format: double
+          nullable: true
+          description: The value or rate of the tax to be created.
+        TaxCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: The code associated with the tax to be created.
+        VatName:
+          type: string
+          nullable: true
+          description: The name of the VAT (Value Added Tax) associated with the tax entry.
+        TaxId:
+          type: string
+          nullable: true
+          description: The tax identification number associated with the tax entry.
+        TaxIncluded:
+          type: boolean
+          nullable: true
+          description: Indicates whether the tax is included in the product price.
+      additionalProperties: false
+    Product:
+      type: object
+      properties:
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier for the product in the Nayax system.
+        ProductGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product group to which the product belongs.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the product.
+        ProductManufacturerID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product's manufacturer.
+        ProductName:
+          type: string
+          nullable: true
+          description: The name of the product.
+        ProductCatalogNumber:
+          type: string
+          nullable: true
+          description: The catalog number assigned to the product.
+        ProductBarcode:
+          type: string
+          nullable: true
+          description: The barcode associated with the product.
+        ProductPackageQuantity:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of product units per package.
+        ProductDescription:
+          type: string
+          nullable: true
+          description: A description of the product.
+        ProductVolumeTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The volume type identifier associated with the product.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The name of the product in the DEX (Data Exchange) format.
+        ProductCostPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The cost price of the product.
+        ProductDefaultRetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The default retail price of the product.
+        ProductMinimumPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum quantity of the product that can be picked.
+        ProductStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status of the product, typically representing availability.
+        ProductCashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with cash.
+        ProductCreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with a credit card.
+        ProductPrepaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with a prepaid card.
+        ProductExternalPrepaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with an external prepaid card.
+        ProductMemberTypePriceBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the product has member-type-specific pricing.
+        ProductPictureURL:
+          type: string
+          nullable: true
+          description: The URL of the product's picture.
+        CaloriesPer100g:
+          type: number
+          format: double
+          nullable: true
+          description: The number of calories per 100 grams of the product.
+        CaloriesPerServing:
+          type: number
+          format: double
+          nullable: true
+          description: The number of calories per serving of the product.
+        EANCode:
+          type: string
+          nullable: true
+          description: The European Article Number (EAN) code associated with the product.
+        ProductCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the product entry.
+        ProductCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was created.
+        ProductUpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the product entry.
+        ProductLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was last updated.
+        VatId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The VAT (Value Added Tax) identifier associated with the product.
+        Refs:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+          description: A map of additional references related to the product.
+      additionalProperties: false
+    ProductEntity:
+      type: object
+      properties:
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier for the product in the Nayax system.
+        ProductGroupID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product group to which the product belongs.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the product.
+        ProductManufacturerID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the product's manufacturer.
+        ProductName:
+          type: string
+          nullable: true
+          description: The name of the product.
+        ProductCatalogNumber:
+          type: string
+          nullable: true
+          description: The catalog number assigned to the product.
+        ProductBarcode:
+          type: string
+          nullable: true
+          description: The barcode associated with the product.
+        ProductPackageQuantity:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of product units per package.
+        ProductDescription:
+          type: string
+          nullable: true
+          description: A description of the product.
+        ProductVolumeTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The volume type identifier associated with the product.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The name of the product in the DEX (Data Exchange) format.
+        ProductCostPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The cost price of the product.
+        ProductDefaultRetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The default retail price of the product.
+        ProductMinimumPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The minimum quantity of the product that can be picked.
+        ProductStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status of the product, typically representing availability.
+        ProductCashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with cash.
+        ProductCreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with a credit card.
+        ProductPrepaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with a prepaid card.
+        ProductExternalPrepaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when paid with an external prepaid card.
+        ProductMemberTypePriceBit:
+          type: boolean
+          nullable: true
+          description: Indicates if the product has member-type-specific pricing.
+        ProductPictureURL:
+          type: string
+          nullable: true
+          description: The URL of the product's picture.
+        CaloriesPer100g:
+          type: number
+          format: double
+          nullable: true
+          description: The number of calories per 100 grams of the product.
+        CaloriesPerServing:
+          type: number
+          format: double
+          nullable: true
+          description: The number of calories per serving of the product.
+        EANCode:
+          type: string
+          nullable: true
+          description: The European Article Number (EAN) code associated with the product.
+        ProductCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the product entry.
+        ProductCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was created.
+        ProductUpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the product entry.
+        ProductLastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the product was last updated.
+        VatId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The VAT (Value Added Tax) identifier associated with the product.
+      additionalProperties: false
+    ProgrammerUpdate:
+      type: object
+      properties:
+        PosChipId:
+          type: string
+          nullable: true
+          description: The chip ID of the POS (Point of Sale) device.
+        MainChipId:
+          type: string
+          nullable: true
+          description: The chip ID of the main board.
+        MainFwVersion:
+          type: string
+          nullable: true
+          description: The firmware version of the main board.
+        PosFwVersion:
+          type: string
+          nullable: true
+          description: The firmware version of the POS device.
+        OrderId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The order ID associated with the device.
+        IMEI:
+          type: string
+          nullable: true
+          description: The IMEI number of the device.
+        SimCardSerial:
+          type: string
+          nullable: true
+          description: The serial number of the SIM card in the device.
+        SimCardProvider:
+          type: string
+          nullable: true
+          description: The provider of the SIM card.
+        ModemModel:
+          type: string
+          nullable: true
+          description: The model of the modem in the device.
+        StatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status ID indicating the current status of the device.
+        BoardReplaceData:
+          "$ref": "#/components/schemas/BoardReplace"
+          description: Data related to the replacement of the board in the device.
+      additionalProperties: false
+    BoardReplace:
+      type: object
+      properties:
+        BoardReplaceEnum:
+          "$ref": "#/components/schemas/BoardReplaceEnum"
+          description: An enumeration indicating the type of board replacement.
+        OldChipId:
+          type: string
+          nullable: true
+          description: The chip ID of the old board being replaced.
+      additionalProperties: false
+    BoardReplaceEnum:
+      type: integer
+      format: int32
+      enum:
+      - 0
+      - 1
+      description: Enumeration indicating whether the board is replaced.
+    DevicesDbEntity:
+      type: object
+      properties:
+        DeviceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the device.
+        ActorID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the actor associated with the device.
+        DeviceTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type identifier of the device, referencing a lookup table.
+        DeviceSerial:
+          type: string
+          nullable: true
+          description: The serial number of the device.
+        IMEI:
+          type: string
+          nullable: true
+          description: The International Mobile Equipment Identity (IMEI) number of the device.
+        DeviceDescription:
+          type: string
+          nullable: true
+          description: A description of the device.
+        SimCardID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the SIM card used in the device.
+        FWVersionID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The firmware version identifier currently installed on the device.
+        RequestedFwID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the firmware version requested for installation.
+        PollInterval:
+          type: integer
+          format: int64
+          nullable: true
+          description: The polling interval for the device in milliseconds.
+        StatusID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the device, representing its current operational state.
+        LastUpdated:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the device information was last updated.
+        IsCollectMultipleParameters:
+          type: boolean
+          nullable: true
+          description: Indicates whether the device collects multiple parameters.
+        IsLogged:
+          type: boolean
+          nullable: true
+          description: Indicates whether logging is enabled for the device.
+        FRequestedNewVersionDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the new firmware version was requested.
+        FTookNewVersionDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the new firmware version was installed.
+        HardwareVersion:
+          type: string
+          nullable: true
+          description: The hardware version of the device.
+        IsRental:
+          type: boolean
+          nullable: true
+          description: Indicates whether the device is rented.
+        RentalEndMonth:
+          type: integer
+          format: int32
+          nullable: true
+          description: The month when the device rental ends.
+        RentalEndYear:
+          type: integer
+          format: int32
+          nullable: true
+          description: The year when the device rental ends.
+        IsToBeReturned:
+          type: boolean
+          nullable: true
+          description: Indicates whether the device is to be returned after rental.
+        FeeCommunicationThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The communication fee threshold for the device.
+        BillingPlanID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The billing plan identifier associated with the device.
+        BillingPlanActivationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the billing plan was activated.
+        DeviceCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the device was created in the system.
+        CreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the device entry.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the device entry.
+        DistributorBillingPlanID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The billing plan identifier associated with the distributor of the device.
+        ChipID:
+          type: string
+          nullable: true
+          description: The chip identifier of the device.
+        OrderID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The order identifier associated with the device.
+        ExternalFlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of the external flash memory in the device, in kilobytes.
+        BoardSerial:
+          type: string
+          nullable: true
+          description: The serial number of the main board in the device.
+        FlashSize:
+          type: integer
+          format: int32
+          nullable: true
+          description: The size of the internal flash memory in the device, in kilobytes.
+        DeviceFamily:
+          type: string
+          nullable: true
+          description: The family or category to which the device belongs.
+        ModemModel:
+          type: string
+          nullable: true
+          description: The model of the modem in the device.
+        TrialEndDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the trial period for the device ends.
+        VerticalTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The vertical type identifier associated with the device's application.
+        VerticalProductTypeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The vertical product type identifier associated with the device's application.
+        VerticalTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup table identifier for the vertical type of the device.
+        VerticalProductTypeLutID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The lookup table identifier for the vertical product type of the device.
+      additionalProperties: false
+    UserPushTokenDbEntity:
+      type: object
+      properties:
+        Token:
+          type: string
+          nullable: true
+          description: The push token used to send notifications to the user’s device.
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the push token entry.
+        UserId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user associated with the push token.
+        AppTypeId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier representing the type of application associated with the push token.
+        TokenStatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the push token, indicating whether it is active or inactive.
+        DeviceModel:
+          type: string
+          nullable: true
+          description: The model of the device associated with the push token.
+        DeviceOs:
+          type: string
+          nullable: true
+          description: The operating system of the device associated with the push token.
+        TokenCreationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the push token was created.
+        TokenCreatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who created the push token entry.
+        LastUpdatedBy:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the push token was last updated.
+        UpdateBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the push token entry.
+        ExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The expiration date of the push token.
+        device_identifier:
+          type: string
+          nullable: true
+          description: The unique identifier of the device associated with the push token.
+      additionalProperties: false
+    TokenInfo:
+      type: object
+      properties:
+        Token:
+          type: string
+          nullable: true
+          description: The push token to be added for the user.
+        AppTypeId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier representing the type of application associated with the push token.
+        DeviceModel:
+          type: string
+          nullable: true
+          description: The model of the device associated with the push token.
+        DeviceOs:
+          type: string
+          nullable: true
+          description: The operating system of the device associated with the push token.
+      additionalProperties: false
+    DriverResponseDto:
+      type: object
+      properties:
+        Id:
+          type: string
+          format: uuid
+          description: The unique identifier of the driver.
+        DistributorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the distributor associated with the driver.
+        OperatorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the operator associated with the driver.
+        OperatorName:
+          type: string
+          nullable: true
+          description: The name of the operator associated with the driver.
+        UserId:
+          type: integer
+          format: int64
+          description: The unique identifier of the user associated with the driver.
+        FullName:
+          type: string
+          nullable: true
+          description: The full name of the driver.
+        Mobile:
+          type: string
+          nullable: true
+          description: The mobile phone number of the driver.
+        Email:
+          type: string
+          nullable: true
+          description: The email address of the driver.
+        DriverLicense:
+          type: string
+          nullable: true
+          description: The driver's license number of the driver.
+        IdNumber:
+          type: string
+          nullable: true
+          description: The identification number of the driver.
+        Img:
+          type: string
+          nullable: true
+          description: The URL to the driver's image.
+        DriverStatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the driver, indicating their current status.
+        StartDate:
+          type: string
+          nullable: true
+          description: The date when the driver started working.
+        Skills:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+          description: A list of skill identifiers associated with the driver.
+        WorkingHours:
+          type: string
+          nullable: true
+          description: The working hours of the driver.
+        CreatedBy:
+          type: integer
+          format: int64
+          description: The identifier of the user who created the driver entry.
+        CreatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the driver entry was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the driver entry.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the driver entry was last updated.
+      additionalProperties: false
+    DriverRequestDto:
+      type: object
+      properties:
+        UserId:
+          type: integer
+          format: int64
+          description: The unique identifier of the user associated with the driver.
+        OperatorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the operator associated with the driver.
+        DriverStatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the driver, indicating their current status.
+        StartDate:
+          type: string
+          nullable: true
+          description: The date when the driver started working.
+        DriverLicense:
+          type: string
+          nullable: true
+          description: The driver's license number of the driver.
+        IdNumber:
+          type: string
+          nullable: true
+          description: The identification number of the driver.
+        Skills:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+          description: A list of skill identifiers associated with the driver.
+        WorkingHours:
+          type: array
+          items:
+            "$ref": "#/components/schemas/DriverWorkingDayAndHours"
+          nullable: true
+          description: A list of working days and hours for the driver.
+      additionalProperties: false
+    DriverWorkingDayAndHours:
+      type: object
+      properties:
+        Day:
+          type: integer
+          format: int32
+          description: The day of the week represented as an integer (e.g., 1 for Monday, 7 for Sunday).
+        Enabled:
+          type: boolean
+          description: Indicates whether the driver is available to work on this day.
+        Hours:
+          type: array
+          items:
+            "$ref": "#/components/schemas/DriverWorkingHours"
+          nullable: true
+          description: The working hours for the driver on this day.
+      additionalProperties: false
+    DriverWorkingHours:
+      type: object
+      properties:
+        StartHour:
+          type: string
+          nullable: true
+          description: The start hour of the driver's working time, formatted as HH:MM.
+        EndHour:
+          type: string
+          nullable: true
+          description: The end hour of the driver's working time, formatted as HH:MM.
+      additionalProperties: false
+    ActorRouteResponseDto:
+      type: object
+      properties:
+        DistributorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the distributor associated with the routes.
+        OperatorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the operator associated with the routes.
+        OperatorName:
+          type: string
+          nullable: true
+          description: The name of the operator associated with the routes.
+        ActorRoutes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/RouteResponseDto"
+          nullable: true
+          description: A list of routes associated with the operator and distributor.
+      additionalProperties: false
+    RouteResponseDto:
+      type: object
+      properties:
+        RouteId:
+          type: integer
+          format: int64
+          description: The unique identifier of the route.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the route.
+        DriverName:
+          type: string
+          nullable: true
+          description: The name of the driver assigned to the route.
+        DriverMobile:
+          type: string
+          nullable: true
+          description: The mobile phone number of the driver assigned to the route.
+        RouteName:
+          type: string
+          nullable: true
+          description: The name of the route.
+        RouteCode:
+          type: string
+          nullable: true
+          description: The code used to identify the route.
+        RouteRemarks:
+          type: string
+          nullable: true
+          description: Additional remarks or notes related to the route.
+        RouteStatusId:
+          type: integer
+          format: int32
+          description: The status identifier of the route, indicating its current status.
+        RouteMachineCount:
+          type: string
+          nullable: true
+          description: The number of machines assigned to the route.
+        CreatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the route was created.
+        CreatedBy:
+          type: integer
+          format: int64
+          description: The identifier of the user who created the route.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the route was last updated.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The identifier of the user who last updated the route.
+      additionalProperties: false
+    RouteCreateRequestDto:
+      type: object
+      properties:
+        RouteName:
+          type: string
+          nullable: true
+          description: The name of the route to be created.
+        RouteCode:
+          type: string
+          nullable: true
+          description: The code used to identify the route to be created.
+        DriverId:
+          type: string
+          format: uuid
+          description: The unique identifier of the driver to be assigned to the route.
+        RouteRemarks:
+          type: string
+          nullable: true
+          description: Additional remarks or notes related to the route.
+        RouteStatusId:
+          type: integer
+          format: int32
+          description: The status identifier of the route, indicating its initial status.
+      additionalProperties: false
+    RouteUpdateRequestDto:
+      type: object
+      properties:
+        OperatorId:
+          type: integer
+          format: int64
+          description: The unique identifier of the operator associated with the route being updated.
+        RouteName:
+          type: string
+          nullable: true
+          description: The updated name of the route.
+        RouteCode:
+          type: string
+          nullable: true
+          description: The updated code used to identify the route.
+        DriverId:
+          type: string
+          format: uuid
+          description: The unique identifier of the driver to be assigned to the updated route.
+        RouteRemarks:
+          type: string
+          nullable: true
+          description: Additional updated remarks or notes related to the route.
+        RouteStatusId:
+          type: integer
+          format: int32
+          description: The updated status identifier of the route, indicating its current status.
+      additionalProperties: false
+    RouteMachineResponseDto:
+      type: object
+      properties:
+        MachineTypeLutId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the machine type from the lookup table.
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine.
+        MachineName:
+          type: string
+          nullable: true
+          description: The name of the machine.
+        MachineNumber:
+          type: string
+          nullable: true
+          description: The unique number assigned to the machine.
+        CountryId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the country where the machine is located.
+        City:
+          type: string
+          nullable: true
+          description: The city where the machine is located.
+        Address:
+          type: string
+          nullable: true
+          description: The address where the machine is located.
+        StreetNumber:
+          type: string
+          nullable: true
+          description: The street number where the machine is located.
+        Longitude:
+          type: string
+          nullable: true
+          description: The longitude coordinate of the machine's location.
+        Latitude:
+          type: string
+          nullable: true
+          description: The latitude coordinate of the machine's location.
+        InstituteId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the institute associated with the machine.
+        InstituteName:
+          type: string
+          nullable: true
+          description: The name of the institute associated with the machine.
+        LocationId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the location where the machine is installed.
+        LocationName:
+          type: string
+          nullable: true
+          description: The name of the location where the machine is installed.
+        CustomerId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the customer associated with the machine.
+        CustomerName:
+          type: string
+          nullable: true
+          description: The name of the customer associated with the machine.
+        CustomerLocationId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the customer's location associated with the machine.
+        CustomerLocationName:
+          type: string
+          nullable: true
+          description: The name of the customer's location associated with the machine.
+        StatusId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The status identifier of the machine, indicating its current status.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the machine.
+        RouteId:
+          type: integer
+          format: int64
+          description: The unique identifier of the route to which the machine is assigned.
+        UserId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who last interacted with the machine.
+        CreatedBy:
+          type: integer
+          format: int64
+          description: The unique identifier of the user who created the route-machine association.
+        CreatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the route-machine association was created.
+      additionalProperties: false
+    RouteMachineCreateRequestDto:
+      type: object
+      properties:
+        MachineIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of unique identifiers for the machines to be assigned to the route. Each `MachineId` corresponds to a machine that will be associated with the specified route.
+      additionalProperties: false
+    VisitOrderResponseDto:
+      type: object
+      properties:
+        MachineVisitOrderId:
+          type: integer
+          format: int64
+          description: The unique identifier for the visit order associated with a specific machine.
+        VisitDate:
+          type: string
+          format: date-time
+          description: The date and time when the visit is scheduled to occur.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the visit. This field is nullable if no driver is assigned.
+        Machines:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MachineOrderResponseDto"
+          nullable: true
+          description: A list of machines included in the visit order, each with details about the machine's ID, route, and order in the visit sequence.
+      additionalProperties: false
+    MachineOrderResponseDto:
+      type: object
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine to be visited. This field is nullable if the machine ID is not available.
+        RouteId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the route associated with the machine. This field is nullable if the route ID is not available.
+        OrderKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The sequence order key indicating the position of the machine in the visit order. This field is nullable if the order key is not defined.
+      additionalProperties: false
+    MachineVisitOrderCreateRequestDto:
+      type: object
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine for which the visit order is being created.
+        VisitDate:
+          type: string
+          format: date-time
+          description: The date and time when the machine is scheduled to be visited.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to visit the machine. This field is nullable if no driver is assigned.
+        RouteId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the route associated with the machine visit. This field is nullable if the route is not specified.
+        OrderKey:
+          type: integer
+          format: int32
+          description: The sequence order key indicating the position of the machine in the visit order.
+      additionalProperties: false
+    MachineVisitOrderCreateResponseDto:
+      type: object
+      properties:
+        VisitDate:
+          type: string
+          format: date-time
+          description: The date and time when the machine is scheduled to be visited.
+        MachineId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine associated with the visit order. This field is nullable if the machine ID is not available.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to visit the machine. This field is nullable if no driver is assigned.
+        RouteId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the route associated with the machine visit. This field is nullable if the route is not specified.
+        OrderKey:
+          type: integer
+          format: int32
+          nullable: true
+          description: The sequence order key indicating the position of the machine in the visit order. This field is nullable if the order key is not defined.
+        CreatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the visit order was created.
+        CreatedBy:
+          type: integer
+          format: int64
+          description: The unique identifier of the user who created the visit order.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the visit order was last updated. This field is nullable if no updates have been made.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who last updated the visit order. This field is nullable if no updates have been made.
+      additionalProperties: false
+    TaskSchedulingResponseDto:
+      type: object
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine associated with the task.
+        RouteId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the route associated with the task, if applicable.
+        RouteName:
+          type: string
+          nullable: true
+          description: The name of the route associated with the task, if applicable.
+        VisitDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time of the scheduled visit.
+        ScheduleTasks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ScheduleTaskDto"
+          nullable: true
+          description: A list of scheduled tasks associated with the machine.
+      additionalProperties: false
+    ScheduleTaskDto:
+      type: object
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine associated with the task.
+        TaskLutId:
+          type: string
+          nullable: true
+          description: The identifier for the type of task from the lookup table.
+        SchedulingId:
+          type: integer
+          format: int64
+          description: The unique identifier of the scheduling instance.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the task.
+        DriverName:
+          type: string
+          nullable: true
+          description: The name of the driver assigned to the task.
+        TimezoneOffset:
+          type: number
+          format: double
+          description: The timezone offset in hours for the scheduled task.
+        ScheduleDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the task is scheduled.
+        StatusId:
+          type: integer
+          format: int32
+          description: The status identifier of the task.
+        Notes:
+          type: string
+          nullable: true
+          description: Additional notes related to the task.
+        GeneratePickList:
+          type: boolean
+          description: Indicates whether a pick list should be generated for the task.
+        GeneratePickListTime:
+          type: string
+          nullable: true
+          description: The time when the pick list is generated.
+        GeneratePickListRange:
+          type: integer
+          format: int32
+          nullable: true
+          description: The range in minutes for generating the pick list.
+        ScheduleNextWorkingDay:
+          type: boolean
+          description: Indicates whether the task should be scheduled for the next working day.
+        AssignedToPatternId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the pattern to which the task is assigned.
+        AssignedToScheduleId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the schedule to which the task is assigned.
+        IncompletionReason:
+          type: string
+          nullable: true
+          description: The reason for task incompletion, if applicable.
+        IncompletionReasonImages:
+          type: array
+          items:
+            "$ref": "#/components/schemas/EntityPicture"
+          nullable: true
+          description: A list of images associated with the reason for task incompletion.
+        Pattern:
+          "$ref": "#/components/schemas/Pattern"
+          description: The pattern details associated with the task, if any.
+        IsClustered:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task is part of a clustered set of tasks.
+        ClusterIds:
+          type: string
+          nullable: true
+          description: The identifiers of the clustered tasks, if applicable.
+        CreatedBy:
+          type: integer
+          format: int64
+          description: The unique identifier of the user who created the task.
+        CreatedDt:
+          type: string
+          format: date-time
+          description: The date and time when the task was created.
+        UpdatedBy:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the user who last updated the task.
+        UpdatedDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the task was last updated.
+        isMobile:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task was created or updated via a mobile device.
+        isSeriesUpdate:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task is part of a series update.
+        originalDate:
+          type: string
+          nullable: true
+          description: The original date of the task before any rescheduling, if applicable.
+        IncompletionReasonId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the reason for task incompletion.
+        IncompletionReasonName:
+          type: string
+          nullable: true
+          description: The name of the reason for task incompletion.
+      additionalProperties: false
+    EntityPicture:
+      type: object
+      properties:
+        EntityPictureId:
+          type: integer
+          format: int32
+          description: The unique identifier of the entity picture.
+        EntityPictureUrl:
+          type: string
+          nullable: true
+          description: The URL of the entity picture.
+      additionalProperties: false
+    Pattern:
+      type: object
+      properties:
+        PatternId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the pattern.
+        Name:
+          type: string
+          nullable: true
+          description: The name of the pattern.
+        Description:
+          type: string
+          nullable: true
+          description: The description of the pattern.
+        RepeatType:
+          type: integer
+          format: int32
+          nullable: true
+          description: The type of repetition for the pattern (e.g., daily, weekly).
+        RepeatInterval:
+          type: integer
+          format: int32
+          description: The interval of repetition for the pattern.
+        IsStatic:
+          type: boolean
+          description: Indicates whether the pattern is static.
+        StartOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: The start date and time of the pattern.
+        EndOn:
+          type: string
+          format: date-time
+          nullable: true
+          description: The end date and time of the pattern.
+        EndAfter:
+          type: integer
+          format: int32
+          nullable: true
+          description: The number of occurrences after which the pattern ends.
+        RepeatOn:
+          type: array
+          items:
+            "$ref": "#/components/schemas/RepeatOn"
+          nullable: true
+          description: The days and weeks on which the pattern repeats.
+      additionalProperties: false
+    RepeatOn:
+      type: object
+      properties:
+        Tasks:
+          type: string
+          nullable: true
+          description: The tasks associated with the repetition pattern.
+        Days:
+          type: string
+          nullable: true
+          description: The days of the week on which the tasks repeat.
+        Week:
+          type: string
+          nullable: true
+          description: The week of the month on which the tasks repeat.
+        MonthDay:
+          type: string
+          nullable: true
+          description: The day of the month on which the tasks repeat.
+        SetPos:
+          type: string
+          nullable: true
+          description: The position within the month (e.g., first, second) for the tasks to repeat.
+        RecurrenceEx:
+          type: string
+          nullable: true
+          description: Any exceptions to the recurrence pattern.
+        WeekNumber:
+          type: string
+          nullable: true
+          description: The week number within the recurrence period.
+      additionalProperties: false
+    TaskSchedulingCreateDto:
+      type: object
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine for which the task is being scheduled.
+        TaskLutId:
+          type: string
+          nullable: true
+          description: The identifier for the type of task from the lookup table. This field is nullable if the task type is not specified.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the task. This field is nullable if no driver is assigned.
+        ScheduleDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the task is scheduled to be performed. This field is nullable if the schedule date is not specified.
+        StatusId:
+          type: integer
+          format: int32
+          description: The status identifier of the task, indicating its current state (e.g., pending, completed).
+        Notes:
+          type: string
+          nullable: true
+          description: Additional notes related to the task. This field is nullable if there are no notes.
+        GeneratePickList:
+          type: boolean
+          description: Indicates whether a pick list should be generated for the task.
+        GeneratePickListTime:
+          type: string
+          nullable: true
+          description: The time when the pick list should be generated. This field is nullable if the pick list generation time is not specified.
+        GeneratePickListRange:
+          type: integer
+          format: int32
+          nullable: true
+          description: The range in minutes for generating the pick list. This field is nullable if the range is not specified.
+        ScheduleNextWorkingDay:
+          type: boolean
+          description: Indicates whether the task should be scheduled for the next working day.
+        TimezoneOffset:
+          type: number
+          format: double
+          description: The timezone offset in hours for the scheduled task, relative to UTC.
+        AssignedToPatternId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the pattern to which the task is assigned. This field is nullable if the task is not associated with a pattern.
+        AssignedToScheduleId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the schedule to which the task is assigned. This field is nullable if the task is not associated with a schedule.
+        Pattern:
+          "$ref": "#/components/schemas/Pattern"
+          description: The pattern details associated with the task, if any.
+        IsMobile:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task was created or updated via a mobile device. This field is nullable if the source of creation is not specified.
+        IsSeriesUpdate:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task is part of a series update. This field is nullable if the task is not part of a series.
+        OriginalDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The original date of the task before any rescheduling. This field is nullable if there was no rescheduling.
+        IncompletionReasonId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the reason for task incompletion. This field is nullable if the task was completed.
+        IncompletionReason:
+          type: string
+          nullable: true
+          description: The reason for task incompletion, if applicable. This field is nullable if the task was completed.
+      additionalProperties: false
+    TaskSchedulingUpdateDto:
+      type: object
+      properties:
+        SchedulingId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the scheduling instance being updated. This field is nullable if the scheduling instance is not specified.
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine associated with the task.
+        TaskLutId:
+          type: string
+          nullable: true
+          description: The identifier for the type of task from the lookup table. This field is nullable if the task type is not specified.
+        DriverId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The unique identifier of the driver assigned to the task. This field is nullable if no driver is assigned.
+        ScheduleDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the task is scheduled to be performed. This field is nullable if the schedule date is not specified.
+        StatusId:
+          type: integer
+          format: int32
+          description: The status identifier of the task, indicating its current state (e.g., pending, completed).
+        Notes:
+          type: string
+          nullable: true
+          description: Additional notes related to the task. This field is nullable if there are no notes.
+        GeneratePickList:
+          type: boolean
+          description: Indicates whether a pick list should be generated for the task.
+        GeneratePickListTime:
+          type: string
+          nullable: true
+          description: The time when the pick list should be generated. This field is nullable if the pick list generation time is not specified.
+        GeneratePickListRange:
+          type: integer
+          format: int32
+          nullable: true
+          description: The range in minutes for generating the pick list. This field is nullable if the range is not specified.
+        ScheduleNextWorkingDay:
+          type: boolean
+          description: Indicates whether the task should be scheduled for the next working day.
+        TimezoneOffset:
+          type: number
+          format: double
+          description: The timezone offset in hours for the scheduled task, relative to UTC.
+        AssignedToPatternId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the pattern to which the task is assigned. This field is nullable if the task is not associated with a pattern.
+        AssignedToScheduleId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the schedule to which the task is assigned. This field is nullable if the task is not associated with a schedule.
+        Pattern:
+          "$ref": "#/components/schemas/Pattern"
+          description: The pattern details associated with the task, if any.
+        IsMobile:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task was created or updated via a mobile device. This field is nullable if the source of creation is not specified.
+        IsSeriesUpdate:
+          type: boolean
+          nullable: true
+          description: Indicates whether the task is part of a series update. This field is nullable if the task is not part of a series.
+        OriginalDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: The original date of the task before any rescheduling. This field is nullable if there was no rescheduling.
+        IncompletionReasonId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The unique identifier of the reason for task incompletion. This field is nullable if the task was completed.
+        IncompletionReason:
+          type: string
+          nullable: true
+          description: The reason for task incompletion, if applicable. This field is nullable if the task was completed.
+      additionalProperties: false
+    UserPwd:
+      type: object
+      properties:
+        usr:
+          type: string
+          nullable: true
+          description: The username of the user attempting to sign in.
+        pwd:
+          type: string
+          nullable: true
+          description: The password of the user attempting to sign in.
+      additionalProperties: false
+    LynxToken:
+      type: object
+      properties:
+        Token:
+          type: string
+          nullable: true
+          description: The authentication token string used for accessing secured endpoints.
+        ExpirationUTC:
+          type: string
+          format: date-time
+          description: The UTC date and time when the token will expire and become invalid.
+        TokenId:
+          type: string
+          nullable: true
+          description: The unique identifier for the token, used for managing and identifying tokens.
+      additionalProperties: false
 
 
 
