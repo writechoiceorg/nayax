@@ -2218,6 +2218,434 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/RolesDbEntity"
+  /v1/regions:
+    get:
+      tags:
+      - Lookups
+      summary: Get Regions
+      description: Retrieves a list of regions (states or provinces), optionally filtered by `CountryID` or `RegionID`.
+      operationId: get-regions
+      parameters:
+      - name: CountryID
+        in: query
+        description: The unique identifier of the country to filter the regions.
+        schema:
+          type: integer
+          format: int32
+      - name: RegionID
+        in: query
+        description: The unique identifier of the region to filter the results.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: A list of regions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RegionsDbEntity"
+  /v1/machines/{MachineID}/attributes/defaults:
+    post:
+      tags:
+      - MachineAttribute
+      summary: Update Machine Attribute to Model Defaults
+      description: Resets the machine attributes to the default values defined by the machine model. This operation is typically used to restore default configurations.
+      operationId: update-machine-attributes-to-defaults
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose attributes are being updated.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine attributes were successfully updated to the machine model defaults.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/{MachineID}/attributes/resendConfig:
+    post:
+      tags:
+      - MachineAttribute
+      summary: Update Machine Attribute to Current Configuration
+      description: Resends the current machine configuration, updating the machine attributes to match the latest configuration settings.
+      operationId: update-machine-attributes-to-current-config
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose attributes are being updated.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The machine attributes were successfully updated to match the current machine configuration.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/{MachineID}/attributes:
+    get:
+      tags:
+      - MachineAttribute
+      summary: Get All Machine Attributes
+      description: Retrieves all attributes associated with a specific machine identified by `MachineID`.
+      operationId: get-machine-attributes
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose attributes are being retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of all attributes associated with the specified machine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MachineAttribute"
+    put:
+      tags:
+      - MachineAttribute
+      summary: Bulk Update Machine Attributes
+      description: Performs a bulk update of machine attributes for the specified machine identified by `MachineID`.
+      operationId: bulk-update-machine-attributes
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose attributes are being updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachineAttribute"
+      responses:
+        '200':
+          description: The result of the bulk update operation, including success and any failure details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BulkUpdateResponse"
+  /v2/machines/attributes:
+    post:
+      tags:
+      - MachineAttribute
+      summary: Insert/Update Machine Attributes
+      description: Allows bulk insertion or updating of machine attributes. The request body should include an array of machine attributes to be processed.
+      operationId: insert-or-update-machine-attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/MachineAttributesInsertLynxRequest"
+      responses:
+        '200':
+          description: The machine attributes were successfully processed.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/{MachineID}/attributes/{DeviceAttributeID}:
+    get:
+      tags:
+      - MachineAttribute
+      summary: Get Specific Machine Attribute
+      description: Retrieves the details of a specific machine attribute identified by `MachineID` and `DeviceAttributeID`.
+      operationId: get-specific-machine-attribute
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine.
+        schema:
+          type: integer
+          format: int64
+      - name: DeviceAttributeID
+        in: path
+        required: true
+        description: The unique identifier of the device attribute.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The details of the requested machine attribute.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineAttribute"
+    put:
+      tags:
+      - MachineAttribute
+      summary: Update Specific Machine Attribute
+      description: Updates the details of a specific machine attribute identified by `MachineID` and `DeviceAttributeID`.
+      operationId: update-specific-machine-attribute
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine.
+        schema:
+          type: integer
+          format: int64
+      - name: DeviceAttributeID
+        in: path
+        required: true
+        description: The unique identifier of the device attribute.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MachineAttribute"
+      responses:
+        '200':
+          description: The machine attribute was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MachineAttribute"
+  /v1/machines/{MachineID}/heartlandBilling:
+    get:
+      tags:
+      - MachineBilling
+      summary: Get Payment Details
+      description: Retrieves the payment details associated with a specific machine identified by `MachineID`.
+      operationId: get-payment-details
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose payment details are being retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The payment details information was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillingInfo"
+    post:
+      tags:
+      - MachineBilling
+      summary: Update Payment Details
+      description: Updates the payment details associated with a specific machine identified by `MachineID`.
+      operationId: update-payment-details
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose payment details are being updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BillingInfo"
+      responses:
+        '200':
+          description: The payment details information was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillingInfo"
+  /v1/machines/{MachineID}/RBIOnboarding:
+    post:
+      tags:
+      - MachineBilling
+      summary: Update Payment Details for RBI Onboarding
+      description: Updates the payment details associated with a specific machine for RBI onboarding, identified by `MachineID`.
+      operationId: update-rbi-onboarding
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine being onboarded for RBI.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RbiBoardingRequest"
+      responses:
+        '200':
+          description: The RBI onboarding details were successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RbiBoardingResponse"
+  /v1/machines/{MachineID}/pickList:
+    get:
+      tags:
+      - MachineInventory
+      summary: Get Pick List
+      description: Retrieves the pick list associated with a specific machine identified by `MachineID`.
+      operationId: get-pick-list
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose pick list is being retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The pick list was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PickListItem"
+    post:
+      tags:
+      - MachineInventory
+      summary: Generate Pick List
+      description: Generates a new pick list for a specific machine, with options to adjust the pick list based on various criteria.
+      operationId: generate-pick-list
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine for which the pick list is being generated.
+        schema:
+          type: integer
+          format: int64
+      - name: UseMinPick
+        in: query
+        description: Specifies whether to use minimum picklist logic for the machine.
+        schema:
+          type: boolean
+      - name: AddOnlineSales
+        in: query
+        description: Adjusts the pick list by considering online transactions (relevant for DEX data).
+        schema:
+          type: boolean
+      - name: AddEstimatedSales
+        in: query
+        description: Adds products to the pick list based on sales statistics for the specified visit date.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: The pick list was successfully generated.
+    delete:
+      tags:
+      - MachineInventory
+      summary: Delete Pick List
+      description: Deletes the existing pick list for a specific machine identified by `MachineID`.
+      operationId: delete-pick-list
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose pick list is being deleted.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The pick list was successfully deleted.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/{MachineID}/inventory/full:
+    post:
+      tags:
+      - MachineInventory
+      summary: Set All Machine Bins as Full
+      description: Marks all bins in the specified machine as fully stocked, indicating that all product slots are filled to capacity.
+      operationId: set-machine-bins-full
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose bins are being set as full.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The operation to mark all machine bins as full was successful.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/{MachineID}/inventory/empty:
+    post:
+      tags:
+      - MachineInventory
+      summary: Empty Machine Products Inventory
+      description: Empties the inventory of all products in the specified machine, marking all product slots as empty.
+      operationId: empty-machine-inventory
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose inventory is being emptied.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The operation to empty the machine's inventory was successful.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/machines/inventory/picklists/update:
+    put:
+      tags:
+      - MachineInventory
+      summary: Update Pick List
+      description: Updates the pick list for a specific machine, allowing changes to the quantity of products to be picked.
+      operationId: update-pick-list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/PickListLynxModelRequest"
+      responses:
+        '200':
+          description: The pick list was successfully updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PickListLynxModelResponse"
 
 
 
@@ -6517,6 +6945,454 @@ components:
           type: boolean
           nullable: true
           description: Indicates whether the role has administrative privileges.
+      additionalProperties: false
+    MachineAttribute:
+      type: object
+      description: Represents a single attribute of a machine, including its identifier, value, and associated metadata.
+      properties:
+        DeviceAttributeID:
+          type: integer
+          format: int64
+          description: The unique identifier of the device attribute.
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine associated with this attribute.
+        DeviceAttributeValue:
+          type: string
+          nullable: true
+          description: The value assigned to this device attribute.
+        DeviceAttributeCodeID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The code identifier for this device attribute.
+        DeviceAttributeName:
+          type: string
+          nullable: true
+          description: The name of the device attribute.
+        DeviceAttributeGroup:
+          type: string
+          nullable: true
+          description: The group or category to which this device attribute belongs.
+        DeviceAttributeReadOnlyBit:
+          type: boolean
+          description: Indicates whether the device attribute is read-only.
+        MachineAttributeRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine attribute, typically used for informational purposes.
+        MachineRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine, typically used for informational purposes.
+      additionalProperties: false
+    BulkUpdateResponse:
+      type: object
+      description: Represents the result of a bulk update operation, indicating overall success and details of any failed updates.
+      properties:
+        isFullySuccess:
+          type: boolean
+          description: Indicates whether the bulk update operation was fully successful.
+        failureItems:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FailureItem"
+          nullable: true
+          description: A list of items that failed to update, including error details.
+      additionalProperties: false
+    FailureItem:
+      type: object
+      description: Represents an individual item that failed during a bulk update operation, including an error message.
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: The identifier of the item that failed to update.
+        error:
+          type: string
+          nullable: true
+          description: The error message explaining why the item failed to update.
+      additionalProperties: false
+    MachineAttributesInsertLynxRequest:
+      type: object
+      description: Represents the data required to insert or update machine attributes, including machine identifiers, attributes, and update options.
+      properties:
+        MachineIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+          nullable: true
+          description: A list of unique identifiers for the machines that the attributes will be applied to.
+        allowCollectDt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time when the attributes are allowed to be collected.
+        Attributes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/AttributeDtoLynxModel"
+          nullable: true
+          description: A list of attributes to be inserted or updated for the specified machines.
+        UpdateQueue:
+          type: boolean
+          description: Indicates whether the attributes should be added to an update queue for processing.
+        UpdateValues:
+          type: boolean
+          description: Indicates whether the existing attribute values should be updated with the new values provided.
+      additionalProperties: false
+    AttributeDtoLynxModel:
+      type: object
+      description: Represents a single attribute to be applied to a machine, including its identifier, value, and code identifier.
+      properties:
+        Id:
+          type: integer
+          format: int64
+          description: The unique identifier of the attribute.
+        Value:
+          type: string
+          nullable: true
+          description: The value assigned to this attribute.
+        CodeId:
+          type: integer
+          format: int64
+          nullable: true
+          description: The code identifier associated with this attribute.
+      additionalProperties: false
+    BillingInfo:
+      type: object
+      description: Represents the billing information for a machine, including login credentials and license details.
+      properties:
+        Username:
+          type: string
+          nullable: true
+          description: The username used for billing authentication.
+        Password:
+          type: string
+          nullable: true
+          description: The password used for billing authentication.
+        LicenseID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The license identifier associated with the machine's billing.
+        SiteID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The site identifier associated with the machine's billing.
+        DeviceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The device identifier associated with the machine's billing.
+      additionalProperties: false
+    RbiBoardingRequest:
+      type: object
+      description: Represents the request payload for RBI onboarding, including options for associating the machine.
+      properties:
+        Associate:
+          type: boolean
+          description: Indicates whether the machine should be associated with the RBI onboarding process.
+      additionalProperties: false
+    RbiBoardingResponse:
+      type: object
+      description: Represents the response after updating payment details for RBI onboarding, including machine identifiers and relevant onboarding details.
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine involved in the RBI onboarding process.
+        MID:
+          type: string
+          nullable: true
+          description: The Merchant ID (MID) associated with the machine after onboarding.
+        TID:
+          type: string
+          nullable: true
+          description: The Terminal ID (TID) associated with the machine after onboarding.
+      additionalProperties: false
+    PickListItem:
+      type: object
+      description: Represents an item on a machine's pick list, including product information, stock levels, and pricing details.
+      properties:
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the Nayax system.
+        ProductID:
+          type: string
+          nullable: true
+          description: The unique identifier of the product.
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine associated with this pick list item.
+        MDBCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The MDB (Multi-Drop Bus) code associated with the product.
+        PACode:
+          type: string
+          nullable: true
+          description: The PA code associated with the product.
+        SelectionID:
+          type: string
+          nullable: true
+          description: The selection identifier for the product within the machine.
+        OperatorButtonCode:
+          type: string
+          nullable: true
+          description: The code used by operators for manual selections.
+        PAR:
+          type: integer
+          format: int32
+          nullable: true
+          description: The PAR level, indicating the standard quantity of the product that should be stocked in the machine.
+        MissingStock:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock that is missing from the machine.
+        OnHandStock:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock currently on hand in the machine.
+        VendOutAlertThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The stock level at which an alert should be triggered for potential vend out.
+        MachinePrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product as set on the machine.
+        CreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a credit card.
+        RetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The retail price of the product.
+        DEXPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product according to DEX (Data Exchange) data.
+        LastPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of the product that was picked during the last restocking.
+        PrePaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a prepaid card.
+        CashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with cash.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The product name according to DEX data.
+        ProductName:
+          type: string
+          nullable: true
+          description: The name of the product.
+        SalesSourceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the source of sales data.
+        MachineInventoryRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine's inventory, typically used for informational purposes.
+        MachineRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the machine, typically used for informational purposes.
+        ProductRef:
+          type: string
+          nullable: true
+          readOnly: true
+          description: A reference string for the product, typically used for informational purposes.
+      additionalProperties: false
+    PickListLynxModelRequest:
+      type: object
+      description: Represents a request to update the pick list for a machine, including the machine ID and the products to be updated.
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          description: The unique identifier of the machine whose pick list is being updated.
+        Products:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PickListProductLynxModelRequest"
+          nullable: true
+          description: A list of products to be updated in the pick list.
+      additionalProperties: false
+    PickListProductLynxModelRequest:
+      type: object
+      description: Represents a product in the pick list update request, including the product ID and the quantity to be picked.
+      properties:
+        MachineProductId:
+          type: integer
+          format: int64
+          description: The unique identifier of the product in the machine.
+        PickQty:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of the product to be picked.
+      additionalProperties: false
+    PickListLynxModelResponse:
+      type: object
+      description: Represents the response after updating the pick list for a machine, including the machine ID and the updated products.
+      properties:
+        MachineID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the machine whose pick list was updated.
+        Products:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PickListProductLynxModelResponse"
+          nullable: true
+          description: A list of products in the updated pick list.
+      additionalProperties: false
+    PickListProductLynxModelResponse:
+      type: object
+      description: Represents a product in the response after updating the pick list, including detailed product information and stock levels.
+      properties:
+        NayaxProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the Nayax system.
+        MachineProductID:
+          type: integer
+          format: int64
+          nullable: true
+          description: The unique identifier of the product in the machine.
+        ProductID:
+          type: string
+          nullable: true
+          description: The unique identifier of the product.
+        MDBCode:
+          type: integer
+          format: int64
+          nullable: true
+          description: The MDB (Multi-Drop Bus) code associated with the product.
+        PACode:
+          type: string
+          nullable: true
+          description: The PA code associated with the product.
+        SelectionID:
+          type: string
+          nullable: true
+          description: The selection identifier for the product within the machine.
+        OperatorButtonCode:
+          type: string
+          nullable: true
+          description: The code used by operators for manual selections.
+        PAR:
+          type: integer
+          format: int32
+          nullable: true
+          description: The PAR level, indicating the standard quantity of the product that should be stocked in the machine.
+        MissingStock:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock that is missing from the machine.
+        OnHandStock:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of stock currently on hand in the machine.
+        VendOutAlertThreshold:
+          type: integer
+          format: int32
+          nullable: true
+          description: The stock level at which an alert should be triggered for potential vend out.
+        MachinePrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product as set on the machine.
+        CreditCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a credit card.
+        RetailPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The retail price of the product.
+        DEXPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product according to DEX (Data Exchange) data.
+        LastPickQTY:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of the product that was picked during the last restocking.
+        PrePaidCardPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with a prepaid card.
+        CashPrice:
+          type: number
+          format: double
+          nullable: true
+          description: The price of the product when purchased with cash.
+        DEXProductName:
+          type: string
+          nullable: true
+          description: The product name according to DEX data.
+        ProductName:
+          type: string
+          nullable: true
+          description: The name of the product.
+        SalesSourceID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The identifier for the source of sales data.
+        AmountInTray:
+          type: integer
+          format: int32
+          nullable: true
+          description: The quantity of the product currently in the tray.
+        GroupId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The group identifier associated with the product.
       additionalProperties: false
 
 
