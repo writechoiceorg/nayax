@@ -4456,6 +4456,109 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ApiResult"
+  /v1/token/auth:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Multi-Token
+      description: Generates a new multi-token based on the provided authentication details. This token allows for multiple access scenarios.
+      operationId: create-multi-token
+      requestBody:
+        description: The authentication details required to generate the multi-token.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenRequest"
+      responses:
+        '200':
+          description: The multi-token was successfully created, and the response contains the token details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/multiTokens:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Multi-Token
+      description: Generates a new multi-token using the provided token ID and expiration date. This token supports multiple access scenarios.
+      operationId: create-new-multi-token
+      parameters:
+      - name: TokenId
+        in: query
+        description: The unique identifier of the token to be used in the creation of the multi-token.
+        schema:
+          type: string
+      - name: ExpirationUTC
+        in: query
+        description: The UTC expiration date and time for the new multi-token.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: The multi-token was successfully created, and the response contains the token details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/device-token/auth:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Device Token
+      description: Generates a new token for a device. Any previously existing token for the device will be deleted and replaced with this new one.
+      operationId: create-device-token
+      requestBody:
+        description: The details required to generate a new device token, including device-specific information.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DeviceTokenRequest"
+      responses:
+        '200':
+          description: The device token was successfully created, and the response contains the details of the new token.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/users/{userId}/duplicate:
+    post:
+      tags:
+      - Users
+      summary: Duplicate a Specific User
+      description: Creates a new user by duplicating the details of an existing user, identified by the userId in the path. The new user will inherit specific attributes and settings from the original user.
+      operationId: duplicate-user
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The ID of the user to duplicate.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The details that define how the user should be duplicated, including customizations like job title, email, and which settings should be copied.
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+      responses:
+        '200':
+          description: The user was successfully duplicated, and the response contains the details of the new user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserDuplicateResponse"
 
 
 
@@ -12877,6 +12980,176 @@ components:
           type: string
           nullable: true
           description: The unique identifier for the token, used for managing and identifying tokens.
+      additionalProperties: false
+    TokenRequest:
+      type: object
+      properties:
+        Usr:
+          type: string
+          nullable: true
+          description: The username associated with the account for which the token is being requested.
+        Pwd:
+          type: string
+          nullable: true
+          description: The password for the user's account, used for authentication.
+        ExpirationUTC:
+          type: string
+          format: date-time
+          nullable: true
+          description: The UTC date and time when the token should expire.
+        TokenId:
+          type: string
+          nullable: true
+          description: A unique identifier for the token, used to track or reference it.
+      additionalProperties: false
+    DeviceTokenRequest:
+      type: object
+      properties:
+        Cellular:
+          type: string
+          nullable: true
+          description: The cellular number associated with the device, if applicable.
+        BoardSN:
+          type: string
+          nullable: true
+          description: The serial number of the device's main board.
+        ExpirationUTC:
+          type: string
+          format: date-time
+          nullable: true
+          description: The UTC date and time when the token should expire.
+        TokenId:
+          type: string
+          nullable: true
+          description: A unique identifier for the token, used to track or reference it.
+      additionalProperties: false
+    UserDuplicateRequest:
+      type: object
+      properties:
+        TargetHierarchyLevel_ActorID:
+          type: integer
+          format: int64
+          description: The actor ID that represents the target hierarchy level for the new user.
+        JobTitle:
+          type: string
+          nullable: true
+          description: The job title to assign to the new user.
+        JobFunction:
+          type: integer
+          format: int32
+          description: The job function identifier for the new user.
+        LoginName:
+          type: string
+          nullable: true
+          description: The login name for the new user.
+        UserEmail:
+          type: string
+          nullable: true
+          description: The email address for the new user.
+        Cellular:
+          type: string
+          nullable: true
+          description: The cellular number for the new user.
+        CopyAlerts:
+          type: boolean
+          description: Indicates whether the alerts from the original user should be copied to the new user.
+        CopyDefaultHomepageSettings:
+          type: boolean
+          description: Indicates whether the default homepage settings should be copied.
+        CopyMachineDynamicStatusPresets:
+          type: boolean
+          description: Indicates whether machine dynamic status presets should be copied.
+        CopyDynamicTransactionsMonitorPresets:
+          type: boolean
+          description: Indicates whether dynamic transaction monitor presets should be copied.
+        CopyDashboardSettings:
+          type: boolean
+          description: Indicates whether dashboard settings should be copied.
+        CopyMenuAndScreens:
+          type: boolean
+          description: Indicates whether menu and screen configurations should be copied.
+        LanguageID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The language ID to assign to the new user.
+        CultureID:
+          type: integer
+          format: int32
+          nullable: true
+          description: The culture ID to assign to the new user.
+      additionalProperties: false
+    UserDuplicateResponse:
+      type: object
+      properties:
+        NewUserID:
+          type: integer
+          format: int64
+          description: The ID of the newly created user.
+        Origin_UserID:
+          type: integer
+          format: int64
+          description: The ID of the original user from which the new user was duplicated.
+        TargetHierarchyLevel_ActorID:
+          type: integer
+          format: int64
+          description: The actor ID that represents the target hierarchy level for the new user.
+        JobTitle:
+          type: string
+          nullable: true
+          description: The job title of the new user.
+        JobFunction:
+          type: integer
+          format: int32
+          description: The job function identifier of the new user.
+        LoginName:
+          type: string
+          nullable: true
+          description: The login name of the new user.
+        UserEmail:
+          type: string
+          nullable: true
+          description: The email address of the new user.
+        Cellular:
+          type: string
+          nullable: true
+          description: The cellular number of the new user.
+        CopyAlerts:
+          type: boolean
+          description: Indicates if alerts were copied to the new user.
+        CopyDefaultHomepageSettings:
+          type: boolean
+          description: Indicates if the default homepage settings were copied.
+        CopyMachineDynamicStatusPresets:
+          type: boolean
+          description: Indicates if machine dynamic status presets were copied.
+        CopyDynamicTransactionsMonitorPresets:
+          type: boolean
+          description: Indicates if dynamic transaction monitor presets were copied.
+        CopyDashboardSettings:
+          type: boolean
+          description: Indicates if dashboard settings were copied.
+        CopyMenuAndScreens:
+          type: boolean
+          description: Indicates if menu and screen configurations were copied.
+        LanguageID:
+          type: integer
+          format: int32
+          description: The language ID of the new user.
+        CultureID:
+          type: integer
+          format: int32
+          description: The culture ID of the new user.
+        RoleGroupMismatch:
+          type: boolean
+          description: Indicates if there was a mismatch in the role group during duplication.
+        RoleIDNotCopied:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+          description: A list of role IDs that were not copied to the new user.
       additionalProperties: false
 
 
