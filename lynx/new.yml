@@ -2938,9 +2938,9 @@ paths:
     post:
       tags:
       - Machines
-      summary: Get All Machine Basic Info
+      summary: Search Machine Basic Info
       description: Retrieves a list of machines based on the search criteria provided in the request body. This allows users to filter and find specific machines or groups of machines by applying various parameters.
-      operationId: get-all-machine-basic-info
+      operationId: search-machine-basic-info
       requestBody:
         content:
           application/json:
