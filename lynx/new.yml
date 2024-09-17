@@ -3,7 +3,7 @@ info:
   title: Nayax Operational Lynx API
   version: v1
 servers:
-- url: "/Operational"
+- url: https://qa-lynx.nayax.com/operational
 security:
 - Authorization: []
 paths:
