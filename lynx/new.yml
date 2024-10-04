@@ -587,7 +587,7 @@ paths:
   /v1/actors/{ActorID}/bankInfo:
     get:
       tags:
-        - BankInformation
+        - Bank Information
       summary: Get Bank Information for Actor
       description: Retrieves the bank information associated with a specific actor, identified by `ActorID`.
       operationId: get-bank-information
@@ -608,7 +608,7 @@ paths:
                 $ref: '#/components/schemas/MerchantBankInfo'
     post:
       tags:
-        - BankInformation
+        - Bank Informationn
       summary: Add Bank Information for Actor
       description: Adds new bank information for a specific actor, identified by `ActorID`.
       operationId: add-bank-information
@@ -636,7 +636,7 @@ paths:
                 $ref: '#/components/schemas/MerchantBankInfo'
     put:
       tags:
-        - BankInformation
+        - Bank Information
       summary: Update Bank Information for Actor
       description: Updates the bank information for a specific actor, identified by `ActorID`.
       operationId: update-bank-information
@@ -665,7 +665,7 @@ paths:
   /v1/reports/{actor_id}/{start_date}/{end_date}:
     get:
       tags:
-        - BillingReport
+        - Billing Report
       summary: Get Report Files by ActorID and Date Range
       description: Retrieves billing report files for a specific actor within a given date range, optionally filtered by report file type.
       operationId: get-report-files-by-actor-and-date-range
@@ -1261,7 +1261,7 @@ paths:
   /v1/companyInfo:
     get:
       tags:
-        - CompanyInfo
+        - Company Info
       summary: Get Actor Address Invoice Information
       description: Retrieves the invoice information for an actor based on specified query parameters, such as `ActorID`, `InvoiceCompanyName`, and `CompanyTaxID`.
       operationId: get-actor-invoice-info-by-params
@@ -1292,7 +1292,7 @@ paths:
   /v1/companyInfo/{ActorID}:
     post:
       tags:
-      - CompanyInfo
+      - Company Info
       summary: Add Actor Address Information Invoice
       description: This endpoint allows you to add address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is linked to the actor's invoice.
       operationId: add-actor-address-info-by-actorid
@@ -1318,7 +1318,7 @@ paths:
                 "$ref": "#/components/schemas/ActorMerchantInfo"
     put:
       tags:
-      - CompanyInfo
+      - Company Info
       summary: Update Actor Address Information Invoice
       description: This endpoint allows you to update the existing address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is updated.
       operationId: update-actor-address-info-by-actorid
@@ -1540,7 +1540,7 @@ paths:
   /v1/DeviceVersions/MainVersion:
     get:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Get Firmware Versions
       description: Retrieves a list of firmware versions, optionally filtered by a specific version identifier.
       operationId: get-firmware-versions
@@ -1562,7 +1562,7 @@ paths:
                   "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
     post:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Add Firmware Version
       description: Adds a new firmware version to the system. The request body should include the details of the firmware version to be added.
       operationId: add-firmware-version
@@ -1582,7 +1582,7 @@ paths:
   /v1/DeviceVersions/{FirmwareVersionID}/MainVersion:
     put:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Update Firmware Version
       description: Updates the details of an existing firmware version identified by `FirmwareVersionID`. The request body should include the updated firmware details.
       operationId: update-firmware-version
@@ -1610,7 +1610,7 @@ paths:
   /v1/DeviceVersions/PosVersion:
     get:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Get Vpos Versions
       description: Retrieves a list of VPOS versions, optionally filtered by a specific VPOS version identifier.
       operationId: get-vpos-versions
@@ -1632,7 +1632,7 @@ paths:
                   "$ref": "#/components/schemas/VposVersionResponseDTO"
     post:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Add Vpos Version
       description: Adds a new VPOS version to the system. The request body should include the details of the VPOS version to be added.
       operationId: add-vpos-version
@@ -1652,7 +1652,7 @@ paths:
   /v1/DeviceVersions/{VPOSVersionID}/POSVersion:
     put:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Update Vpos Version
       description: Updates the details of an existing VPOS version identified by `VPOSVersionID`. The request body should include the updated VPOS version details.
       operationId: update-vpos-version
@@ -1680,7 +1680,7 @@ paths:
   /v1/DeviceVersions/version-update:
     post:
       tags:
-      - DeviceVersions
+      - Device Versions
       summary: Post Device Version
       description: Adds or updates device versions in bulk. The request body should contain an array of device version update requests.
       operationId: post-device-version
@@ -2146,7 +2146,7 @@ paths:
   /v1/machines/{MachineID}/attributes/defaults:
     post:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Update Machine Attribute to Model Defaults
       description: Resets the machine attributes to the default values defined by the machine model. This operation is typically used to restore default configurations.
       operationId: update-machine-attributes-to-defaults
@@ -2168,7 +2168,7 @@ paths:
   /v1/machines/{MachineID}/attributes/resendConfig:
     post:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Update Machine Attribute to Current Configuration
       description: Resends the current machine configuration, updating the machine attributes to match the latest configuration settings.
       operationId: update-machine-attributes-to-current-config
@@ -2190,7 +2190,7 @@ paths:
   /v1/machines/{MachineID}/attributes:
     get:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Get All Machine Attributes
       description: Retrieves all attributes associated with a specific machine identified by `MachineID`.
       operationId: get-machine-attributes
@@ -2213,7 +2213,7 @@ paths:
                   "$ref": "#/components/schemas/MachineAttribute"
     put:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Bulk Update Machine Attributes
       description: Performs a bulk update of machine attributes for the specified machine identified by `MachineID`.
       operationId: bulk-update-machine-attributes
@@ -2242,7 +2242,7 @@ paths:
   /v2/machines/attributes:
     post:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Insert/Update Machine Attributes
       description: Allows bulk insertion or updating of machine attributes. The request body should include an array of machine attributes to be processed.
       operationId: insert-or-update-machine-attributes
@@ -2263,7 +2263,7 @@ paths:
   /v1/machines/{MachineID}/attributes/{DeviceAttributeID}:
     get:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Get Specific Machine Attribute
       description: Retrieves the details of a specific machine attribute identified by `MachineID` and `DeviceAttributeID`.
       operationId: get-specific-machine-attribute
@@ -2291,7 +2291,7 @@ paths:
                 "$ref": "#/components/schemas/MachineAttribute"
     put:
       tags:
-      - MachineAttribute
+      - Machine Attribute
       summary: Update Specific Machine Attribute
       description: Updates the details of a specific machine attribute identified by `MachineID` and `DeviceAttributeID`.
       operationId: update-specific-machine-attribute
@@ -2325,7 +2325,7 @@ paths:
   /v1/machines/{MachineID}/heartlandBilling:
     get:
       tags:
-      - MachineBilling
+      - Machine Billing
       summary: Get Payment Details
       description: Retrieves the payment details associated with a specific machine identified by `MachineID`.
       operationId: get-payment-details
@@ -2346,7 +2346,7 @@ paths:
                 "$ref": "#/components/schemas/BillingInfo"
     post:
       tags:
-      - MachineBilling
+      - Machine Billing
       summary: Update Payment Details
       description: Updates the payment details associated with a specific machine identified by `MachineID`.
       operationId: update-payment-details
@@ -2373,7 +2373,7 @@ paths:
   /v1/machines/{MachineID}/RBIOnboarding:
     post:
       tags:
-      - MachineBilling
+      - Machine Billing
       summary: Update Payment Details for RBI Onboarding
       description: Updates the payment details associated with a specific machine for RBI onboarding, identified by `MachineID`.
       operationId: update-rbi-onboarding
@@ -2400,7 +2400,7 @@ paths:
   /v1/machines/{MachineID}/pickList:
     get:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Get Pick List
       description: Retrieves the pick list associated with a specific machine identified by `MachineID`.
       operationId: get-pick-list
@@ -2423,7 +2423,7 @@ paths:
                   "$ref": "#/components/schemas/PickListItem"
     post:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Generate Pick List
       description: Generates a new pick list for a specific machine, with options to adjust the pick list based on various criteria.
       operationId: generate-pick-list
@@ -2456,7 +2456,7 @@ paths:
           description: The pick list was successfully generated.
     delete:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Delete Pick List
       description: Deletes the existing pick list for a specific machine identified by `MachineID`.
       operationId: delete-pick-list
@@ -2478,7 +2478,7 @@ paths:
   /v1/machines/{MachineID}/inventory/full:
     post:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Set All Machine Bins as Full
       description: Marks all bins in the specified machine as fully stocked, indicating that all product slots are filled to capacity.
       operationId: set-machine-bins-full
@@ -2500,7 +2500,7 @@ paths:
   /v1/machines/{MachineID}/inventory/empty:
     post:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Empty Machine Products Inventory
       description: Empties the inventory of all products in the specified machine, marking all product slots as empty.
       operationId: empty-machine-inventory
@@ -2522,7 +2522,7 @@ paths:
   /v1/machines/inventory/picklists/update:
     put:
       tags:
-      - MachineInventory
+      - Machine Inventory
       summary: Update Pick List
       description: Updates the pick list for a specific machine, allowing changes to the quantity of products to be picked.
       operationId: update-pick-list
@@ -2545,7 +2545,7 @@ paths:
   /v1/machines/{MachineID}/machineProducts:
     get:
       tags:
-      - MachineProducts
+      - Machine Products
       summary: Get Machine Products
       description: Retrieves the list of products associated with a specific machine identified by `MachineID`.
       operationId: get-machine-products
@@ -2568,7 +2568,7 @@ paths:
                   "$ref": "#/components/schemas/MachineProduct"
     post:
       tags:
-      - MachineProducts
+      - Machine Products
       summary: Create Machine Products
       description: Creates new products for the specified machine identified by `MachineID`.
       operationId: create-machine-products
@@ -2598,7 +2598,7 @@ paths:
                   "$ref": "#/components/schemas/MachineProduct"
     put:
       tags:
-      - MachineProducts
+      - Machine Productss
       summary: Update Machine Products
       description: Updates the products associated with a specific machine identified by `MachineID`, with an option to avoid deletion.
       operationId: update-machine-products
@@ -2635,7 +2635,7 @@ paths:
   /v1/machines/{MachineID}/machineProducts/{MachineProductID}:
     get:
       tags:
-      - MachineProducts
+      - Machine Productsss
       summary: Get a Machine Product
       description: Retrieves details of a specific machine product identified by `MachineProductID` within the machine identified by `MachineID`.
       operationId: get-machine-product
@@ -2663,7 +2663,7 @@ paths:
                 "$ref": "#/components/schemas/MachineProduct"
     put:
       tags:
-      - MachineProducts
+      - Machine Products
       summary: Update a Machine Product
       description: Updates the details of a specific machine product identified by `MachineProductID` within the machine identified by `MachineID`.
       operationId: update-machine-product
@@ -3244,7 +3244,7 @@ paths:
   /v1/productGroups/{ProductGroupID}:
     get:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Get Product Group
       description: Retrieves details of a specific product group identified by the ProductGroupID. The response includes information such as the product group name, code, and other related details.
       operationId: get-product-group
@@ -3265,7 +3265,7 @@ paths:
                 "$ref": "#/components/schemas/ProductGroup"
     put:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Update Product Group
       description: Updates the details of a specific product group identified by the ProductGroupID. The request body should include the updated information such as the product group name, code, and category.
       operationId: update-product-group
@@ -3292,7 +3292,7 @@ paths:
   /v1/operators/{ActorID}/productGroups:
     get:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Get Product Groups by Actor
       description: Retrieves a list of product groups associated with a specific actor, identified by the ActorID. The response includes details of each product group.
       operationId: get-product-groups-by-actor
@@ -3316,7 +3316,7 @@ paths:
   /v1/productGroups:
     post:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Create New Product Groups
       description: Creates new product groups based on the details provided in the request body. The request includes information such as the product group name, code, and associated actor.
       operationId: create-product-groups
@@ -3334,7 +3334,7 @@ paths:
                 "$ref": "#/components/schemas/ProductGroup"
     get:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Get All Product Groups
       description: Retrieves a list of all product groups. The response includes details of each product group such as the name, code, and associated actor.
       operationId: get-all-product-groups
@@ -3350,7 +3350,7 @@ paths:
   /v1/productGroups/{ProductGroupID}/tax:
     get:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Get Product Group Tax
       description: Retrieves the tax details associated with a specific product group, identified by the ProductGroupID. Optionally, a specific tax row can be retrieved using the TaxRowID query parameter.
       operationId: get-product-group-tax
@@ -3379,7 +3379,7 @@ paths:
                   "$ref": "#/components/schemas/VatDTO"
     put:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Update Product Group Tax
       description: Updates the tax details for a specific product group, identified by the ProductGroupID. The request body contains the updated tax information.
       operationId: update-product-group-tax
@@ -3409,7 +3409,7 @@ paths:
                   "$ref": "#/components/schemas/VatDTO"
     post:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Create Product Group Tax
       description: Creates new tax details for a specific product group, identified by the ProductGroupID. The request body contains the tax information to be added.
       operationId: create-product-group-tax
@@ -3440,7 +3440,7 @@ paths:
   /v1/productGroups/{ProductGroupID}/tax/{TaxRowID}:
     delete:
       tags:
-      - ProductGroups
+      - Product Groups
       summary: Delete Product Group Tax
       description: Deletes a specific tax entry associated with a product group, identified by both ProductGroupID and TaxRowID. This operation removes the specified tax row from the product group.
       operationId: delete-product-group-tax
@@ -3569,7 +3569,7 @@ paths:
   /v1/users/{UserName}/pushTokens:
     get:
       tags:
-      - PushTokens
+      - Push Tokens
       summary: Get All User Push Tokens
       description: Retrieves all push tokens associated with a specific user, identified by their UserName. The response includes details of each push token.
       operationId: get-user-push-tokens
@@ -3591,7 +3591,7 @@ paths:
                   "$ref": "#/components/schemas/UserPushTokenDbEntity"
     post:
       tags:
-      - PushTokens
+      - Push Tokens
       summary: Add New Push Token
       description: Adds a new push token for a specific user, identified by their UserName. The request body should include details of the push token to be added.
       operationId: add-user-push-token
@@ -3616,7 +3616,7 @@ paths:
                 "$ref": "#/components/schemas/UserPushTokenDbEntity"
     delete:
       tags:
-      - PushTokens
+      - Push Tokens
       summary: Delete Push Token
       description: Deletes a specific push token for a user, identified by their UserName and the token. This operation removes the specified push token from the user’s account.
       operationId: delete-user-push-token
@@ -4207,7 +4207,7 @@ paths:
   /v1/signin:
     post:
       tags:
-      - SignIn
+      - Sign In
       summary: User Sign In
       description: Authenticates a user with the provided credentials (username and password).
       operationId: user-sign-in
@@ -4223,7 +4223,7 @@ paths:
   /signin:
     get:
       tags:
-      - SignIn
+      - Sign Inn
       summary: Sign In
       operationId: sign-in
       responses:
