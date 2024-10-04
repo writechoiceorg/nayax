@@ -1212,7 +1212,7 @@ paths:
     post:
       tags:
         - Cards
-      summary: Create new card
+      summary: Create New Card
       description: Creates a new card with the specified details.
       operationId: create-new-card
       requestBody:
@@ -4800,6 +4800,7 @@ components:
           format: int32
           nullable: true
           description: The identifier for the language preference of the actor.
+          $ref: "#/components/schemas/LanguageIdEnum"
         ActorMerchantBit:
           type: string
           nullable: true
@@ -4879,11 +4880,60 @@ components:
           format: int32
           nullable: true
           description: The identifier representing the type of actor, which could indicate their role or classification.
+          enum:
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+          x-enumDescriptions:
+            5: "Area"
+            6: "Route"
+            7: "City"
+            8: "State"
+            9: "Province"
+            10: "Region"
+            11: "Client"
+            12: "Facility Management"
+            13: "Location (General)"
+            14: "Customer (General)"
+            15: "District"
+            16: "Account"
+            17: "Branch"
+            18: "Terminal"
+            19: "Floor"
+            20: "Zone"
+            21: "Airport"
+            22: "Gate"
+            23: "eCommerce"
+            24: "Bus"
+            25: "Train"
+            26: "Tramway"
+            27: "EV Infrastructure"
         ActorStatus:
           type: integer
           format: int32
           nullable: true
           description: The current status of the actor, represented by a status code.
+          $ref: "#/components/schemas/ActiveInactiveEnum"
         ActorHierarchyLevel:
           type: integer
           format: int32
@@ -4893,7 +4943,7 @@ components:
           type: integer
           format: int32
           nullable: true
-          description: The currency identifier used by the actor for transactions.
+          description: The currency identifier used by the actor for transactions. Use the [Get Currencies](ref:get-currencies) endpoint for a full list of available currencies.
         LastUpdated:
           type: string
           format: date-time
@@ -4920,7 +4970,7 @@ components:
           type: integer
           format: int32
           nullable: true
-          description: The identifier for the country in which the actor is located.
+          description: The identifier for the country in which the actor is located. Use the [Get Countries](ref:get-countries) endpoint for a full list of available countries.
         DailyCCTransLimitPerCard:
           type: integer
           format: int32
@@ -5072,6 +5122,7 @@ components:
           format: int32
           nullable: true
           description: The identifier for the language preference of the actor.
+          $ref: "#/components/schemas/LanguageIdEnum"
         ActorMerchantBit:
           type: string
           nullable: true
@@ -5216,6 +5267,7 @@ components:
           type: integer
           format: int32
           description: The identifier for the language preference of the actor.
+          $ref: "#/components/schemas/LanguageIdEnum"
         MCCCode:
           type: string
           nullable: true
@@ -5443,6 +5495,7 @@ components:
           format: int32
           nullable: true
           description: The identifier for the language preference of the actor.
+          $ref: "#/components/schemas/LanguageIdEnum"
         OverrideGeoInherritcanceBit:
           type: boolean
           description: Indicates whether the actor overrides inherited geographic settings.
@@ -5791,6 +5844,13 @@ components:
           type: integer
           format: int32
           description: The status identifier of the machine group, indicating its current state.
+          $ref: "#/components/schemas/ActiveInactiveEnum"
+        LanguageId:
+          type: integer
+          format: int32
+          nullable: true
+          description: The virtual machine's language in the "General" tab.
+          $ref: "#/components/schemas/LanguageIdEnum"
       additionalProperties: false
     ActorGroupRequestDTO:
       type: object
@@ -6407,11 +6467,22 @@ components:
           format: int32
           nullable: true
           description: The current status of the card.
+          $ref: "#/components/schemas/ActiveInactiveEnum"
         CardType:
           type: integer
           format: int32
           nullable: true
           description: The type identifier of the card.
+          enum:
+            - 31
+            - 33
+            - 34
+            - 30000616
+          x-enumDescriptions:
+            31: "Technician card"
+            33: "Prepaid card"
+            34: "Refund card"
+            30000616: "Discount card"
         CardUserIdentity:
           type: string
           nullable: true
@@ -6420,12 +6491,12 @@ components:
           type: integer
           format: int32
           nullable: true
-          description: The identifier of the country associated with the card.
+          description: The identifier of the country associated with the card. Use the [Get Countries](ref:get-countries) endpoint for a full list of available countries.
         Currency:
           type: integer
           format: int32
           nullable: true
-          description: The currency identifier used for the card.
+          description: The currency identifier used for the card. Use the [Get Currencies](ref:get-currencies) endpoint for a full list of available currencies.
         MobileNumber:
           type: string
           nullable: true
@@ -7064,11 +7135,33 @@ components:
           format: int32
           nullable: true
           description: The type identifier of the card.
+          enum:
+            - 31
+            - 33
+            - 34
+            - 30000616
+          x-enumDescriptions:
+            31: "Technician card"
+            33: "Prepaid card"
+            34: "Refund card"
+            30000616: "Discount card"
         PhysicalTypeID:
           type: integer
           format: int32
           nullable: true
           description: The physical type identifier of the card.
+          enum:
+            - 30000528
+            - 30000529
+            - 30000530
+            - 30000531
+            - 943237560
+          x-enumDescriptions:
+            30000528: "Swipe card"
+            30000529: "Contact Card"
+            30000530: "Contactless card"
+            30000531: "Contactless sticker"
+            943237560: "QR Code"
         Notes:
           type: string
           nullable: true
@@ -7078,6 +7171,7 @@ components:
           format: int32
           nullable: true
           description: The status identifier of the card.
+          $ref: "#/components/schemas/ActiveInactiveEnum"
         ExternalApplicationUserID:
           type: string
           nullable: true
@@ -7099,7 +7193,7 @@ components:
           type: integer
           format: int32
           nullable: true
-          description: The country identifier associated with the cardholder.
+          description: The country identifier associated with the cardholder. Use the [Get Countries](ref:get-countries) endpoint for a full list of available countries.
         MobileNumber:
           type: string
           nullable: true
@@ -7113,6 +7207,22 @@ components:
           format: int32
           nullable: true
           description: The membership type identifier associated with the cardholder.
+          enum:
+            - 800
+            - 801
+            - 802
+            - 803
+            - 804
+            - 805
+            - 812
+          x-enumDescriptions:
+            800: Bronze
+            801: Silver
+            802: Gold
+            803: Platinum
+            804: Diamond
+            805: Emerald
+            812: Personal
       additionalProperties: false
     CardRevalueRewardRuleUpdate:
       type: object
@@ -7350,6 +7460,7 @@ components:
           format: int32
           nullable: true
           description: The language identifier used for invoices.
+          $ref: "#/components/schemas/LanguageIdEnum"
         InvoiceReportType:
           type: integer
           format: int32
@@ -7711,6 +7822,7 @@ components:
           format: int32
           nullable: true
           description: The status identifier of the device.
+          $ref: "#/components/schemas/ActiveInactiveEnum"
       additionalProperties: false
     DevicesInsertHistoryDto:
       type: object
@@ -8350,6 +8462,7 @@ components:
           format: int32
           nullable: true
           description: The identifier of the machine type associated with this model.
+          $ref: "#/components/schemas/MachineTypeIDEnum"
         ProviderID:
           type: integer
           format: int32
@@ -9772,6 +9885,7 @@ components:
           format: int32
           nullable: true
           description: The identifier of the language used by the machine.
+          $ref: "#/components/schemas/LanguageIdEnum"
         OperatorActorID:
           type: integer
           format: int64
@@ -9797,6 +9911,7 @@ components:
           format: int32
           nullable: true
           description: The identifier of the type of machine.
+          $ref: "#/components/schemas/MachineTypeIDEnum"
         SerialNumber:
           type: string
           nullable: true
@@ -10122,6 +10237,7 @@ components:
           format: int32
           nullable: true
           description: The identifier for the language used by the machine.
+          $ref: "#/components/schemas/LanguageIdEnum"
         SalesSourceID:
           type: integer
           format: int32
@@ -10132,6 +10248,7 @@ components:
           format: int32
           nullable: true
           description: The identifier for the type of the machine.
+          $ref: "#/components/schemas/MachineTypeIDEnum"
         SerialNumber:
           type: string
           nullable: true
@@ -13073,6 +13190,7 @@ components:
           format: int32
           nullable: true
           description: The language ID to assign to the new user.
+          $ref: "#/components/schemas/LanguageIdEnum"
         CultureID:
           type: integer
           format: int32
@@ -13136,6 +13254,7 @@ components:
           type: integer
           format: int32
           description: The language ID of the new user.
+          $ref: "#/components/schemas/LanguageIdEnum"
         CultureID:
           type: integer
           format: int32
@@ -13151,9 +13270,175 @@ components:
           nullable: true
           description: A list of role IDs that were not copied to the new user.
       additionalProperties: false
-
-
-
+    ActiveInactiveEnum:
+      enum:
+        - 1
+        - 2
+      x-enumDescriptions:
+        1: Active
+        2: Inactive
+    LanguageIdEnum:
+      enum:
+        - 2
+        - 4
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 21
+        - 22
+        - 23
+        - 27
+        - 28
+        - 29
+        - 30
+        - 31
+        - 34
+        - 41
+        - 42
+        - 51
+        - 52
+        - 54
+        - 62
+        - 64
+        - 81
+      x-enumDescriptions:
+        2: "Turkish"
+        4: "Hebrew"
+        7: "English"
+        8: "French"
+        9: "Romanian"
+        10: "Swedish"
+        11: "Norwegian"
+        12: "Russian"
+        13: "Iceland"
+        14: "Portuguese"
+        15: "Spanish"
+        16: "Italian"
+        17: "Danish"
+        18: "Polish"
+        21: "Dutch"
+        22: "Chinese"
+        23: "Hungarian"
+        27: "Thai"
+        28: "German"
+        29: "Japanese"
+        30: "Greek"
+        31: "English UK"
+        34: "Latvian"
+        41: "Slovenian"
+        42: "Estonian"
+        51: "Vietnamese"
+        52: "Czech"
+        54: "Finnish"
+        62: "Arabic"
+        64: "Lithuanian"
+        81: "Bulgarian"
+    MachineTypeIDEnum:
+      type: integer
+      format: int32
+      enum:
+        - 555001
+        - 555002
+        - 555003
+        - 555004
+        - 555005
+        - 555006
+        - 555007
+        - 555008
+        - 556017
+        - 556018
+        - 30000514
+        - 30000515
+        - 30000516
+        - 30000517
+        - 30000518
+        - 30000519
+        - 30000520
+        - 30000521
+        - 30000522
+        - 30000523
+        - 30000524
+        - 30000525
+        - 30000526
+        - 30000527
+        - 30000561
+        - 30000578
+        - 30000579
+        - 30000580
+        - 30000581
+        - 30000582
+        - 30000583
+        - 30000602
+        - 30000611
+        - 30000612
+        - 30000617
+        - 30000618
+        - 30000619
+        - 30000620
+        - 30000623
+        - 176649542
+        - 227707459
+        - 227707460
+        - 504059468
+        - 529079224
+        - 363311433
+        - 244797254
+      x-enumDescriptions:
+        555001: "Safe"
+        555002: "Cash Register"
+        555003: "Car Accessories"
+        555004: "Donation station"
+        555005: "Transportation"
+        555006: "Micro Markets"
+        555007: "OCPP Electrical Vehicle"
+        555008: "Parking"
+        556017: "Windshield washer fluid"
+        556018: "Canteen"
+        30000514: "Hot Drinks"
+        30000515: "Cold Drinks"
+        30000516: "Snacks"
+        30000517: "Ice Cream"
+        30000518: "Milk Produce"
+        30000519: "Sandwiches"
+        30000520: "Food"
+        30000521: "Amusement"
+        30000522: "Alcohol"
+        30000523: "Cigarettes"
+        30000524: "Combo"
+        30000525: "Air"
+        30000526: "Electricity"
+        30000527: "Other"
+        30000561: "Recycling"
+        30000578: "Car Wash Machine"
+        30000579: "Laundry Machine"
+        30000580: "Cellular Accessories"
+        30000581: "Pharmacy"
+        30000582: "TV And Internet Services"
+        30000583: "PPE"
+        30000602: "Massage Chairs"
+        30000611: "Ice"
+        30000612: "Photo Booth"
+        30000617: "Pictures"
+        30000618: "Photocopies"
+        30000619: "Flowers"
+        30000620: "Car Vacuum Cleaner"
+        30000623: "Water Filling Station"
+        176649542: "Access Control"
+        227707459: "Golf Ball Dispenser"
+        227707460: "Gaming"
+        504059468: "Dog Wash"
+        529079224: "Lockers"
+        363311433: "Fresh Juice"
+        244797254: "Weight"
 
 
 
