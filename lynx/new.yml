@@ -386,7 +386,7 @@ paths:
     put:
       tags:
         - Actors
-      summary: Decrypt message by encryption version
+      summary: Decrypt Message by Encryption Version
       description: Decrypts a message using a specific encryption version for a given actor, identified by `actorID` and `encVer`.
       operationId: decrypt-message-by-encryption-version
       parameters:
@@ -555,7 +555,7 @@ paths:
     delete:
       tags:
         - Actors
-      summary: Delete actor group
+      summary: Delete Actor Group
       description: Deletes an actor group associated with a specific actor, identified by `ActorID`.
       operationId: delete-actor-group
       parameters:
@@ -608,7 +608,7 @@ paths:
                 $ref: '#/components/schemas/MerchantBankInfo'
     post:
       tags:
-        - Bank Informationn
+        - Bank Information
       summary: Add Bank Information for Actor
       description: Adds new bank information for a specific actor, identified by `ActorID`.
       operationId: add-bank-information
@@ -842,7 +842,7 @@ paths:
     get:
       tags:
         - Cards
-      summary: Get the Card's Revalue
+      summary: Get Card's Revalue
       description: Retrieves the revalue amount associated with a specific card, identified by the card's unique identifier.
       operationId: get-card-revalue
       parameters:
@@ -934,7 +934,7 @@ paths:
     get:
       tags:
         - Cards
-      summary: Validates Card for Machine use
+      summary: Validates Card for Machine Use
       description: Validates whether a prepaid or discount card can be used with a specific machine.
       operationId: validate-card-for-machine
       parameters:
@@ -1124,7 +1124,7 @@ paths:
     post:
       tags:
         - Cards
-      summary: Update card status
+      summary: Update Card Status
       description: Updates the status of a card, identified by its unique identifier.
       operationId: update-card-status
       parameters:
@@ -1233,7 +1233,7 @@ paths:
     put:
       tags:
         - Cards
-      summary: Update card by ID
+      summary: Update Card by ID
       description: Updates the details of a card identified by its unique ID.
       operationId: update-card-by-id
       parameters:
@@ -1482,7 +1482,7 @@ paths:
     post:
       tags:
       - Devices
-      summary: Add RMA to device history
+      summary: Add RMA to Device History
       description: Add a Return Merchandise Authorization (RMA) entry to the history of a device identified by its serial number.
       operationId: add-rma-to-device-history
       parameters:
@@ -1611,7 +1611,7 @@ paths:
     get:
       tags:
       - Device Versions
-      summary: Get Vpos Versions
+      summary: Get VPOS Versions
       description: Retrieves a list of VPOS versions, optionally filtered by a specific VPOS version identifier.
       operationId: get-vpos-versions
       parameters:
@@ -1633,7 +1633,7 @@ paths:
     post:
       tags:
       - Device Versions
-      summary: Add Vpos Version
+      summary: Add VPOS Version
       description: Adds a new VPOS version to the system. The request body should include the details of the VPOS version to be added.
       operationId: add-vpos-version
       requestBody:
@@ -1653,7 +1653,7 @@ paths:
     put:
       tags:
       - Device Versions
-      summary: Update Vpos Version
+      summary: Update VPOS Version
       description: Updates the details of an existing VPOS version identified by `VPOSVersionID`. The request body should include the updated VPOS version details.
       operationId: update-vpos-version
       parameters:
@@ -1681,7 +1681,7 @@ paths:
     post:
       tags:
       - Device Versions
-      summary: Post Device Version
+      summary: Add Device Version
       description: Adds or updates device versions in bulk. The request body should contain an array of device version update requests.
       operationId: post-device-version
       requestBody:
@@ -2424,7 +2424,7 @@ paths:
     post:
       tags:
       - Machine Inventory
-      summary: Generate Pick List
+      summary: Create Pick List
       description: Generates a new pick list for a specific machine, with options to adjust the pick list based on various criteria.
       operationId: generate-pick-list
       parameters:
@@ -2598,7 +2598,7 @@ paths:
                   "$ref": "#/components/schemas/MachineProduct"
     put:
       tags:
-      - Machine Productss
+      - Machine Products
       summary: Update Machine Products
       description: Updates the products associated with a specific machine identified by `MachineID`, with an option to avoid deletion.
       operationId: update-machine-products
@@ -2635,7 +2635,7 @@ paths:
   /v1/machines/{MachineID}/machineProducts/{MachineProductID}:
     get:
       tags:
-      - Machine Productsss
+      - Machine Products
       summary: Get a Machine Product
       description: Retrieves details of a specific machine product identified by `MachineProductID` within the machine identified by `MachineID`.
       operationId: get-machine-product
@@ -4223,7 +4223,7 @@ paths:
   /signin:
     get:
       tags:
-      - Sign Inn
+      - Sign In
       summary: Sign In
       operationId: sign-in
       responses:
