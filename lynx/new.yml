@@ -4560,10 +4560,6 @@ paths:
               schema:
                 "$ref": "#/components/schemas/UserDuplicateResponse"
 
-
-
-
-
 components:
   securitySchemes:
     Authorization:
