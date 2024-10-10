@@ -2452,7 +2452,7 @@ paths:
           type: string
           format: date-time
       responses:
-        '200':
+        '204':
           description: The pick list was successfully generated.
     delete:
       tags:
