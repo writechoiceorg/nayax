@@ -192,4 +192,656 @@ paths:
             application/json:
               schema:
                 type: string
-  
+  /v1/actors/{ActorID}/bankInfo:
+    get:
+      tags:
+        - Bank Information
+      summary: Get Bank Information for Actor
+      description: Retrieves the bank information associated with a specific actor, identified by `ActorID`.
+      operationId: get-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being retrieved.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The bank information was retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+    post:
+      tags:
+        - Bank Information
+      summary: Add Bank Information for Actor
+      description: Adds new bank information for a specific actor, identified by `ActorID`.
+      operationId: add-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being posted.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The bank information to be posted.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantBankInfo'
+      responses:
+        '200':
+          description: The bank information was added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+    put:
+      tags:
+        - Bank Information
+      summary: Update Bank Information for Actor
+      description: Updates the bank information for a specific actor, identified by `ActorID`.
+      operationId: update-bank-information
+      parameters:
+        - name: ActorID
+          in: path
+          required: true
+          description: The unique identifier of the actor for whom the bank information is being updated.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: The bank information to be updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantBankInfo'
+      responses:
+        '200':
+          description: The bank information was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantBankInfo'
+  /v1/reports/{actor_id}/{start_date}/{end_date}:
+    get:
+      tags:
+        - Billing Report
+      summary: Get Report Files by ActorID and Date Range
+      description: Retrieves billing report files for a specific actor within a given date range, optionally filtered by report file type.
+      operationId: get-report-files-by-actor-and-date-range
+      parameters:
+        - name: actor_id
+          in: path
+          description: The unique identifier of the actor for whom the report files are being retrieved.
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: start_date
+          in: path
+          description: The start date of the report file range.
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: path
+          description: The end date of the report file range.
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: report_file_type
+          in: query
+          description: The type of report file to retrieve, if filtering by type.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Report files retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingReportsResponse'
+  /v1/companyInfo:
+    get:
+      tags:
+        - Company Info
+      summary: Get Actor Address Invoice Information
+      description: Retrieves the invoice information for an actor based on specified query parameters, such as `ActorID`, `InvoiceCompanyName`, and `CompanyTaxID`.
+      operationId: get-actor-invoice-info-by-params
+      parameters:
+        - name: ActorID
+          in: query
+          description: The unique identifier of the actor for which the invoice information is being requested.
+          schema:
+            type: integer
+            format: int64
+        - name: InvoiceCompanyName
+          in: query
+          description: The company name associated with the invoice.
+          schema:
+            type: string
+        - name: CompanyTaxID
+          in: query
+          description: The tax ID of the company associated with the invoice.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice information retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActorMerchantInfo'
+  /v1/companyInfo/{ActorID}:
+    post:
+      tags:
+      - Company Info
+      summary: Add Actor Address Information Invoice
+      description: This endpoint allows you to add address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is linked to the actor's invoice.
+      operationId: add-actor-address-info-by-actorid
+      parameters:
+      - name: ActorID
+        in: path
+        required: true
+        description: The unique identifier of the actor whose address information is being added to the invoice.
+        schema:
+          type: string
+      requestBody:
+        description: The address information to be added for the actor's invoice.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ActorMerchantInfo"
+      responses:
+        '200':
+          description: The address information was successfully added to the actor's invoice.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ActorMerchantInfo"
+    put:
+      tags:
+      - Company Info
+      summary: Update Actor Address Information Invoice
+      description: This endpoint allows you to update the existing address information for an actor's invoice using the `ActorID`. The actor's unique identifier is provided in the path to ensure that the correct address information is updated.
+      operationId: update-actor-address-info-by-actorid
+      parameters:
+      - name: ActorID
+        in: path
+        required: true
+        description: The unique identifier of the actor whose address information is being updated for the invoice.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated address information for the actor's invoice.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ActorMerchantInfo"
+      responses:
+        '200':
+          description: The address information was successfully updated for the actor's invoice.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ActorMerchantInfo"
+  /v1/DeviceVersions/MainVersion:
+    get:
+      tags:
+      - Device Versions
+      summary: Get Firmware Versions
+      description: Retrieves a list of firmware versions, optionally filtered by a specific version identifier.
+      operationId: get-firmware-versions
+      parameters:
+      - name: versionId
+        in: query
+        description: The unique identifier of the firmware version to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of firmware versions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+    post:
+      tags:
+      - Device Versions
+      summary: Add Firmware Version
+      description: Adds a new firmware version to the system. The request body should include the details of the firmware version to be added.
+      operationId: add-firmware-version
+      requestBody:
+        description: The details of the firmware version to be added.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FirmwareVersionRequestDTO"
+      responses:
+        '200':
+          description: The firmware version was successfully added.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+  /v1/DeviceVersions/{FirmwareVersionID}/MainVersion:
+    put:
+      tags:
+      - Device Versions
+      summary: Update Firmware Version
+      description: Updates the details of an existing firmware version identified by `FirmwareVersionID`. The request body should include the updated firmware details.
+      operationId: update-firmware-version
+      parameters:
+      - name: FirmwareVersionID
+        in: path
+        required: true
+        description: The unique identifier of the firmware version to be updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated details of the firmware version.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FirmwareVersionRequestDTO"
+      responses:
+        '200':
+          description: The firmware version was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FirmwareVersionResponseDTO"
+  /v1/DeviceVersions/PosVersion:
+    get:
+      tags:
+      - Device Versions
+      summary: Get VPOS Versions
+      description: Retrieves a list of VPOS versions, optionally filtered by a specific VPOS version identifier.
+      operationId: get-vpos-versions
+      parameters:
+      - name: VPOSVersionID
+        in: query
+        description: The unique identifier of the VPOS version to filter the results.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A list of VPOS versions matching the specified criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VposVersionResponseDTO"
+    post:
+      tags:
+      - Device Versions
+      summary: Add VPOS Version
+      description: Adds a new VPOS version to the system. The request body should include the details of the VPOS version to be added.
+      operationId: add-vpos-version
+      requestBody:
+        description: The details of the VPOS version to be added.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/VposVersionRequestDTO"
+      responses:
+        '200':
+          description: The VPOS version was successfully added.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VposVersionResponseDTO"
+  /v1/DeviceVersions/{VPOSVersionID}/POSVersion:
+    put:
+      tags:
+      - Device Versions
+      summary: Update VPOS Version
+      description: Updates the details of an existing VPOS version identified by `VPOSVersionID`. The request body should include the updated VPOS version details.
+      operationId: update-vpos-version
+      parameters:
+      - name: VPOSVersionID
+        in: path
+        required: true
+        description: The unique identifier of the VPOS version to be updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The updated details of the VPOS version.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/VposVersionRequestDTO"
+      responses:
+        '200':
+          description: The VPOS version was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VposVersionResponseDTO"
+  /v1/DeviceVersions/version-update:
+    post:
+      tags:
+      - Device Versions
+      summary: Add Device Version
+      description: Adds or updates device versions in bulk. The request body should contain an array of device version update requests.
+      operationId: post-device-version
+      requestBody:
+        description: An array of device version update requests.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/VersionUpdateLynxRequest"
+      responses:
+        '200':
+          description: The device versions were successfully processed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/VersionUpdateLynxResponse"
+  /v1/machines/{MachineID}/heartlandBilling:
+    get:
+      tags:
+      - Machine Billing
+      summary: Get Payment Details
+      description: Retrieves the payment details associated with a specific machine identified by `MachineID`.
+      operationId: get-payment-details
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose payment details are being retrieved.
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: The payment details information was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillingInfo"
+    post:
+      tags:
+      - Machine Billing
+      summary: Update Payment Details
+      description: Updates the payment details associated with a specific machine identified by `MachineID`.
+      operationId: update-payment-details
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine whose payment details are being updated.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BillingInfo"
+      responses:
+        '200':
+          description: The payment details information was successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BillingInfo"
+  /v1/machines/{MachineID}/RBIOnboarding:
+    post:
+      tags:
+      - Machine Billing
+      summary: Update Payment Details for RBI Onboarding
+      description: Updates the payment details associated with a specific machine for RBI onboarding, identified by `MachineID`.
+      operationId: update-rbi-onboarding
+      parameters:
+      - name: MachineID
+        in: path
+        required: true
+        description: The unique identifier of the machine being onboarded for RBI.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RbiBoardingRequest"
+      responses:
+        '200':
+          description: The RBI onboarding details were successfully updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RbiBoardingResponse"
+  /v1/users/{UserName}/pushTokens:
+    get:
+      tags:
+      - Push Tokens
+      summary: Get All User Push Tokens
+      description: Retrieves all push tokens associated with a specific user, identified by their UserName. The response includes details of each push token.
+      operationId: get-user-push-tokens
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user whose push tokens are being retrieved.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of push tokens associated with the specified user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/UserPushTokenDbEntity"
+    post:
+      tags:
+      - Push Tokens
+      summary: Add New Push Token
+      description: Adds a new push token for a specific user, identified by their UserName. The request body should include details of the push token to be added.
+      operationId: add-user-push-token
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user to whom the push token will be added.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenInfo"
+      responses:
+        '200':
+          description: The push token was successfully added for the specified user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserPushTokenDbEntity"
+    delete:
+      tags:
+      - Push Tokens
+      summary: Delete Push Token
+      description: Deletes a specific push token for a user, identified by their UserName and the token. This operation removes the specified push token from the user’s account.
+      operationId: delete-user-push-token
+      parameters:
+      - name: UserName
+        in: path
+        description: The username of the user whose push token is to be deleted.
+        required: true
+        schema:
+          type: string
+      - name: Token
+        in: query
+        description: The push token to be deleted.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The push token was successfully deleted from the specified user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/token:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Token
+      description: Creates a new token for the user, invalidating any previously existing tokens. The new token's expiration time can be specified.
+      operationId: create-new-token
+      parameters:
+      - name: ExpirationUTC
+        in: query
+        description: The UTC expiration date and time for the new token.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: The new token was successfully created, and the response contains the details of the token.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+    delete:
+      tags:
+      - Tokens
+      summary: Delete All User Tokens
+      description: Deletes all tokens associated with the user.
+      operationId: delete-all-user-tokens
+      responses:
+        '200':
+          description: All user tokens were successfully deleted.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResult"
+  /v1/token/auth:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Multi-Token
+      description: Generates a new multi-token based on the provided authentication details. This token allows for multiple access scenarios.
+      operationId: create-multi-token
+      requestBody:
+        description: The authentication details required to generate the multi-token.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenRequest"
+      responses:
+        '200':
+          description: The multi-token was successfully created, and the response contains the token details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/multiTokens:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Multi-Token
+      description: Generates a new multi-token using the provided token ID and expiration date. This token supports multiple access scenarios.
+      operationId: create-new-multi-token
+      parameters:
+      - name: TokenId
+        in: query
+        description: The unique identifier of the token to be used in the creation of the multi-token.
+        schema:
+          type: string
+      - name: ExpirationUTC
+        in: query
+        description: The UTC expiration date and time for the new multi-token.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: The multi-token was successfully created, and the response contains the token details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/device-token/auth:
+    post:
+      tags:
+      - Tokens
+      summary: Create a New Device Token
+      description: Generates a new token for a device. Any previously existing token for the device will be deleted and replaced with this new one.
+      operationId: create-device-token
+      requestBody:
+        description: The details required to generate a new device token, including device-specific information.
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DeviceTokenRequest"
+      responses:
+        '200':
+          description: The device token was successfully created, and the response contains the details of the new token.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LynxToken"
+  /v1/users/{userId}/duplicate:
+    post:
+      tags:
+      - Users
+      summary: Duplicate a Specific User
+      description: Creates a new user by duplicating the details of an existing user, identified by the userId in the path. The new user will inherit specific attributes and settings from the original user.
+      operationId: duplicate-user
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The ID of the user to duplicate.
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: The details that define how the user should be duplicated, including customizations like job title, email, and which settings should be copied.
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/UserDuplicateRequest"
+      responses:
+        '200':
+          description: The user was successfully duplicated, and the response contains the details of the new user.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserDuplicateResponse"
