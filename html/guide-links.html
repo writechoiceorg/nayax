@@ -59,10 +59,6 @@
       box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
       transform: translateY(-1px);
 
-      h3 {
-        color: #d2a900;
-      }
-
       svg {
         fill: none;
 
@@ -73,6 +69,94 @@
 
         path {
           fill: #FFF;
+        }
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-color-mode="system"] .card_container {
+      .card {
+        border: 1px solid #556974;
+        background: #20292e;
+
+        svg {
+          rect {
+            fill: #20292e;
+            stroke: #556974;
+          }
+        }
+
+        h3,
+        p {
+          color: #FFF;
+        }
+      }
+
+      .card:hover {
+        cursor: pointer;
+        border: 1px solid #d2a900 !important;
+        box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
+        transform: translateY(-1px);
+
+        h3 {
+          color: #d2a900;
+        }
+
+        svg {
+          fill: none;
+
+          rect {
+            fill: #d2a900;
+            stroke: #556974;
+          }
+
+          path {
+            fill: #20292e;
+          }
+        }
+      }
+    }
+  }
+
+  [data-color-mode="dark"] .card_container {
+    .card {
+      border: 1px solid #556974;
+      background: #20292e;
+
+      svg {
+        rect {
+          fill: #20292e;
+          stroke: #556974;
+        }
+      }
+
+      h3,
+      p {
+        color: #FFF;
+      }
+    }
+
+    .card:hover {
+      cursor: pointer;
+      border: 1px solid #d2a900 !important;
+      box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
+      transform: translateY(-1px);
+
+      h3 {
+        color: #d2a900;
+      }
+
+      svg {
+        fill: none;
+
+        rect {
+          fill: #d2a900;
+          stroke: #556974;
+        }
+
+        path {
+          fill: #20292e;
         }
       }
     }
