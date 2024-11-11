@@ -51,6 +51,10 @@
         margin: 0;
         text-align: start;
       }
+
+      p {
+        color: #383838;
+      }
     }
 
     .card:hover {
@@ -74,6 +78,32 @@
         path {
           fill: #FFF;
         }
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-color-mode="system"] .card_container {
+      .card {
+        border: 1px solid #556974;
+        background: #20292e;
+
+        h3,
+        p {
+          color: #FFF;
+        }
+      }
+    }
+  }
+
+  [data-color-mode="dark"] .card_container {
+    .card {
+      border: 1px solid #556974;
+      background: #20292e;
+
+      h3,
+      p {
+        color: #FFF;
       }
     }
   }
