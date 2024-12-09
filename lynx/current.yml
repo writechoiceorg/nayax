@@ -1274,33 +1274,33 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/DeviceExtra"
-  /v1/devices/history/{serialNumber}:
-    post:
-      tags:
-      - Devices
-      summary: Add RMA to Device History
-      description: Add a Return Merchandise Authorization (RMA) entry to the history of a device identified by its serial number.
-      operationId: add-rma-to-device-history
-      parameters:
-      - name: serialNumber
-        in: path
-        required: true
-        description: The serial number of the device to which the RMA entry will be added.
-        schema:
-          type: string
-      requestBody:
-        description: The details of the RMA entry to be added to the device's history.
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/DevicesInsertHistoryDto"
-      responses:
-        '200':
-          description: The RMA entry was successfully added to the device's history.
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/DeviceExtra"
+  # /v1/devices/history/{serialNumber}:
+  #   post:
+  #     tags:
+  #     - Devices
+  #     summary: Add RMA to Device History
+  #     description: Add a Return Merchandise Authorization (RMA) entry to the history of a device identified by its serial number.
+  #     operationId: add-rma-to-device-history
+  #     parameters:
+  #     - name: serialNumber
+  #       in: path
+  #       required: true
+  #       description: The serial number of the device to which the RMA entry will be added.
+  #       schema:
+  #         type: string
+  #     requestBody:
+  #       description: The details of the RMA entry to be added to the device's history.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             "$ref": "#/components/schemas/DevicesInsertHistoryDto"
+  #     responses:
+  #       '200':
+  #         description: The RMA entry was successfully added to the device's history.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               "$ref": "#/components/schemas/DeviceExtra"
   /v1/devices/move/{actorId}:
     put:
       tags:
