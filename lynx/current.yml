@@ -6,6 +6,8 @@ servers:
 - url: https://qa-lynx.nayax.com/operational
 security:
 - Authorization: []
+x-readme:
+  explorer-enabled: true
 paths:
   /v1/actors/{ActorID}:
     get:
