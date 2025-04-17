@@ -15,6 +15,7 @@
       --card-svg-color: #2B5BFF;
       --api-svg-circle-color: #FAF1C9CC;
       --device-svg-circle-color: #DBD8F6;
+      --title-size: 45.42px;
     }
 
     [data-color-mode=dark] {
@@ -27,7 +28,20 @@
       --card-svg-color: #6185FF;
       --api-svg-circle-color: #524E3ECC;
       --device-svg-circle-color: #39374A;
+    }
 
+    @media (prefers-color-scheme: dark) {
+      [data-color-mode=system] {
+        --color-bg-page: #1B1B1B;
+        --card-background-color: #262626;
+        --card-title-color: #fff;
+        --card-desc-color: #fff;
+        --card-border-color: #3C3C3C;
+        --card-link-color: #6185FF;
+        --card-svg-color: #6185FF;
+        --api-svg-circle-color: #524E3ECC;
+        --device-svg-circle-color: #39374A;
+      }
     }
 
     .rm-LandingPage {
@@ -101,7 +115,7 @@
 
     main {
       max-width: var(--container-lg);
-      margin: 0 auto 30px;
+      margin: 0 auto 80px;
 
       .device_integration_section_container {
         margin-top: 50px;
@@ -126,12 +140,10 @@
       .cards-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 10px;
+        gap: 30px;
         padding: 0 30px;
         width: 100%;
       }
-
-
 
       .card {
         background: var(--card-background-color);
@@ -145,7 +157,7 @@
       }
 
       .solo_card {
-        margin: 10px 30px;
+        margin: 30px 30px;
       }
 
       .card:hover {
@@ -212,6 +224,61 @@
 
     }
 
+    @media (max-width: 1300px) {
+      .hero {
+
+        .header_banner {
+          height: 400px;
+        }
+
+        .header_container {
+          margin: 0 auto;
+          gap: 60px;
+          padding: 80px 30px;
+
+          .hero_content {
+            max-width: 610px;
+          }
+
+          .hero_img {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1250px) {
+      .hero {
+
+        .header_banner {
+          height: 347px;
+        }
+
+        .header_container {
+          margin: 0 auto;
+          gap: 60px;
+
+          .hero_content {
+            max-width: 530px;
+
+            h1 {
+              font-size: 40px;
+              line-height: 71.62px;
+            }
+
+            p {
+              font-size: 20px;
+              margin-top: 10px;
+            }
+          }
+
+          .hero_img {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+
     @media (max-width: 1150px) {
       .hero {
 
@@ -219,16 +286,27 @@
           .hero_content {
             max-width: 500px;
           }
+        }
+      }
 
-          .hero_img {
-            width: 350px;
-          }
+      main {
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
         }
       }
     }
 
     @media (max-width: 920px) {
       .hero {
+
+        .header_banner {
+          height: 263px;
+        }
 
         .header_container {
           padding: 50px 30px;
@@ -237,11 +315,12 @@
             max-width: 400px;
 
             h1 {
-              font-size: 40px;
+              font-size: 34px;
+              line-height: normal;
             }
 
             p {
-              font-size: 14px;
+              font-size: 16px;
             }
           }
 
@@ -250,6 +329,34 @@
           }
         }
       }
+
+      main {
+        .section_content {
+          padding: 0 30px;
+
+          h2 {
+            font-size: 30px;
+          }
+
+          p {
+            font-size: 16px;
+          }
+        }
+
+        .card-desc {
+          font-size: 14px;
+        }
+
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
+        }
+      }
+
     }
 
     @media (max-width: 670px) {
@@ -271,6 +378,44 @@
 
           .hero_img {
             width: 250px;
+          }
+        }
+      }
+
+      main {
+        .section_content {
+          padding: 0 30px;
+
+          h2 {
+            font-size: 26px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+
+        .card-desc {
+          font-size: 12px;
+        }
+      }
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+
+        .header_banner {
+          height: 196px;
+        }
+
+        .header_container {
+
+          .hero_content {
+            max-width: 100%;
+          }
+
+          .hero_img {
+            display: none;
           }
         }
       }
@@ -298,6 +443,17 @@
           .hero_img {
             display: none;
           }
+        }
+      }
+
+      main {
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
         }
       }
     }
@@ -401,7 +557,7 @@
     </div>
     <div class="cards-grid api-cards">
       <!-- Card 1 -->
-      <div class="card">
+      <!-- <div class="card">
         <div>
           <div class="card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -445,7 +601,7 @@
             </defs>
           </svg>
         </a>
-      </div>
+      </div> -->
 
       <!-- Card 2 -->
       <div class="card">
@@ -474,7 +630,7 @@
             endpoints.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <a href="/docs/lynx-overview" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -492,7 +648,7 @@
       </div>
 
       <!-- Card 3 -->
-      <div class="card">
+      <!-- <div class="card">
         <div>
           <div class="card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -528,7 +684,7 @@
             </defs>
           </svg>
         </a>
-      </div>
+      </div> -->
 
       <!-- Card 4 -->
       <div class="card">
@@ -615,7 +771,7 @@
             Centralizes and simplifies the integration and management of connected hardware and smart devices.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <a href="/docs/marshall-sdk" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -661,7 +817,7 @@
             Delivers secure payment processing using chip card standards, ensuring compliance and fraud protection.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <a href="/docs/overview-2" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -679,7 +835,7 @@
       </div>
 
       <!-- Card 3 -->
-      <div class="card">
+      <!-- <div class="card">
         <div>
           <div class="card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -722,7 +878,7 @@
             </defs>
           </svg>
         </a>
-      </div>
+      </div> -->
 
       <!-- Card 4 -->
       <div class="card">
@@ -754,7 +910,54 @@
             integration.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <a href="/docs/overview-1" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="31" r="23" />
+              <g clip-path="url(#clip0_281_872)">
+                <path
+                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_872">
+                  <rect width="48" height="48" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Terms and Services</h3>
+          <p class="card-desc">
+            Explore the detailed terms, conditions, and service agreements that define how users interact with our
+            technologies, ensuring clear expectations, data protection, responsible use, and ongoing support across all
+            solutions.
+          </p>
+        </div>
+        <a href="/docs/terms-of-service" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -771,9 +974,10 @@
         </a>
       </div>
     </div>
+    </div>
 
     <!-- Card 5 -->
-    <div class="card solo_card">
+    <!-- <div class="card solo_card">
       <div>
         <div class="card-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -817,7 +1021,7 @@
         </svg>
       </a>
     </div>
-    </div>
+    </div> -->
 
   </main>
 </body>
