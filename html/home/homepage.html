@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
     :root {
       --card-background-color: #fff;
       --card-border-color: #D7D7D7;
@@ -126,12 +128,14 @@
 
         h2 {
           margin-bottom: 0;
+          font-family: Inter !important;
           font-size: 35px;
           font-weight: 700;
           line-height: 71.62px;
         }
 
         p {
+          font-family: Inter !important;
           font-size: 24px;
           margin-bottom: 30px;
         }
@@ -199,6 +203,7 @@
         text-decoration: none;
         display: inline-flex;
         align-items: center;
+        width: fit-content;
       }
 
       .card-link svg {
@@ -222,9 +227,32 @@
         fill: var(--device-svg-circle-color);
       }
 
+      .card-coming-soon {
+        font-family: Inter;
+        display: inline-block;
+        width: fit-content;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #000;
+        background-color: #FFCD00;
+        padding: 4px 8px;
+        border-radius: 50px;
+      }
+
+      .card-coming-soon-device {
+        color: #fff;
+        background-color: #6352E0;
+      }
     }
 
     @media (max-width: 1300px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 100px -50px;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
       .hero {
 
         .header_banner {
@@ -280,6 +308,13 @@
     }
 
     @media (max-width: 1150px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 100px 0;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
       .hero {
 
         .header_container {
@@ -402,6 +437,13 @@
     }
 
     @media (max-width: 650px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: -50px 0;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
       .hero {
 
         .header_banner {
@@ -423,6 +465,13 @@
 
 
     @media (max-width: 530px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 60px 50px;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
       .hero {
 
         .header_container {
@@ -557,53 +606,6 @@
     </div>
     <div class="cards-grid api-cards">
       <!-- Card 1 -->
-      <!-- <div class="card">
-        <div>
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
-              <circle cx="24" cy="30.5" r="23" fill-opacity="0.8" />
-              <g clip-path="url(#clip0_281_450)">
-                <path d="M31.5 9.5H39V17" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M39 32V39.5H31.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M9 9.5L39 39.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M28.2432 20.2569L39 9.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M9 39.5L19.7569 28.7432" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </g>
-              <defs>
-                <clipPath id="clip0_281_450">
-                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-          <h3 class="card-title">Cortina</h3>
-          <p class="card-desc">
-            Enables efficient data flow and system communication through a structured, reliable API framework.
-          </p>
-        </div>
-        <a href="#" class="card-link">
-          Learn More
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
-            <g clip-path="url(#clip0_281_264)">
-              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </g>
-            <defs>
-              <clipPath id="clip0_281_264">
-                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
-              </clipPath>
-            </defs>
-          </svg>
-        </a>
-      </div> -->
-
-      <!-- Card 2 -->
       <div class="card">
         <div>
           <div class="card-icon">
@@ -647,8 +649,58 @@
         </a>
       </div>
 
+      <!-- Card 2 -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="30.5" r="23" fill-opacity="0.8" />
+              <g clip-path="url(#clip0_281_450)">
+                <path d="M31.5 9.5H39V17" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M39 32V39.5H31.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 9.5L39 39.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M28.2432 20.2569L39 9.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 39.5L19.7569 28.7432" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_450">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Cortina</h3>
+          <p class="card-desc">
+            Enables efficient data flow and system communication through a structured, reliable API framework.
+          </p>
+        </div>
+        <span class="card-coming-soon">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a> -->
+      </div>
+
+
+
       <!-- Card 3 -->
-      <!-- <div class="card">
+      <div class="card">
         <div>
           <div class="card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -669,7 +721,8 @@
             Powers lightweight, high‑speed operations through scalable and responsive APIs designed for performance.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <span class="card-coming-soon">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -683,8 +736,8 @@
               </clipPath>
             </defs>
           </svg>
-        </a>
-      </div> -->
+        </a> -->
+      </div>
 
       <!-- Card 4 -->
       <div class="card">
@@ -713,7 +766,8 @@
             service integration.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <span class="card-coming-soon">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -727,7 +781,7 @@
               </clipPath>
             </defs>
           </svg>
-        </a>
+        </a> -->
       </div>
     </div>
 
@@ -835,7 +889,7 @@
       </div>
 
       <!-- Card 3 -->
-      <!-- <div class="card">
+      <div class="card">
         <div>
           <div class="card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -863,7 +917,8 @@
             Supports standardized EV charging communication for interoperability between networks and service providers.
           </p>
         </div>
-        <a href="#" class="card-link">
+        <span class="card-coming-soon card-coming-soon-device">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
           Learn More
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
             <g clip-path="url(#clip0_281_264)">
@@ -877,8 +932,8 @@
               </clipPath>
             </defs>
           </svg>
-        </a>
-      </div> -->
+        </a> -->
+      </div>
 
       <!-- Card 4 -->
       <div class="card">
@@ -927,57 +982,11 @@
         </a>
       </div>
 
-      <div class="card">
-        <div>
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
-              <circle cx="24" cy="31" r="23" />
-              <g clip-path="url(#clip0_281_872)">
-                <path
-                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
-                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </g>
-              <defs>
-                <clipPath id="clip0_281_872">
-                  <rect width="48" height="48" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-          <h3 class="card-title">Terms and Services</h3>
-          <p class="card-desc">
-            Explore the detailed terms, conditions, and service agreements that define how users interact with our
-            technologies, ensuring clear expectations, data protection, responsible use, and ongoing support across all
-            solutions.
-          </p>
-        </div>
-        <a href="/docs/terms-of-service" class="card-link">
-          Learn More
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
-            <g clip-path="url(#clip0_281_264)">
-              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </g>
-            <defs>
-              <clipPath id="clip0_281_264">
-                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
-              </clipPath>
-            </defs>
-          </svg>
-        </a>
-      </div>
     </div>
     </div>
 
     <!-- Card 5 -->
-    <!-- <div class="card solo_card">
+    <div class="card solo_card">
       <div>
         <div class="card-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
@@ -1005,7 +1014,7 @@
           solutions.
         </p>
       </div>
-      <a href="#" class="card-link">
+      <a href="/docs/terms-of-service" class="card-link">
         Learn More
         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
           <g clip-path="url(#clip0_281_264)">
@@ -1021,7 +1030,7 @@
         </svg>
       </a>
     </div>
-    </div> -->
+    </div>
 
   </main>
 </body>
