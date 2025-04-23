@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+    :root {
+      --card-background-color: #fff;
+      --card-border-color: #D7D7D7;
+      --card-title-color: #252525;
+      --card-desc-color: #555;
+      --card-link-color: #2B5BFF;
+      --card-svg-color: #2B5BFF;
+      --api-svg-circle-color: #FAF1C9CC;
+      --device-svg-circle-color: #DBD8F6;
+      --title-size: 45.42px;
+    }
+
+    [data-color-mode=dark] {
+      --color-bg-page: #1B1B1B;
+      --card-background-color: #262626;
+      --card-title-color: #fff;
+      --card-desc-color: #fff;
+      --card-border-color: #3C3C3C;
+      --card-link-color: #6185FF;
+      --card-svg-color: #6185FF;
+      --api-svg-circle-color: #524E3ECC;
+      --device-svg-circle-color: #39374A;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      [data-color-mode=system] {
+        --color-bg-page: #1B1B1B;
+        --card-background-color: #262626;
+        --card-title-color: #fff;
+        --card-desc-color: #fff;
+        --card-border-color: #3C3C3C;
+        --card-link-color: #6185FF;
+        --card-svg-color: #6185FF;
+        --api-svg-circle-color: #524E3ECC;
+        --device-svg-circle-color: #39374A;
+      }
+    }
+
+    .rm-LandingPage {
+      width: 100% !important;
+      padding: 0 !important;
+      font-family: Inter !important;
+    }
+
+    .rdmd-html {
+      width: 100% !important;
+      font-family: Inter !important;
+      background-image: url('https://raw.githubusercontent.com/writechoiceorg/nayax/main/html/home/images/background.png');
+      background-size: contain;
+      background-position: 250px -100px;
+      background-repeat: no-repeat;
+      width: 100%;
+    }
+
+    .hero {
+
+      .header_banner {
+        height: 330px;
+        width: 100%;
+        background-color: #f2f2f2;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .header_container {
+        display: flex;
+        margin: 0 auto;
+        max-width: var(--container-lg);
+        justify-content: start;
+        gap: 100px;
+        padding: 80px 30px;
+
+        .hero_content {
+          max-width: 610px;
+
+          h1 {
+            color: #30374F;
+            font-family: Inter;
+            font-size: 45.42px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 71.62px;
+            margin: 0;
+          }
+
+          p {
+            color: #30374F;
+            font-family: Inter;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 300;
+            margin-top: 10px;
+          }
+        }
+
+        .hero_img {
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+
+          .dark_img {
+            display: none;
+          }
+        }
+      }
+    }
+
+    main {
+      max-width: var(--container-lg);
+      margin: 0 auto 80px;
+
+      .device_integration_section_container {
+        margin-top: 50px;
+      }
+
+      .section_content {
+        padding: 0 30px;
+
+        h2 {
+          margin-bottom: 0;
+          font-family: Inter !important;
+          font-size: 35px;
+          font-weight: 700;
+          line-height: 71.62px;
+        }
+
+        p {
+          font-family: Inter !important;
+          font-size: 24px;
+          margin-bottom: 30px;
+        }
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 30px;
+        padding: 0 30px;
+        width: 100%;
+      }
+
+      .card {
+        background: var(--card-background-color);
+        border: 1px solid var(--card-border-color);
+        border-radius: 12px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: box-shadow .2s ease;
+      }
+
+      .solo_card {
+        margin: 30px 30px;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+      }
+
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--icon-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        font-family: Inter;
+      }
+
+      .card-title {
+        font-family: Inter;
+        margin: 0 0 8px;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--card-title-color, #252525);
+      }
+
+      .card-desc {
+        flex-grow: 1;
+        margin: 0 0 16px;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        color: var(--card-desc-color);
+      }
+
+      .card-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--card-link-color) !important;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+      }
+
+      .card-link svg {
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+        transition: transform .2s ease;
+        stroke: var(--card-svg-color);
+      }
+
+      .card-link:hover svg {
+        transform: translateX(2px);
+      }
+
+      .api-cards .card .card-icon svg circle,
+      .solo_card .card-icon svg circle {
+        fill: var(--api-svg-circle-color);
+      }
+
+      .device-cards .card .card-icon svg circle {
+        fill: var(--device-svg-circle-color);
+      }
+
+      .card-coming-soon {
+        font-family: Inter;
+        display: inline-block;
+        width: fit-content;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #000;
+        background-color: #FFCD00;
+        padding: 4px 8px;
+        border-radius: 50px;
+      }
+
+      .card-coming-soon-device {
+        color: #fff;
+        background-color: #6352E0;
+      }
+    }
+
+    @media (max-width: 1300px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 100px -50px;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
+      .hero {
+
+        .header_banner {
+          height: 400px;
+        }
+
+        .header_container {
+          margin: 0 auto;
+          gap: 60px;
+          padding: 80px 30px;
+
+          .hero_content {
+            max-width: 610px;
+          }
+
+          .hero_img {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1250px) {
+      .hero {
+
+        .header_banner {
+          height: 347px;
+        }
+
+        .header_container {
+          margin: 0 auto;
+          gap: 60px;
+
+          .hero_content {
+            max-width: 530px;
+
+            h1 {
+              font-size: 40px;
+              line-height: 71.62px;
+            }
+
+            p {
+              font-size: 20px;
+              margin-top: 10px;
+            }
+          }
+
+          .hero_img {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1150px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 100px 0;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
+      .hero {
+
+        .header_container {
+          .hero_content {
+            max-width: 500px;
+          }
+        }
+      }
+
+      main {
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
+        }
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+
+        .header_banner {
+          height: 263px;
+        }
+
+        .header_container {
+          padding: 50px 30px;
+
+          .hero_content {
+            max-width: 400px;
+
+            h1 {
+              font-size: 34px;
+              line-height: normal;
+            }
+
+            p {
+              font-size: 16px;
+            }
+          }
+
+          .hero_img {
+            width: 300px;
+          }
+        }
+      }
+
+      main {
+        .section_content {
+          padding: 0 30px;
+
+          h2 {
+            font-size: 30px;
+          }
+
+          p {
+            font-size: 16px;
+          }
+        }
+
+        .card-desc {
+          font-size: 14px;
+        }
+
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
+        }
+      }
+
+    }
+
+    @media (max-width: 670px) {
+      .hero {
+
+        .header_container {
+
+          .hero_content {
+            max-width: 320px;
+
+            h1 {
+              font-size: 30px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+          }
+
+          .hero_img {
+            width: 250px;
+          }
+        }
+      }
+
+      main {
+        .section_content {
+          padding: 0 30px;
+
+          h2 {
+            font-size: 26px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+
+        .card-desc {
+          font-size: 12px;
+        }
+      }
+    }
+
+    @media (max-width: 650px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: -50px 0;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
+      .hero {
+
+        .header_banner {
+          height: 196px;
+        }
+
+        .header_container {
+
+          .hero_content {
+            max-width: 100%;
+          }
+
+          .hero_img {
+            display: none;
+          }
+        }
+      }
+    }
+
+
+    @media (max-width: 530px) {
+      .rdmd-html {
+        background-size: contain;
+        background-position: 60px 50px;
+        background-repeat: no-repeat;
+        width: 100%;
+      }
+
+      .hero {
+
+        .header_container {
+          padding: 30px;
+
+          .hero_content {
+            max-width: 320px;
+
+            h1 {
+              font-size: 30px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+          }
+
+          .hero_img {
+            display: none;
+          }
+        }
+      }
+
+      main {
+        .cards-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+        }
+
+        .solo_card {
+          margin: 20px 30px;
+        }
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+      [data-color-mode="system"] .header_banner {
+        background-color: #262626 !important;
+      }
+
+      [data-color-mode="system"] .hero {
+
+        .header_container {
+          .hero_content {
+
+            h1 {
+              color: #FFF;
+            }
+
+            p {
+              color: #FFF;
+            }
+          }
+
+          .hero_img {
+            .light_img {
+              display: none;
+            }
+
+            .dark_img {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+
+    [data-color-mode="dark"] .header_banner {
+      background-color: #262626 !important;
+    }
+
+    [data-color-mode="dark"] .hero {
+
+
+      .header_container {
+        .hero_content {
+
+          h1 {
+            color: #FFF;
+          }
+
+          p {
+            color: #FFF;
+          }
+        }
+
+        .hero_img {
+          .light_img {
+            display: none;
+          }
+
+          .dark_img {
+            display: block;
+          }
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="header_banner"></div>
+    <div class="header_container">
+      <div class="hero_content">
+        <h1>Nayax API Suite</h1>
+        <p>
+          Leverage Nayax’s robust integrations to support your organization's business requirements.
+        </p>
+      </div>
+      <div class="hero_img">
+        <img class="light_img"
+          src="https://raw.githubusercontent.com/writechoiceorg/nayax/main/html/home/images/logo_light.svg" alt="">
+        <img class="dark_img"
+          src="https://raw.githubusercontent.com/writechoiceorg/nayax/main/html/home/images/logo_dark.svg" alt="">
+      </div>
+    </div>
+  </header>
+  <main>
+
+    <div class="api_section_container">
+      <div class="section_content">
+        <h2>
+          Integrate POS Devices
+        </h2>
+        <p>Integrate Nayax POS with your machines, kiosks, EV chargers, or any application.</p>
+      </div>
+
+    </div>
+    <div class="cards-grid api-cards">
+      <!-- Card 1 -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56" fill="none">
+              <circle cx="24" cy="32.3672" r="23" fill-opacity="0.8" />
+              <g clip-path="url(#clip0_281_480)">
+                <path d="M6 33.6328L24 44.1328L42 33.6328" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M6 24.6328L24 35.1328L42 24.6328" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M6 15.6328L24 26.1328L42 15.6328L24 5.13281L6 15.6328Z" stroke="#FFCD00" stroke-width="3"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_480">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.632812)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Twe​zzerCom</h3>
+          <p class="card-desc">
+            Facilitates seamless communication across multiple platforms, ensuring interoperability and efficient
+            service integration.
+          </p>
+        </div>
+        <span class="card-coming-soon">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a> -->
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="30.5" r="23" />
+              <g clip-path="url(#clip0_281_534)">
+                <path
+                  d="M45 36.5V18.5C45 16.8431 43.6569 15.5 42 15.5H33C31.3431 15.5 30 16.8431 30 18.5V36.5C30 38.1569 31.3431 39.5 33 39.5H42C43.6569 39.5 45 38.1569 45 36.5Z"
+                  stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M24 39.5H16.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M30 33.5H7.5C6.70435 33.5 5.94129 33.1839 5.37868 32.6213C4.81607 32.0587 4.5 31.2956 4.5 30.5V12.5C4.5 11.7044 4.81607 10.9413 5.37868 10.3787C5.94129 9.81607 6.70435 9.5 7.5 9.5H34.5C35.2956 9.5 36.0587 9.81607 36.6213 10.3787C37.1839 10.9413 37.5 11.7044 37.5 12.5V15.5"
+                  stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M36 21.5H39" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_534">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Marshall</h3>
+          <p class="card-desc">
+            Centralizes and simplifies the integration and management of connected hardware and smart devices.
+          </p>
+        </div>
+        <a href="/docs/marshall-sdk" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="30.5" r="23" />
+              <g clip-path="url(#clip0_281_543)">
+                <path
+                  d="M42 11H6C5.17157 11 4.5 11.6716 4.5 12.5V36.5C4.5 37.3284 5.17157 38 6 38H42C42.8284 38 43.5 37.3284 43.5 36.5V12.5C43.5 11.6716 42.8284 11 42 11Z"
+                  stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M31.5 32H37.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M22.5 32H25.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M4.5 18.5H43.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_543">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">EMVCore</h3>
+          <p class="card-desc">
+            Delivers secure payment processing using chip card standards, ensuring compliance and fraud protection.
+          </p>
+        </div>
+        <a href="/docs/overview-2" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24.499" cy="30.5" r="23" fill-opacity="0.8" />
+              <g clip-path="url(#clip0_281_474)">
+                <path d="M30 3.5L27 18.5L39 23L18 45.5L21 30.5L9 26L30 3.5Z" stroke="#FFCD00" stroke-width="3"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_474">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Spark</h3>
+          <p class="card-desc">
+            Powers lightweight, high‑speed operations through scalable and responsive APIs designed for performance.
+          </p>
+        </div>
+        <span class="card-coming-soon">Coming Soon</span>
+        <!-- <a href="#" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a> -->
+      </div>
+
+      <!-- <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="30.5" r="23" fill-opacity="0.8" />
+              <g clip-path="url(#clip0_281_450)">
+                <path d="M31.5 9.5H39V17" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M39 32V39.5H31.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 9.5L39 39.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M28.2432 20.2569L39 9.5" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M9 39.5L19.7569 28.7432" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_450">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Cortina</h3>
+          <p class="card-desc">
+            Enables efficient data flow and system communication through a structured, reliable API framework.
+          </p>
+        </div>
+        <span class="card-coming-soon">Coming Soon</span>
+        <a href="#" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div> -->
+
+    </div>
+
+    <div class="card solo_card">
+      <div>
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+            <circle cx="24" cy="30.5" r="23" />
+            <g clip-path="url(#clip0_281_561)">
+              <path d="M21 32L24 24.5H18L21 17" stroke="#FFCD00" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path
+                d="M10.5 41V11C10.5 10.2044 10.8161 9.44129 11.3787 8.87868C11.9413 8.31607 12.7044 8 13.5 8H28.5C29.2956 8 30.0587 8.31607 30.6213 8.87868C31.1839 9.44129 31.5 10.2044 31.5 11V41"
+                stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6 41H36" stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M31.5 21.5H36C36.7956 21.5 37.5587 21.8161 38.1213 22.3787C38.6839 22.9413 39 23.7044 39 24.5V32C39 32.7956 39.3161 33.5587 39.8787 34.1213C40.4413 34.6839 41.2044 35 42 35C42.7956 35 43.5587 34.6839 44.1213 34.1213C44.6839 33.5587 45 32.7956 45 32V16.7431C45.0001 16.3489 44.9224 15.9586 44.7715 15.5944C44.6207 15.2302 44.3995 14.8993 44.1206 14.6206L40.5 11"
+                stroke="#FFCD00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_561">
+                <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+        <h3 class="card-title">OCPI</h3>
+        <p class="card-desc">
+          Supports standardized EV charging communication for interoperability between networks and service providers.
+        </p>
+      </div>
+      <span class="card-coming-soon card-coming-soon-api">Coming Soon</span>
+      <!-- <a href="#" class="card-link">
+      Learn More
+      <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+        <g clip-path="url(#clip0_281_264)">
+          <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clipPath id="clip0_281_264">
+            <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+          </clipPath>
+        </defs>
+      </svg>
+    </a> -->
+    </div>
+
+    <div class="device_integration_section_container">
+      <div class="section_content">
+        <h2>
+          Manage Data & Operations
+        </h2>
+        <p>Manage operations and monitor transactions from the comfort of
+          your existing business applications (ERP, CRM, VMS, CPMS).</p>
+      </div>
+
+    </div>
+
+    <div class="cards-grid device-cards">
+      <!-- Card 1 -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="30.5" r="23" />
+              <g clip-path="url(#clip0_281_570)">
+                <path
+                  d="M6 18.5V38C6 38.3978 6.15804 38.7794 6.43934 39.0607C6.72064 39.342 7.10218 39.5 7.5 39.5H40.5C40.8978 39.5 41.2794 39.342 41.5607 39.0607C41.842 38.7794 42 38.3978 42 38V18.5L24 6.5L6 18.5Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M20.7279 29L6.46289 39.0763" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M41.5365 39.0763L27.2715 29" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M42 18.5L27.2738 29H20.7281L6 18.5" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_570">
+                  <rect width="48" height="48" fill="white" transform="translate(0 0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Amazon SQS</h3>
+          <p class="card-desc">
+            Handles asynchronous communication through reliable message queues, decoupling services for flexible
+            integration.
+          </p>
+        </div>
+        <a href="/docs/overview-1" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="51" height="54" viewBox="0 0 51 54" fill="none">
+              <circle cx="23" cy="30.332" r="23" fill-opacity="0.8" />
+              <g clip-path="url(#clip0_281_467)">
+                <path
+                  d="M29.1463 12.7955L31.2088 10.733C32.0205 9.92104 32.9842 9.27694 34.0449 8.8375C35.1056 8.39806 36.2425 8.17187 37.3906 8.17188C38.5388 8.17187 39.6756 8.39806 40.7363 8.8375C41.797 9.27694 42.7608 9.92104 43.5725 10.733C44.3845 11.5447 45.0286 12.5085 45.468 13.5692C45.9075 14.6299 46.1336 15.7668 46.1336 16.9149C46.1336 18.063 45.9075 19.1999 45.468 20.2606C45.0286 21.3213 44.3845 22.285 43.5725 23.0968L39.0013 27.668L37.0625 29.6068C36.2498 30.4196 35.2849 31.0642 34.2228 31.5037C33.1607 31.9432 32.0225 32.1689 30.8731 32.1681C29.7237 32.1672 28.5857 31.9397 27.5243 31.4986C26.463 31.0575 25.499 30.4114 24.6875 29.5974C23.8476 28.7578 23.1881 27.7554 22.7496 26.6517C22.3111 25.548 22.1028 24.3663 22.1375 23.1793"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M24.1292 36.5406L22.0667 38.6031C21.254 39.4159 20.289 40.0605 19.2269 40.5C18.1649 40.9395 17.0266 41.1653 15.8772 41.1644C14.7278 41.1635 13.5899 40.936 12.5285 40.4949C11.4671 40.0538 10.5031 39.4078 9.69165 38.5937C8.05663 36.953 7.1395 34.7305 7.14161 32.4142C7.14371 30.0979 8.06489 27.8771 9.7029 26.2393L16.2129 19.7293C17.0246 18.9174 17.9884 18.2733 19.0491 17.8338C20.1098 17.3944 21.2467 17.1682 22.3948 17.1682C23.5429 17.1682 24.6798 17.3944 25.7405 17.8338C26.8012 18.2733 27.7649 18.9174 28.5767 19.7293C29.42 20.5689 30.0824 21.5724 30.5229 22.6778C30.9635 23.7833 31.1727 24.9673 31.1379 26.1568"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_467">
+                  <rect width="48" height="48" fill="white" transform="translate(2.6377 0.667969)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Lynx</h3>
+          <p class="card-desc">
+            Provides secure, real‑time connectivity between devices, services, and applications via robust API
+            endpoints.
+          </p>
+        </div>
+        <a href="/docs/lynx-overview" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="device_integration_section_container">
+      <div class="section_content">
+        <h2>
+          Accept Various Payments
+        </h2>
+        <p>If your organization has its own customer app, loyalty card, or
+          closed-loop payment method, you can easily accept it on any
+          Nayax POS with a quick Cortina integration.</p>
+      </div>
+
+    </div>
+
+    <div class="cards-grid device-cards">
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="31" r="23" />
+              <g clip-path="url(#clip0_281_872)">
+                <path
+                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_872">
+                  <rect width="48" height="48" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Dynamic QR</h3>
+          <p class="card-desc">
+            Dynamic QR codes offer an added layer of security by generating a unique code for each transaction. This
+            ensures the QR code cannot be reused, making it ideal for high-value or secure transactions.
+          </p>
+        </div>
+        <a href="/docs/payment-methods-cortina#dynamicqr" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="31" r="23" />
+              <g clip-path="url(#clip0_281_872)">
+                <path
+                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_872">
+                  <rect width="48" height="48" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Static QR</h3>
+          <p class="card-desc">
+            Static QR codes provide a simple and secure way to process payments by allowing customers to scan a code
+            displayed on the vending machine or terminal.
+          </p>
+        </div>
+        <a href="/docs/payment-methods-cortina#staticqr" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="31" r="23" />
+              <g clip-path="url(#clip0_281_872)">
+                <path
+                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_872">
+                  <rect width="48" height="48" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">Credit Card</h3>
+          <p class="card-desc">
+            Credit card payments process involves standard card verification steps, including authentication and
+            authorization, to ensure that the transaction is secure and that funds are available before approval.
+          </p>
+        </div>
+        <a href="/docs/payment-methods-cortina#prepaid-card#credit-card" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="54" viewBox="0 0 48 54" fill="none">
+              <circle cx="24" cy="31" r="23" />
+              <g clip-path="url(#clip0_281_872)">
+                <path
+                  d="M37.5 42H10.5C10.1022 42 9.72064 41.842 9.43934 41.5607C9.15804 41.2794 9 40.8978 9 40.5V7.5C9 7.10218 9.15804 6.72064 9.43934 6.43934C9.72064 6.15804 10.1022 6 10.5 6H28.5L39 16.5V40.5C39 40.8978 38.842 41.2794 38.5607 41.5607C38.2794 41.842 37.8978 42 37.5 42Z"
+                  stroke="#6352E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M28.5 6V16.5H39" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 25.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 31.5H30" stroke="#6352E0" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_281_872">
+                  <rect width="48" height="48" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="card-title">External Prepaid</h3>
+          <p class="card-desc">
+            Prepaid card transactions work similarly to credit card payments but are used with pre-loaded cards.
+          </p>
+        </div>
+        <a href="/docs/payment-methods-cortina#prepaid-card#credit-card" class="card-link">
+          Learn More
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+            <g clip-path="url(#clip0_281_264)">
+              <path d="M2.88672 10H15.587" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.3916 4.80444L15.5872 10L10.3916 15.1956" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_281_264">
+                <rect width="18.4731" height="18.4731" fill="white" transform="translate(0 0.763428)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+</body>
+
+</html>
