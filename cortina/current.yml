@@ -1,0 +1,6554 @@
+openapi: 3.0.1
+info:
+  title: Nayax Cortina API
+  description: Credit Card, Prepaid, DynamicQR, StaticQR APIs
+  version: v2.1
+  x-logo:
+    url: https://www.nayax.com//wp-content/uploads/2015/10/logo_dark1.png
+servers:
+  - url: https://{domain}:{port}/api
+    variables:
+      domain:
+        default: example.com
+        description: Customer ID assigned by the service provider
+      port:
+        enum:
+          - '443'
+          - '8443'
+        default: '443'
+paths:
+  /Cortina/Version:
+    get:
+      tags:
+        - Cortina
+      summary: Get Version
+      description: Returns the Cortina assembly version and build
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+  /Cortina/StartSession:
+    post:
+      tags:
+        - Cortina
+      summary: Post Start Session
+      description: Initial Request Validation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartSessionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartSessionResponse'
+  /Cortina/SaleEndNotification:
+    post:
+      tags:
+        - Cortina
+      summary: Post Sale End Notification
+      description: >
+        Optional method, Notify Sale Success, this method is called by Nayax to
+        inform the integrator about a successful end of sale transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleEndNotificationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SaleEndNotificationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SaleEndNotificationRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleEndNotificationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SaleEndNotificationResponse'
+  /Cortina/AgeVerification:
+    post:
+      tags:
+        - Cortina
+      summary: Cortina Age Verification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgeVerificationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AgeVerificationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AgeVerificationRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgeVerificationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AgeVerificationResponse'
+  /Cortina/RenewKey:
+    post:
+      tags:
+        - Cortina
+      summary: Post Renew Key
+      description: >
+        ## Renew Key
+
+        Nayax Engine takes the key as is and asks the Provider MS to refresh the
+        key (step 3)
+
+        Cortina returns new PIN encryption key (step 4) under the ZMK of the
+        provider
+
+        [![Renew Key
+        Process](Redoc/CortinaMain/RenewKeyProcess.png)](Redoc/CortinaMain/RenewKeyProcess.png)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewKeyRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RenewKeyRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RenewKeyRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenewKeyResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RenewKeyResponse'
+  /Cortina/CreditCard/Authorization:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCAuthRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCAuthRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCAuthRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCAuthResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCAuthResponse'
+  /Cortina/CreditCard/Settlement:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Settlement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCSettResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCSettResponse'
+  /Cortina/CreditCard/Cancel:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Cancel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCCancelRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCCancelRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCCancelRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCCancelResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCCancelResponse'
+  /Cortina/CreditCard/Sale:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Sale
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCSaleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCSaleResponse'
+  /Cortina/CreditCard/Void:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Void
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCVoidRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCVoidRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCVoidRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCVoidResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCVoidResponse'
+  /Cortina/CreditCard/Refund:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCRefundRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCRefundRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCRefundRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCRefundResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCRefundResponse'
+  /Cortina/CreditCard/IncrementalAuth:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Incremental Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCSettRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCSettResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCSettResponse'
+  /Cortina/CreditCard/Inquiry3DS:
+    post:
+      tags:
+        - Cortina Credit Card
+      summary: Cortina Credit Card Inquiry3DS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CCSaleRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CCSaleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CCSaleResponse'
+  /Cortina/Prepaid/Authorization:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPAuthRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPAuthRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPAuthRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPAuthResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPAuthResponse'
+  /Cortina/Prepaid/Settlement:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Settlement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPSettRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPSettRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPSettRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPSettResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPSettResponse'
+  /Cortina/Prepaid/Cancel:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Cancel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPCancelRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPCancelRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPCancelRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPCancelResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPCancelResponse'
+  /Cortina/Prepaid/Sale:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Sale
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPSaleRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPSaleRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPSaleRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPSaleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPSaleResponse'
+  /Cortina/Prepaid/Void:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Void
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPVoidRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPVoidRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPVoidRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPVoidResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPVoidResponse'
+  /Cortina/Prepaid/Refund:
+    post:
+      tags:
+        - Cortina Prepaid
+      summary: Cortina Prepaid Refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PPRefundRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PPRefundRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PPRefundRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PPRefundResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PPRefundResponse'
+  /Cortina/DynamicQR/GenerateQR:
+    post:
+      tags:
+        - DynamicQR
+      summary: Cortina DynamicQR GenerateQR
+      description: >
+        This method is called by Nayax and provides the integrator with a
+        transaction Id identification (Generated in /StartSession),
+
+        required Amount, merchant, and Machine details (and more). The
+        integrator Shall validate the information and respond
+
+        with the Dynamic QR information to be displayed on the Nayax device
+        accordingly.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DynamicQrRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DynamicQrRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DynamicQrRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicQrResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DynamicQrResponse'
+  /Cortina/DynamicQR/Inquiry:
+    post:
+      tags:
+        - DynamicQR
+      summary: Cortina DynamicQR Inquiry
+      description: >
+        This method is called by Nayax to inquire the approval status of a
+        Transaction ID.
+
+        This call will include the transaction’s final amount and the
+        transaction ID generated in the /GenerateQR call.
+
+        An “Approved” response this call will usually attempt to vend/release
+        the product.
+
+        A “Decline” will terminate the transaction and a “Pending” response will
+        trigger a subsequent /Inquiry request after a predefined time.
+
+        Consult your Technical Point of Contact in Nayax to setup how many calls
+        and how frequently should they be polled.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DynamicInquiryRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DynamicInquiryRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DynamicInquiryRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicInquiryResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DynamicInquiryResponse'
+  /Cortina/DynamicQR/Refund:
+    post:
+      tags:
+        - DynamicQR
+      summary: Cortina DynamicQR Refund
+      description: >
+        This method is called by Nayax, within Nayax web system (DCS),
+
+        to refund full/partial amount of the sale/settlement payment requests or
+        a successful inquiry,
+
+        for example due to an Application user’s complaint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DynamicRefundRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DynamicRefundRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DynamicRefundRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicRefundResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DynamicRefundResponse'
+  /Cortina/DynamicQR/Void:
+    post:
+      tags:
+        - DynamicQR
+      summary: Cortina DynamicQR Void
+      description: >
+        This method is called by Nayax to void a previously successful Inquiry
+        payment requests (for example- in cases where product was not dispensed,
+
+        or the machine has been timed-out).
+
+        In some cases, this command may resemble the ‘effect’ of /Refund (in
+        pre-selection cases) method. However,
+
+        the /Void method should always be implemented nevertheless as it refers
+        to a dedicated user story.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DynamicVoidRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DynamicVoidRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DynamicVoidRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicVoidResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DynamicVoidResponse'
+  /Cortina/{integratorName}/start:
+    post:
+      servers:
+        - url: https://lynx.nayax.com/payment/v2/transactions
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Start
+      description: >
+        This method starts every transaction flow and informs Nayax that a
+        consumer has been approached to an operator's machine.
+
+        This method is called by the Integrator and provides Nayax with a
+        transaction Id (Generated by the integrator and binds all
+        Nayax-Integrator communication regarding a certain transaction),
+
+        AppUserID, TerminalId, secret token, and App account balance.
+
+
+        The request should be sent to the following address:
+
+        https://lynx.nayax.com/payment/v2/transactions/cortina/(integrator's
+        payment method name)/start
+      parameters:
+        - name: integratorName
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Integrator name assigned by Nayax
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticNotifyRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticNotifyRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticNotifyRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticNotifyResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticNotifyResponse'
+  /Cortina/StaticQR/Authorization:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Authorization
+      description: >
+        Used in preauthorization cases (e.g., when a consumer starts a
+        transaction, but the exact clearing amount will be defined later
+        according to their uses),
+
+        this method is called by Nayax and provides the integrator with relevant
+        information to validate and authorize an ongoing transaction by the
+        consumer based on their account.
+
+        /Authorization request will temporarily hold credit in the consumer
+        account balance as part of the transaction flows. This command must be
+        followed by either settlement or cancel request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticAuthRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticAuthRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticAuthRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticAuthResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticAuthResponse'
+  /Cortina/StaticQR/Settlement:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Settlement
+      description: >
+        Upon successful dispense of a product/service by the operator's machine,
+        Nayax will call this method to complete and capture the transaction with
+        the integrator.
+
+        This call will include the transaction’s final amount to be cleared by
+        the integrator.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticSettRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticSettRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticSettRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticSettResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticSettResponse'
+  /Cortina/StaticQR/Cancel:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Cancel
+      description: >
+        In events of revoking preauthorization process, this method is called by
+        Nayax and provides the integrator with relevant information to revoke an
+        ongoing instance of preauthorization transaction.
+
+        Therefore, in such events this method (Cancel) will replace the
+        settlement method and will release the temporarily captured credit in
+        the consumer account.
+
+        for example, in event such of Vend fail, authorization timeout, consumer
+        manual cancels before choosing a product.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticCancelRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticCancelRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticCancelRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticCancelResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticCancelResponse'
+  /Cortina/StaticQR/Sale:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Sale
+      description: >
+        Used in preselection cases (e.g., when a consumer starts a transaction,
+        and the exact clearing amount is known),
+
+        this method is called by Nayax and provides the integrator with relevant
+        information to charge the consumer account balance for a specific amount
+        in a single request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticSaleRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticSaleRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticSaleRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticSaleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticSaleResponse'
+  /Cortina/StaticQR/Void:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Void
+      description: >
+        This method is called by Nayax to void a previously successful payment
+        request.
+
+        For example, in cases such as vend failed, Cortina time out in /sale
+        method, and device failed to produce settlement after a successful
+        /Sale.
+
+        Although in pre-selection cases /Void may resemble to /Refund method,
+        /Void should always be implemented as it addresses different use cases.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticVoidRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticVoidRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticVoidRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticVoidResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticVoidResponse'
+  /Cortina/StaticQR/Refund:
+    post:
+      tags:
+        - StaticQR
+      summary: Cortina StaticQR Refund
+      description: >
+        This method is called by Nayax, within Nayax web system (DCS), to refund
+        full/partial amount of the sale/settlement payment requests or a
+        successful inquiry, for example due to an Application user’s complaint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaticRefundRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/StaticRefundRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/StaticRefundRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaticRefundResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StaticRefundResponse'
+  /Version:
+    get:
+      tags:
+        - Cortina Onboarding
+      summary: Get Version
+      description: Returns the Commerce assembly version and build
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingVersionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingVersionResponse'
+  /OnboardActor:
+    post:
+      tags:
+        - Cortina Onboarding
+      summary: Onboard Actor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardActorRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OnboardActorRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OnboardActorRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardActorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/OnboardActorResponse'
+  /OnboardMachine:
+    post:
+      tags:
+        - Cortina Onboarding
+      summary: Onboard Machine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardMachineRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OnboardMachineRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OnboardMachineRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardMachineResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/OnboardMachineResponse'
+components:
+  schemas:
+    BatchStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 99
+      type: integer
+      format: int32
+      description: |
+        *  0 - Missing
+        *  1 - Open
+        *  2 - InProgress
+        *  3 - Close
+        *  4 - Reopen
+        *  5 - Closed
+        *  6 - Declined
+        * 99 - Unknown
+    BatchOperation:
+      enum:
+        - 1
+        - 3
+      type: integer
+      format: int32
+      description: |
+        * 1 - Open
+        * 3 - Close
+    ECIType:
+      enum:
+        - 1
+        - 5
+        - 6
+        - 7
+      type: integer
+      format: int32
+      description: >
+        Conditional (Only if interface = 01)
+
+        Pre process method used for Electronic Commerce
+
+        * 01 - Mail Order/Telephone Order (MOTO, no 3DS)
+
+        * 05 - Fully authenticated CAVV/UCAFF verification submission
+
+        * 06 - Non-authenticated security transaction at a 3-D Secure-capable
+        Merchant.
+               The Merchant attempted to authenticate the Cardholder using 3-D Secure (aka: Proof of attempt)
+        * 07 - Non-authenticated security submission
+      example: 1
+    ECom3DSType:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+      description: |
+        3DS version supported by the merchant:
+        * 0 - Not supported
+        * 1 - 3DS version 1.0
+        * 2 - 3DS version  2.0
+      example: 1
+    ResponseCode:
+      enum:
+        - -9
+        - 0
+        - 4
+        - 5
+        - 8
+        - 80
+        - 81
+        - 82
+        - 83
+        - 84
+        - 85
+        - 992
+        - 993
+        - 994
+        - 995
+        - 996
+        - 997
+        - 998
+        - 999
+        - 1021
+      type: integer
+      format: int32
+      description: >
+        Error description
+
+        *   -9 - Onboarding Failure
+
+        *   0 - Success
+
+        *   4 - Insufficient funds
+
+        *   5 - Onboarding Success
+
+        *   8 - Onboarding In Progress
+
+        * 80 - AgeVerification approved
+
+        * 81 - AgeVerification declined
+
+        * 82 - AgeVerification data not available on client side (For ex. card
+        not recognized)
+
+        * 83 - AgeVerification provider not responding
+
+        * 84 - AgeVerification data invalid (The requested age cannot be
+        verified because it does not match any age group)
+
+        * 85 - AgeVerification command data invalid
+
+        * 990 - CertificateFileName not found
+
+        * 991 - Failed to decipher message body
+
+        * 992 - Timeout
+
+        * 993 - Keep polling
+
+        * 994 - Card Brand Not supported
+
+        * 995 - Device Skip Site
+
+        * 996 - Transaction ID unknown / Duplicate Transaction ID (Start Session
+        Error)
+
+        * 997 - Missing mandatory parameters
+
+        * 998 - Validation/request cannot be parsed
+
+        * 999 - General system failure
+
+        * 1010 - Public Key Certificate not found
+
+        * 1011 - Method not Implemented
+
+        * 1021 - Switch Interface
+    RegularCreditType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+      description: |
+        * 0 - transactions
+        * 1 - amount
+    TransitTransactionType:
+      enum:
+        - 1
+        - 2
+        - 3
+        - 7
+      type: integer
+      format: int32
+      description: |
+        * 1 - Prefunded
+        * 2 - Realtime Authorization
+        * 3 - Post-Authorization Aggregated Transaction
+        * 7 - Debt Recovery
+    DenyListIndication:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+      description: |
+        * 0 - unknown/ no effect
+        * 1 - Decline will cause consumer to be added to the deny list
+        * 2 - Approval shall cause the consumer to be removed from deny list.
+    Status:
+      type: object
+      description: Transaction status
+      properties:
+        Verdict:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Const string values:
+            - Status of the request ('Approved'/'Declined')
+        Code:
+          type: integer
+          format: int32
+          nullable: true
+          description: >
+            - Conditional - Only if verdict value is declined
+
+            - Please refer to the Decline Reasons Code List in the relevant
+            Overview section for full list of allowed decline codes
+        StatusMessage:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - Length: 255
+
+            - Transaction status message free text field / additional varying
+            data
+        CustomDeclineCode:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - This field is used for specifying a custom decline code (i.e. Soft
+            Decline or Switch Interface).
+
+            - The value might be the same as the acquirer's response code or
+            composed by other data.
+      additionalProperties: false
+    Product:
+      type: object
+      nullable: true
+      description: Product information
+      properties:
+        Code:
+          type: integer
+          format: int32
+          nullable: true
+          description: >
+            - Mandatory
+
+            - length: short (int16)
+
+            - Code of the selected item as defined in the Nayax backoffice or
+            vending machine
+        CatalogProductId:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - length: string (100)
+
+            - External unique identifier of the selected item (the product
+            catalog number) as defined in the Nayax backoffice
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Product name as defined in the Nayax backoffice
+        Price:
+          type: number
+          format: double
+          nullable: true
+          description: >
+            - Mandatory
+
+            - Product price in the machine's currency. This the original Product
+            price while the transaction amount is the billing price after
+            adjustments such as surcharge or loyalty.
+        UnitOfMeasurement:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 64
+            - Product's unit of measurement (e.g 'unit' or 'Liter')
+        Measurement:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Optional
+            - Decimal
+            - Product's quantity in the unit of measurement
+        Group:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Length: 255
+            - Product's group as existing in the product map
+        ProductGroupId:
+          type: string
+          nullable: true
+          description: |
+            - Length: 255
+            - Product's group code as existing in the product map
+        PulseLineNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: >
+            - Extending remote vend capability to support multiple machines via
+            pulse.
+
+            - positive (PulseLineNumber >= 0)
+      additionalProperties: false
+    CustomData:
+      type: object
+      nullable: true
+      description: Custom Fields Information, Contact Nayax TPOC to define.
+      properties:
+        DirectActor:
+          type: string
+          nullable: true
+          description: |
+            Direct actor custom data (String in json format)
+          example: String
+        Operator:
+          type: string
+          nullable: true
+          description: |
+            Operator custom data (String in json format)
+          example: String
+        Distributor:
+          type: string
+          nullable: true
+          description: |
+            Distributor custom data (String in json format)
+          example: String
+        Actor:
+          type: string
+          nullable: true
+          description: |
+            Actor custom data (String in json format)
+          example: String
+        Machine:
+          type: string
+          nullable: true
+          description: |
+            Machine custom data (String in json format)
+          example: String
+        SoftDecline:
+          type: string
+          nullable: true
+          description: |
+            Soft Decline custom data (String in json format)
+          example: String
+      additionalProperties: false
+    TransitElement:
+      type: object
+      nullable: true
+      description: Transit Element Information
+      properties:
+        TransitTransactionType:
+          $ref: '#/components/schemas/TransitTransactionType'
+        DenyListIndication:
+          $ref: '#/components/schemas/DenyListIndication'
+    BasicInfo:
+      type: object
+      nullable: true
+      description: Basic Information
+      properties:
+        TransactionId:
+          type: string
+          nullable: true
+          description: >
+            String (36)
+
+            Mandatory
+
+            The unique identifier for this transaction.
+
+            If /StartSession has been used then this will echo the transaction
+            Id encrypted in 'TranIDCipher'.
+
+            If /StartSession was not Used - Nayax Engine shall generate this
+            Value.
+          example: N99O4XURDQYJZIK4OTCAWF1RHHA40TZWVCRB
+        NayaxTransactionId:
+          type: integer
+          nullable: true
+          format: int64
+          description: >
+            - Nayax Internal Unique identifier for the transaction which will be
+            echoed
+
+            in further requests.
+          example: 3584697384
+        Amount:
+          type: number
+          format: double
+          nullable: true
+          description: >
+            Decimal (max 3 digits for cents)
+
+            Mandatory
+
+            The amount of the payment
+
+            Example: 1 cent = 0.01, 20 cents = 0.20
+
+            Note: Currencies with no Decimal Place shall be represented as
+            double as well
+
+            Example: 234 JYN = 234.0
+          example: 5
+        CurrencyCode:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            Currency according to ISO4217
+            Attribute format: Alpha-3
+          example: ILS
+        CurrencyNumeric:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            Currency according to ISO4217
+            Attribute format: Numeric-3
+          example: '376'
+        SiteId:
+          type: integer
+          format: int16
+          nullable: true
+          description: |
+            Region of the Nayax server.
+          example: 1
+        MachineAuTime:
+          type: string
+          nullable: true
+          description: |
+            Machine Authorization Timestamp
+          example: '071221132914'
+        TimeoutMS:
+          type: integer
+          format: int32
+          nullable: false
+          description: |
+            Nayax Server T/O configuration, in milliseconds
+          example: 15000
+        IsProductSelected:
+          type: boolean
+          nullable: true
+          description: |
+            indication if the product was pre-selected
+          example: true
+        PaymentMethodID:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            Nayax identifier of the payment provider
+          example: 1
+        BillingProviderId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            Nayax identifier of the billing provider
+          example: 1
+        AuditNumber:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            For Nayax internal use only.
+          example: 342
+        NayaxRRN:
+          type: string
+          description: >
+            - Optional
+
+            - Reference to generate Nayax Number, Used as External Transaction
+            Identification for external parties (Usually Card schemes, or App
+            service providers).From support perspective - It is highly
+            recommended that this ID shall be the one visible to the end
+            consumer/Card holder and the card's Issuer (e.g. Bank) or
+            Application service provider (e.g. Alipay, WeChat). If none of the
+            above is applicable, the Integrator shall generate an additional
+            String.
+
+            - This Value shall be echoed in the \/Inquiry request.
+          example: '111111'
+        IsDeferredAuthorization:
+          type: boolean
+          nullable: true
+        AgeLimitation:
+          type: integer
+          nullable: true
+          format: int16
+          description: |
+            - Optional
+            - Minimum age required to allow the transaction.
+          example: 18
+        IsSoftDeclineCompletion:
+          type: boolean
+          nullable: false
+        TransitElement:
+          $ref: '#/components/schemas/TransitElement'
+      additionalProperties: false
+    MachineInfo:
+      type: object
+      nullable: true
+      description: Machine Information
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Mandatory
+            - Machine entity unique ID allocated in the Nayax backoffice.
+          example: 106791869
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Mandatory
+            - Length: 255
+            - Machine Name as defined in the Nayax backoffice
+          example: Itai_TestPayCC V2
+        ExternalId:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - Length: 200
+
+            - Optional filed, it reflects the Machine External ID as it has been
+            provided by the operator in the Nayax back-office system (Machine
+            number - operator).
+          example: OperatorExternalID
+        Type:
+          type: string
+          nullable: true
+          description: |
+            - Length: 50
+            - Machine Type as defined in the Nayax backoffice
+          example: machine type
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Optional Terminal identifier as defined in the Nayax backoffice.
+          example: '8888888844'
+        DecimalPlace:
+          type: integer
+          format: int64
+          nullable: true
+          description: >
+            Decimal point location for amounts used on this machine
+
+            Example: a value of '2' refers to possible amounts such as 123.45,
+            while a value of '0' refers to amount 12345
+          example: 2
+        Offset:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - UTC timezone offset
+          example: '3.00'
+        GroupId:
+          type: string
+          nullable: true
+          description: |
+            For Nayax internal use only.
+          example: String
+        OperatorId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant ID as defined in the Nayax backoffice
+          example: 2001537302
+        Region:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Region as defined in the Nayax backoffice
+          example: EU
+        City:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Machine City as defined in the Nayax backoffice
+          example: Abbeville
+        ZipCode:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Machine ZipCode as defined in the Nayax backoffice
+          example: 22448Z
+        Country:
+          $ref: '#/components/schemas/CountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/GeoLocation'
+      additionalProperties: false
+    DeviceInfo:
+      type: object
+      nullable: true
+      description: Nayax Device Information
+      properties:
+        HwSerial:
+          type: string
+          nullable: true
+          description: |
+            Nayax Device Hardware serial number as embedded on the device
+          example: '0434324119376526'
+        FWVersion:
+          type: string
+          nullable: true
+          description: |
+            Device Firmware version
+          example: 4.0.0.22-RC01 - Aug 25 2021
+        Type:
+          type: string
+          nullable: true
+          description: |
+            Nayax Device Type
+          example: Onyx
+      additionalProperties: false
+    ActorInfo:
+      type: object
+      nullable: true
+      description: |
+        Merchant (aka: Actor) Information.
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Mandatory
+            - Length: 255
+            - Actor ID as saved as defined in the Nayax backoffice
+          example: 2001537302
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Mandatory
+            - Length: 255
+            - Direct Merchant name as defined in the Nayax backoffice
+          example: TestPayCC V2 OP
+        OperatorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator ID as defined in the Nayax backoffice
+          example: 2001537302
+        OperatorName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator name  as defined in the Nayax backoffice
+          example: TestPayCC V2 OP _ Sub Merchant
+        MerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Merchant identifier as defined in the Nayax backoffice
+          example: 999999888885
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+          example: https://www.nayax.com/alternativeURL
+        Country:
+          $ref: '#/components/schemas/CountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/GeoLocation'
+        MCC:
+          type: integer
+          format: int32
+          description: >
+            - Optional
+
+            - classify merchants and businesses by the type of goods or services
+            provided. Payment brands, issuers and acquirers.
+          nullable: true
+          example: 455
+        SubMerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Sub Merchant identifier as defined in the Nayax backoffice
+          example: 999999888886
+      additionalProperties: false
+    CountryInfo:
+      type: object
+      nullable: true
+      description: |
+        Actor and Machine Country information
+      properties:
+        Name:
+          type: string
+          nullable: true
+          description: |
+            String
+            Mandatory
+            Country Full Name
+          example: UNITED STATES
+        NumericCode:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            ISO-3166-1 format: Numeric-3 code
+          example: '840'
+        Alpha2Code:
+          type: string
+          nullable: true
+          description: |
+            String(2)
+            Mandatory
+            ISO-3166-1 format: Alpha-2 code
+          example: US
+        Alpha3Code:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            ISO-3166-1 format: Alpha-3 code
+          example: USA
+        Intra:
+          type: string
+          nullable: true
+          description: >
+            String
+
+            Mandatory
+
+            An Intra Region refers to a geographical diversification across
+            countries within a single 'Intra region'.
+
+            E.g. 'France' is country within the 'European Union' Intra Region.
+          example: Europe
+      additionalProperties: false
+    GeoLocation:
+      type: object
+      description: Actor and Machine Geo location information
+      nullable: true
+      properties:
+        State:
+          type: string
+          nullable: true
+          description: |
+            - String
+            - Optional
+            - Actor geo state code as defined in the Nayax backoffice
+          example: Alabama
+        City:
+          type: string
+          nullable: true
+          description: |
+            - String(255)
+            - Optional
+            - City as defined in the Nayax backoffice
+          example: Zambezi
+        CountryCode:
+          type: string
+          nullable: true
+          description: |
+            String
+            Optional
+            Country code (ISO3) as defined in the Nayax backoffice
+          example: ZM
+        ZipCode:
+          type: string
+          nullable: true
+          description: |
+            String(255)
+            Optional
+            Zip code defined in the Nayax backoffice
+          example: '234234'
+        Address:
+          type: string
+          nullable: true
+          description: |
+            String(255)
+            Optional
+            Address as defined in the Nayax backoffice
+          example: River
+        Latitude:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Machine Location Latitude as defined in the Nayax backoffice
+          example: 51.0003431
+        Longitude:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Machine Location Longitude as defined in the Nayax backoffice
+          example: 23.745245
+      additionalProperties: false
+    PaymentInfo:
+      type: object
+      nullable: true
+      description: >
+        - This Object Identifies Transaction Information and references
+        (RRNs,Transaction IDs, AUth Code, original amounts etc..)
+
+        - The Object is Included in all response messages for Payment calls
+
+        - When included in requests (cases of /Settlement, /Void, /Refund, and
+        /Inquiry) the object refers to the PaymentInfo object returned on a
+        previous call (e.g a Refund request will include the information
+        returned in the Original /Sale, /Settlement or /Inquiry responses the
+        settled it.)
+      properties:
+        SrvTranId:
+          type: string
+          nullable: true
+          description: >
+            - the Integrator's internal transaction id.
+
+            - Conditional, only if /StartSession was not Used.
+
+            - If /StartSession was used, this should be either empty or Echo the
+            Transaction ID sent in the request.
+          example: '3584697388'
+        AuthCode:
+          type: string
+          nullable: true
+          description: >
+            - String (40)
+
+            - Conditional For Credit cards implementation, when transaction is
+            approved,
+
+            - Optional for Static QR, Dynamic QR and ExternalPP.
+
+            - External (usually Card issuer's)Authorization Code
+
+            - Note: In dynamic QR implementation The Value returned in an
+            approved /Inquiry request shall represent the Approval Code of the
+            transaction and shall override any previous values returned.
+          example: '333333'
+        AuthAmount:
+          type: number
+          format: double
+          nullable: true
+          description: >
+            - Conditional, on /Authorization and /Sale responses,
+
+            - Optional for all other cases,
+
+            - The original amount requested in /Authorization or /Sale
+            requested.
+          example: 5.5
+        SettAmount:
+          type: number
+          format: double
+          nullable: true
+          description: >
+            - Conditional, on /Settlement, /Inquiry and /Sale responses,
+
+            - Optional for all other cases.
+
+            - In most cases - the original amount requested in /Settlement or
+            /Sale process.
+
+            - For Cortina External Prepaid *only*, this value can be used to
+            update a discount that was given to the cardholder. The amount can
+            be equal or lower than the original amount, and it will be reflected
+            in the transaction settlement amount in Nayax Core transaction
+            record. Please notice, this field is used for reporting purposes
+            only, and can only be used for cases where the integrator is
+            preforming the discount.
+          example: 5.5
+        RRN:
+          type: string
+          nullable: true
+          description: >
+            Reference Retrieval Number, Used as External Transaction
+            Identification for external parties (Usually Card schemes)
+
+            From support perspective - It is highly recommended that this ID
+            shall be the one visible to the end consumer/Card holder.
+
+            Note: in /Inquiry response the RRN value must match the preceding
+            Value sent in the /GenerateQR response.
+          example: '111111'
+        Token:
+          type: string
+          nullable: true
+          description: |
+            String(256)
+            A unique token for the transaction
+            For Internal Nayax use only
+          example: string
+        AuthDateTime:
+          type: string
+          nullable: true
+          description: >
+            - Conditional, on /Authorization and /Sale response
+
+            - The date time string of when the /Authorization ot /Sale took
+            place
+
+            - Format: ddMMyyHHmmss
+          example: '071221133300'
+        SettDateTime:
+          type: string
+          nullable: true
+          description: |
+            - Conditional, on /Settlement and /Sale responses
+            - The date time string of when the /Settlement or /Sale took place
+            - Format: ddMMyyHHmmss
+          example: '071221133330'
+        TraceNumber:
+          type: string
+          nullable: true
+          description: |
+            Trace number,
+            For Internal Nayax use only
+          example: '4444'
+        AuthSource:
+          type: string
+          nullable: true
+          description: |
+            - String(5)
+            - For Internal Nayax use only
+          example: string
+        AdditionalData:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC on order define.
+            - String in JSON format.
+          example: string
+        IsGatewayTimeout:
+          type: boolean
+          nullable: true
+          description: |
+            Was there was a gateway timeout (valid in response)
+          example: false
+        ProviderExternalData:
+          type: string
+          nullable: true
+          description: |
+            - Optional.
+            - String in JSON format.
+          example: string
+        InitiateTranReference:
+          type: integer
+          nullable: true
+          format: int64
+          description: >
+            - Conditional, in case of re-attempt of using a prepaid loyalty card
+            on a terminal in a given transaction,
+
+            - this field will reflect which transaction (Nayax Transaction ID)
+            this attempt originally belongs to.
+          example: 11223344
+        IsRevalueCard:
+          type: boolean
+          nullable: true
+          description: Indication if card is allowed revalue
+          example: false
+      additionalProperties: false
+    CardData:
+      type: object
+      nullable: true
+      description: >-
+        Additional data we read from the card (EMV data, expiration date, cvv2,
+        etc.)
+      properties:
+        CardNumber:
+          type: string
+          nullable: true
+          description: >
+            - String ()
+
+            - Mandatory
+
+            - For card present Authorization and Sale, the full Track2 will be
+            sent in this field.
+
+            - For card not present, Settlement, Cancel, Void, Refund - The card
+            PAN only will be sent.
+          example: '****'
+        EntryMode:
+          type: string
+          nullable: true
+          description: >
+            String (4)
+
+            Mandatory
+
+            Optional Value:
+
+            * MCR - Card number read from the card magnetic stripe.
+
+            * CON - Card details read from the chip via the contact interface
+            (insert).
+
+            * CLS - Card details read from the chip via the contactless
+            interface (tap).
+
+            * NFC - Card details read from the phone via the contactless
+            interface (phone tap).
+
+            * CLM - Card track2 read from the chip via the contactless interface
+            (contactless magstripe\\legacy mode).
+
+            * MIF\\MIFH - MIFARE\\MIFARE received as Hexadecimal
+
+            * QR - Card number read from a QR by the
+            [DOT](https://www.nayax.com/solution/dot/)
+
+
+            Other values may also be sent in specific edge case, for more
+            information please consult your Nayax POC.
+          example: MCR
+        ExpYear:
+          type: string
+          nullable: true
+          description: Conditional only when Interface is 1 or 10, (YY)
+          example: '23'
+        ExpMonth:
+          type: string
+          nullable: true
+          description: Conditional only when Interface is 1 or 10, (MM)
+          example: '01'
+        EMVData:
+          type: string
+          nullable: true
+          description: |
+            String of emv tags in TLV format
+          example: string
+        CVV2:
+          type: string
+          nullable: true
+          description: |
+            Optional, cvv2
+          example: '****'
+        IDNumber:
+          type: string
+          nullable: true
+          description: ID Number
+          example: '****'
+        RandomNumber:
+          type: string
+          nullable: true
+          example: string
+        BrandInfo:
+          $ref: '#/components/schemas/CardBrandInfo'
+        CardHolderName:
+          type: string
+          nullable: true
+          description: Card Holder Name
+          example: Test Card Holder
+        IsDebitCard:
+          type: boolean
+          nullable: true
+          description: Indication if card is Debit or Prepaid
+          example: true
+      additionalProperties: false
+    RevalueCardData:
+      type: object
+      nullable: true
+      description: Revalue Card Data
+      properties:
+        CardNumber:
+          type: string
+          nullable: true
+          description: |
+            - String ()
+            - Mandatory
+          example: '****'
+        EntryMode:
+          type: string
+          nullable: true
+          description: >
+            String (4)
+
+            Mandatory
+
+            Optional Value:
+
+            * MCR - Card number read from the card magnetic stripe.
+
+            * CON - Card details read from the chip via the contact interface
+            (insert).
+          example: MCR
+      additionalProperties: false
+    RevaluePaymentInfo:
+      type: object
+      nullable: true
+      description: >
+        - This Object Identifies Revalue Transaction Information and references
+        (RRNs,Transaction IDs, AUth Code, original amounts etc..)
+      properties:
+        SrvTranId:
+          type: string
+          nullable: true
+          description: |
+            - the Integrator's internal transaction id.
+          example: '3584697388'
+        RevalueAuthCode:
+          type: string
+          nullable: true
+          description: |
+            - String (40)
+            - External (usually Card issuer's)Authorization Code
+          example: '333333'
+        RevalueAmount:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - The original amount requested in /Revalue requested.
+          example: 5.5
+        RevalueFinalAmount:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - The Revalue Final Amount.
+          example: 5.5
+        RRN:
+          type: string
+          nullable: true
+          description: >
+            Reference Retrieval Number, Used as External Transaction
+            Identification for external parties (Usually Card schemes)
+
+            From support perspective - It is highly recommended that this ID
+            shall be the one visible to the end consumer/Card holder.
+          example: '111111'
+        RevalueDateTime:
+          type: string
+          nullable: true
+          description: |
+            - The date time string of when the /Revalue took place
+            - Format: ddMMyyHHmmss
+          example: '071221133300'
+        CreditCardNumber:
+          type: string
+          nullable: true
+          description: |
+            - String ()
+            - Mandatory
+          example: 1234 xxxx xxxx 5678
+        IsGatewayTimeout:
+          type: boolean
+          nullable: true
+          description: |
+            Was there was a gateway timeout (valid in response)
+          example: false
+        AdditionalData:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC on order define.
+            - String in JSON format.
+          example: string
+      additionalProperties: false
+    Balance:
+      type: object
+      nullable: true
+      properties:
+        RegularCreditType:
+          $ref: '#/components/schemas/RegularCreditType'
+        RegularCredit:
+          type: number
+          format: double
+          nullable: true
+          description: >-
+            Regular Credit amount or amounts of transactions based on
+            RegularCreditType Decimal place 2
+        RevalueCredit:
+          type: integer
+          format: int32
+          nullable: true
+          description: >-
+            Revalue credit amount - Only if card is configured a revalue-able
+            Decimal place 2
+      additionalProperties: false
+    Polling:
+      type: object
+      nullable: true
+      properties:
+        IsLastPolling:
+          type: boolean
+          nullable: true
+          description: |
+            Flag indicator of last polling attempt
+        PollingAttemptCounter:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            Current polling attempt number
+      additionalProperties: false
+    EMVTags:
+      type: object
+      nullable: true
+      description: Response EMV tags, Mandatory for Contact.
+      properties:
+        Tag91:
+          type: string
+          nullable: true
+          description: EMV Tag 91 (Issuer Authentication Data), Mandatory for Contact.
+          example: A93381BFF8C5E9EC0012
+        Tag8A:
+          type: string
+          nullable: true
+          description: >-
+            EMV Tag 8A (Authorisation Response Code), Mandatory for Contact.
+            Value must be sent in ASCII value, e.g.value of 00 (HEXA) should be
+            sent as 3030 (ASCII) and value of 05 (HEXA) should be sent as 3035 .
+          example: '3030'
+        Tag71:
+          type: string
+          nullable: true
+          description: >-
+            EMV Tag 71 (Issuer Script Template 1). Tags 71 and 72 are optional
+            and in any case should only be sent on Contact flow.
+          example: 860D8424000008D466284E10D1FF7C
+        Tag72:
+          type: string
+          nullable: true
+          description: >-
+            EMV Tag 72 (Issuer Script Template 2). Tags 71 and 72 are optional
+            and in any case should only be sent on Contact flow.
+          example: 860D8424000008D466284E10D1FF7C
+      additionalProperties: false
+    Batch:
+      nullable: true
+      type: object
+      properties:
+        BatchStatus:
+          $ref: '#/components/schemas/BatchStatus'
+        BatchId:
+          type: integer
+          nullable: true
+          format: int64
+          description: |
+            Batch id relevant to the transaction
+          example: 0
+        AddToBatch:
+          nullable: true
+          type: boolean
+          description: |
+            Denote on whether to add to the batch
+          example: true
+        DeleteFromBatch:
+          type: boolean
+          nullable: true
+          description: |
+            Denote on whether to delete from batch
+          example: true
+        BatchTransactionId:
+          type: string
+          nullable: true
+          description: |
+            The transaction id inside the batch (id)
+          example: string
+        OperationToPerform:
+          $ref: '#/components/schemas/BatchOperation'
+      additionalProperties: false
+    ECom3DSInfo:
+      type: object
+      nullable: true
+      properties:
+        ECI:
+          $ref: '#/components/schemas/ECIType'
+        ECom3DSUCAFFCAVV:
+          type: string
+          nullable: true
+          description: Base64 String Conditional (Only if ECI = 05)
+          example: string
+        XID:
+          type: string
+          nullable: true
+          description: Base64 String Conditional
+          example: string
+        ECom3DSVersion:
+          $ref: '#/components/schemas/ECom3DSType'
+          nullable: true
+          description: Expect the value 1 from the enum. Validate against it.
+        ECom3DSRequested:
+          type: boolean
+          nullable: false
+          description: states this request should do a SCA verification
+        ECom3DSCallbackUrl:
+          type: string
+          nullable: true
+          description: this is the url to get the callback from acquirer
+        ECom3DSAdditionalData:
+          type: string
+          nullable: true
+          description: all additional data is contained here
+      additionalProperties: false
+    ECom3DSResponseInfo:
+      type: object
+      nullable: true
+      properties:
+        ECom3DSRedirectUrl:
+          type: string
+          nullable: true
+          description: >-
+            where the requester should redirect the customer for the SCA
+            verification
+        ECom3DSStatus:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            Conditional - when ECom3DSRequested was true.
+              * 0/null/missing - no 3DS attempted
+              * 1 - 3DS attempted & No SCA Required (Frictionless or waived by the issuer)
+              * 2 - 3DS attempted - SCA Required (Redirect URL must be used)
+              * 3 - 3DS attempt could not be completed with provider
+              * 4 - SCA performed and Failed
+              * 5 - SCA performed and Completed
+              * 6 - SCA could not be completed by Issuer
+    DukptInfo:
+      type: object
+      nullable: true
+      properties:
+        Algorithm:
+          type: integer
+          nullable: true
+          format: int32
+          description: |
+            * 0 - 3DES
+            * 1 - AES128
+          example: 1
+        KSN:
+          type: string
+          nullable: true
+          description: |
+            key serial number of DUKPT encryption
+          example: string
+        PINBlock:
+          type: string
+          nullable: true
+          description: |
+            The PIN data provided by the card holder
+            encrypted according to the key received by TMS.
+          example: '****'
+        PINBlockFormat:
+          type: integer
+          nullable: true
+          format: int32
+          description: |
+            * 0 - ISO 0
+            * 1 - ISO 1
+            * 2 - ISO 2
+            * 3 - ISO 3
+            * 4 - ISO 4
+          example: 4
+        ExternalKeyId:
+          type: string
+          nullable: true
+          description: |
+            - External Key Id
+      additionalProperties: false
+    QRData:
+      type: object
+      nullable: true
+      properties:
+        ChannelId:
+          type: string
+          nullable: true
+          description: |
+            - Conditional for multi channel integrations
+            - Echo of the value provided by Nayax in the request.
+        RRN:
+          type: string
+          description: >
+            - Mandatory
+
+            - Reference Retrieval Number, Used as External Transaction
+            Identification for external parties (Usually Card schemes, or App
+            service providers).From support perspective - It is highly
+            recommended that this ID shall be the one visible to the end
+            consumer/Card holder and the card's Issuer (e.g. Bank) or
+            Application service provider (e.g. Alipay, WeChat). If none of the
+            above is applicable, the Integrator shall generate an additional
+            String.
+
+            - This Value shall be echoed in the /Inquiry request.
+        SrvTranId:
+          type: string
+          description: >
+            - the Integrator's internal transaction id.
+
+            - Conditional, only if /StartSession was **not** Used.
+
+            - If /StartSession was used, this should be either empty or Echo the
+            Transaction ID sent in the request.
+      additionalProperties: false
+    CardBrandInfo:
+      type: object
+      properties:
+        PrimaryId:
+          type: string
+          nullable: true
+          description: Primary Brand Id
+          example: '6'
+        PrimaryDescription:
+          type: string
+          nullable: true
+          description: Primary Brand Description
+          example: VISA
+        SecondaryId:
+          type: string
+          nullable: true
+          description: Secondary Brand Id
+          example: '0'
+        SecondaryDescription:
+          type: string
+          nullable: true
+          description: Secondary Brand Description
+          example: string
+      additionalProperties: false
+    EncryptInfo:
+      type: object
+      nullable: true
+      properties:
+        RandomNumber:
+          type: string
+          nullable: true
+          description: Random number generated
+          example: string
+        CertificateFileName:
+          type: string
+          nullable: true
+          description: |
+            - Include the filename (name only without the path)
+            - of the certificate files used for the encryption
+          example: string
+        EncryptedSessionKey:
+          type: string
+          nullable: true
+          description: Include AES session key encrypted by the Public key
+          example: string
+        EncryptedMessage:
+          type: string
+          nullable: true
+          description: Encrypted JSON message
+          example: string
+      additionalProperties: false
+    FreeInfo:
+      type: array
+      nullable: true
+      description: |
+        - This field is relevant only to certain integrations
+        - Please contact our integration team for further assistance
+      items:
+        type: string
+        additionalProperties: false
+    PosDisplay:
+      type: object
+      nullable: true
+      properties:
+        FreeInfo:
+          $ref: '#/components/schemas/FreeInfo'
+          nullable: true
+          additionalProperties: false
+    CurrentKeyData:
+      type: object
+      description: |
+        - Current Key Data
+      properties:
+        ZpkId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Internal ID for the ZPK Key
+        ZmkId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Internal ID for the ZMK Key
+        Kcv:
+          type: string
+          nullable: true
+          description: |
+            - Key Check value (content is bytes)
+        AlgorithmId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - AlgorithmId ID
+        KeyFormatId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Key Format ID
+        KeyProviderId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Key Provider ID
+        KeyRenewalDt:
+          type: string
+          example: '2021-03-01 13:45:56.100'
+          nullable: true
+          description: |
+            - Key Renewal Datetime
+        KeyExpirationDt:
+          type: string
+          example: '2021-03-01 13:45:56.100'
+          nullable: true
+          description: |
+            - Key Expiration Datetime
+        ExternalKeyId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - External Key ID
+        ProviderId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Provider ID
+    NewKeyData:
+      type: object
+      description: |
+        - New Key Data
+      properties:
+        EncryptedKeyValue:
+          type: string
+          nullable: true
+          description: |
+            - Encrypted Key Value
+        Kcv:
+          type: string
+          nullable: true
+          description: |
+            - New Key Check value (content is bytes)
+        ExternalKeyId:
+          type: string
+          nullable: true
+          description: |
+            - New External Key Id
+    VersionResponse:
+      type: object
+      properties:
+        ProductVersion:
+          type: string
+          nullable: false
+        Copyright:
+          type: string
+          nullable: false
+        ApiVersion:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RenewKeyRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        CurrentKeyData:
+          $ref: '#/components/schemas/CurrentKeyData'
+          nullable: true
+      additionalProperties: false
+    RenewKeyResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        NewKeyData:
+          $ref: '#/components/schemas/NewKeyData'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        NewKeyData:
+          EncryptedKeyValue: string
+          Kcv: 05A301
+          ExternalKeyId: 1
+      additionalProperties: false
+    AgeVerificationRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: N99O4XURDQYJZIK4OTCAWF1RHHA40TZWVCRB
+          NayaxTransactionId: 3584697384
+          Amount: 5
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '071221132914'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+          AgeLimitation: 18
+        DeviceInfo:
+          HwSerial: '0434324119376526'
+          FWVersion: 4.0.0.22-RC01 - Aug 25 2021
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+      additionalProperties: false
+    AgeVerificationResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '222222'
+          AuthCode: '333333'
+          AuthAmount: 5
+          SettAmount: 5
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '071221132914'
+          SettDateTime: 12/7/2021 10:29:16 AM
+          TraceNumber: '4444'
+          AuthSource: '555555'
+          AdditionalData: ''
+      additionalProperties: false
+    StartSessionRequest:
+      type: object
+      properties:
+        TokenId:
+          type: string
+          nullable: false
+          description: |
+            3rd party Secret Token reference number
+        RandomNumber:
+          type: string
+          nullable: false
+          description: |
+            Nayax will create 27 char Random Number
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+      additionalProperties: false
+    StartSessionResponse:
+      type: object
+      properties:
+        TranIDCipher:
+          type: string
+          nullable: false
+          description: >
+            - Mandatory
+
+            - The Integrator Generates transaction ID of 36 Chars (or 288 bits).
+
+            - The Integrator then appends the char = and RandomNumber to create
+            the ciphertext of 64 chars
+
+            - Format TransactionId=RandomNumber
+
+            - The integrator encrypts the ciphertexts with the Secret Token in
+            AES ECB.
+
+            - The AES key will be the last (right most) 256 bits (or 32 chars)
+            of the Secret Token the matches the TokenID provided in the request.
+
+            - Nayax will AES ECB decrypt and extract transaction id
+
+            - The transaction Id value will then be used for all further
+            requests
+        Status:
+          $ref: '#/components/schemas/Status'
+      additionalProperties: false
+    SaleEndNotificationRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+      additionalProperties: false
+    SaleEndNotificationResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+      additionalProperties: false
+    DynamicQrRequest:
+      type: object
+      properties:
+        ChannelId:
+          type: integer
+          format: int32
+          nullable: true
+          description: >
+            - Conditional, for Multi-channel integration, Contact Nayax TPOC to
+            define.
+
+            - Channel Values shall be provided by Nayax, and cannot be altered.
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        Product:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ChannelId: 19
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        DeviceInfo: null
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayDynamicQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        Product:
+          - Code: 11
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: USD
+            Measurement: 1
+          - Code: 456
+            Name: expensiveSprite
+            Price: 600
+            UnitOfMeasurement: USD
+            Measurement: 0
+      additionalProperties: false
+    DynamicQrResponse:
+      type: object
+      properties:
+        QRCode:
+          type: string
+          nullable: true
+          description: |
+            - Mandatory
+            - QR URL for device
+        QRData:
+          $ref: '#/components/schemas/QRData'
+          nullable: true
+        Status:
+          $ref: '#/components/schemas/Status'
+      example:
+        QRCode: DynamicQrResponse_QRCode_Test
+        QRData:
+          ChannelId: '19'
+          RRN: '111111'
+          SrvTranId: '236584335969834429321847829253667359'
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        additionalProperties: false
+    DynamicInquiryRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+            description: Mandatory Products details
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Polling:
+          $ref: '#/components/schemas/Polling'
+          description: Optional Polling Information
+      example:
+        BasicInfo:
+          TransactionId: '236584335969834429321847829253667359'
+          Amount: 0.1
+          Currency: ILS
+          SiteId: 1
+          MachineAuTime: '230221101008'
+        Products:
+          - Code: 11
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: Unit
+            Measurement: 1
+        DeviceInfo:
+          Id: 0
+          HwSerial: '0434324119376524'
+          FWVersion: 4.0.0.12-RC1 - Sep 22 2020
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayDynamicQR V2
+          TerminalId: '987654321'
+          DecimalPlace: 2
+          Offset: '2.00'
+          CountryCode: US
+          CountryISOCode: USA
+          Country: UNITED STATES
+          City: Abbeville
+          Address: TestPayDynamicQR V2
+          ZipCode: '1223311'
+        ActorInfo:
+          Id: 2001505522
+          Name: TanyaT_OP
+          MerchantId: '123456789'
+          CountryCode: US
+        CustomData:
+          Actor: ''
+          Machine:
+            dynamic_qr_channels_rec_ids: 8,19
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthAmount: 0.1
+          SettAmount: 0
+          RRN: '111111'
+          IsGatewayTimeout: false
+        Polling:
+          IsLastPolling: false
+          PollingAttemptCounter: 30
+      additionalProperties: false
+    DynamicInquiryResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+          description: |
+            Use 993 to keep polling.
+            See status description for more info
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '555555'
+          AdditionalData: ''
+      additionalProperties: false
+    DynamicRefundRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+          description: |
+            - Optional
+            - length: Short integer (16)
+            - Refund reason code as saved in Nayax system
+        ReasonText:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - length: 64
+            - Refund description as saved in Nayax system
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      additionalProperties: false
+    DynamicRefundResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      additionalProperties: false
+    DynamicVoidRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+          description: |
+            - Optional
+            - length: Short integer (16)
+            - Refund reason code as saved in Nayax system
+        ReasonText:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - length: 64
+            - Refund description as saved in Nayax system
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ReasonCode: 3
+        ReasonText: Cashless Cancelled by machine
+        BasicInfo:
+          TransactionId: '236584335969834429321847829253667359'
+          Amount: 0.1
+          Currency: ILS
+          SiteId: 1
+          MachineAuTime: '230221121009'
+        DeviceInfo:
+          Id: 0
+          HwSerial: '0434324119376524'
+          FWVersion: ''
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayDynamicQR V2
+          TerminalId: '987654321'
+          DecimalPlace: 2
+          Offset: '2.00'
+          CountryCode: US
+          CountryISOCode: USA
+          Country: UNITED STATES
+          City: Abbeville
+          Address: TestPayDynamicQR V2
+          ZipCode: '1223311'
+        ActorInfo:
+          Id: 2001187922
+          Name: TanyaT_OP
+          MerchantId: '123456789'
+        CustomData:
+          Actor: ''
+          Machine:
+            dynamic_qr_channels_rec_ids: 18,19
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: '111111'
+          Token: ''
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    DynamicVoidResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: '111111'
+          Token: ''
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    StaticAuthRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+      additionalProperties: false
+    StaticAuthResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticSettRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+          description: Products details
+      example:
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        Products:
+          - Code: 0
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: USD
+            Measurement: 1
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticSettResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+      example:
+        Status:
+          Verdict: Declined
+          Code: 10
+          StatusMessage: Amount is missing
+      additionalProperties: false
+    StaticCancelRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+          description: |
+            - Optional
+            - Cancellation reason code (by nayax system table of error codes)
+        ReasonText:
+          type: string
+          description: >
+            - Optional
+
+            - Length: 255
+
+            - Cancellation reason description (by nayax system table of error
+            codes)
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+      example:
+        ReasonCode: 2
+        ReasonText: Cashless cancelled by consumer
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticCancelResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: Cortina V2 Stub Tester
+      additionalProperties: false
+    StaticVoidRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+          description: |
+            - Optional
+            - Cancellation reason code (by nayax system table of error codes)
+        ReasonText:
+          type: string
+          description: >
+            - Optional
+
+            - Length: 255
+
+            - Cancellation reason description (by nayax system table of error
+            codes)
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+      example:
+        ReasonCode: 0
+        ReasonText: string
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticVoidResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: '111111'
+          Token: ''
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    StaticRefundRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+          description: |
+            - Optional
+            - Refund reason code (by nayax system table of error codes)
+        ReasonText:
+          type: string
+          description: |
+            - Optional
+            - Length: 255
+            - Refund reason description (by nayax system table of error codes)
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ReasonText: string
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticRefundResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: Cortina V2 Stub Tester
+      additionalProperties: false
+    StaticSaleRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          description: Mandatory Products details
+      example:
+        ReasonCode: 0
+        ReasonText: string
+        BasicInfo:
+          TransactionId: 236584335969834429321847829253667359,
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        Products:
+          - Code: 0
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: USD
+            Measurement: 1
+      additionalProperties: false
+    StaticSaleResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: transaction approved
+        PaymentInfo:
+          SrvTranId: string
+          AuthCode: string
+          AuthAmount: 0
+          SettAmount: 0
+          RRN: string
+          Token: string
+          AuthDateTime: string
+          SettDateTime: string
+          TraceNumber: string
+          AuthSource: string
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    StaticNotifyRequest:
+      type: object
+      properties:
+        AppUserId:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Length: 40
+            - Unique identifier of the consumer in Mobile App provider system
+        TerminalId:
+          type: string
+          nullable: false
+          description: |
+            - Conditional, must be sent if UniQR is not sent.
+            - Length: 255
+            - Unique Identifier for the vending machine printed on a
+            sticker or encoded in the QR (HW-Serial of the device)
+        TransactionId:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Length: 40
+            - Unique identifier for the transaction which will be echoed
+            in further requests and responses. Minimum of 8 chars.
+        SecretToken:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Length: 64
+            - Unique key for the your system.
+            This value will be Provided by Nayax in advance.
+            You should keep this value as a secret in your system.
+        UniQR:
+          type: string
+          nullable: true
+          description: |
+            - Conditional, must be sent if TerminalId is not sent.
+            - Machine reference unique qr number
+        Balance:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Optional
+            - Decimal (max 3 digits for cents)
+            - The balance of user's account.
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        Data:
+          type: string
+          nullable: true
+          description: |
+            - Data received from a third party and will be sent back in response
+      example:
+        AppUserId: 111111
+        TerminalId: 77788
+        TransactionId: 12345678
+        SecretToken: 43262a8f8136f704b3d42b3f116e4bb0c4bf69e6d3415aff6e2cb9dfe06630ff
+        Balance: 0
+      additionalProperties: false
+    StaticNotifyResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+      example:
+        Status:
+          Verdict: Approved
+          StatusMessage: Cortina V2 Stub Tester
+      additionalProperties: false
+    PPAuthRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      additionalProperties: false
+    PPAuthResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPSettRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 0
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+          MachineAuTime: string
+          TimeoutMS: 15000
+          IsProductSelected: true
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: string
+          ExpYear: string
+          ExpMonth: string
+          EMVData: string
+          IDNumber: string
+          RandomNumber: string
+          BrandInfo:
+            PrimaryId: string
+            PrimaryDescription: string
+            SecondaryId: string
+          CardHolderName: Test Card Holder
+        Products:
+          - Code: 11
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: USD
+            Measurement: false
+          - Code: 12
+            Name: expensiveSprite
+            Price: 6
+            UnitOfMeasurement: USD
+            Measurement: false
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+        SecondaryDescription: string
+      additionalProperties: false
+    PPSettResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+        FinalSettAmount:
+          type: number
+          format: double
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPCancelRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ReasonCode: 999
+        ReasonText: General exception
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 0
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+          MachineAuTime: string
+          TimeoutMS: 15000
+          IsProductSelected: true
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: string
+          ExpYear: string
+          ExpMonth: string
+          EMVData: string
+          IDNumber: string
+          RandomNumber: string
+          BrandInfo:
+            PrimaryId: string
+            PrimaryDescription: string
+            SecondaryId: string
+            SecondaryDescription: string
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    PPCancelResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPSaleRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Product:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      example:
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 0
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+          MachineAuTime: string
+          TimeoutMS: 15000
+          IsProductSelected: true
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Type: Food
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: string
+          ExpYear: string
+          ExpMonth: string
+          EMVData: string
+          IDNumber: string
+          RandomNumber: string
+          BrandInfo:
+            PrimaryId: string
+            PrimaryDescription: string
+            SecondaryId: string
+            SecondaryDescription: string
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+        Products:
+          - Code: 11
+            Name: Stella
+            Price: 0.1
+            UnitOfMeasurement: USD
+            Measurement: false
+          - Code: 12
+            Name: expensiveSprite
+            Price: 6
+            UnitOfMeasurement: USD
+            Measurement: false
+      additionalProperties: false
+    PPSaleResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+        PosDisplay:
+          $ref: '#/components/schemas/PosDisplay'
+          nullable: true
+          description: >
+            In this feature, MOL will have the ability to send Nayax two strings
+            with free texting
+
+            according to the API requirements.
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPVoidRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ReasonCode: 999
+        ReasonText: General exception
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 0
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+          MachineAuTime: string
+          TimeoutMS: 15000
+          IsProductSelected: true
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: double
+            Latitude: double
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: double
+            Latitude: double
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: string
+          ExpYear: string
+          ExpMonth: string
+          EMVData: string
+          IDNumber: string
+          RandomNumber: string
+          BrandInfo:
+            PrimaryId: string
+            PrimaryDescription: string
+            SecondaryId: string
+            SecondaryDescription: string
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    PPVoidResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+        PosDisplay:
+          $ref: '#/components/schemas/PosDisplay'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: '111111'
+          Token: ''
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPRefundRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        ReasonCode: 999
+        ReasonText: General exception
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 0
+          Amount: 0.1
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 12
+          MachineAuTime: string
+          TimeoutMS: 15000
+          IsProductSelected: true
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: double
+            Latitude: double
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: double
+            Latitude: double
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: string
+          ExpYear: string
+          ExpMonth: string
+          EMVData: string
+          IDNumber: string
+          RandomNumber: string
+          BrandInfo:
+            PrimaryId: string
+            PrimaryDescription: string
+            SecondaryId: string
+            SecondaryDescription: string
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: 2.3658433596983443e+35
+          AuthCode: 333333
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: 111111
+          Token: string
+          AuthDateTime: 230221101008
+          SettDateTime: 230221101009
+          TraceNumber: 4444
+          AuthSource: 555555
+          AdditionalData: string
+          IsGatewayTimeout: true
+      additionalProperties: false
+    PPRefundResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+            Optional Pre-Paid balance details
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    PPRevalueRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/RevalueCardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/RevaluePaymentInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: 2.3658433596983443e+35
+          NayaxTransactionId: 235841867
+          CurrencyCode: USD
+          CurrencyNumeric: 376
+          SiteId: 1
+          MachineAuTime: string
+          TimeoutMS: 15000
+          PaymentMethodID: 266
+          BillingProviderId: 13
+          NayaxRRN: '111111'
+        DeviceInfo:
+          HwSerial: string
+          FWVersion: string
+          Type: ONYX
+        MachineInfo:
+          Id: 869761713
+          Name: TestPayStaticQR V2
+          TerminalId: 987654321
+          DecimalPlace: 2
+          Offset: 2
+          GroupId: Beverages
+          OperatorId: 12345
+          Region: string
+          City: string
+          ZipCode: 10001
+          Country:
+            Name: United States of America
+            NumericCode: 840
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        ActorInfo:
+          Id: 2001102296
+          Name: Far East Dev Zone
+          OperatorId: 2000305191
+          OperatorName: TanyaT_OP
+          MerchantId: 10011
+          Country:
+            Name: string
+            NumericCode: string
+            Alpha2Code: string
+            Alpha3Code: string
+          GeoLocation:
+            State: string
+            City: string
+            CountryCode: string
+            ZipCode: string
+            Address: string
+            Longitude: 34.998819
+            Latitude: 32.8198988
+        CustomData:
+          DirectActor: 12312312
+          Operator: 123121434134
+          Distributor: superDistributor
+          Actor: 12312312
+          Machine: 131231348
+        CardData:
+          CardNumber: string
+          EntryMode: MCR
+          IDNumber: string
+        PaymentInfo:
+          SrvTranId: 23658433596
+          RevalueAuthCode: 333333
+          RevalueAmount: 5
+          RRN: 111111
+          RevalueDateTime: 230221101008
+          CreditCardNumber: 1234 xxxx xxxx 5678
+          AdditionalData: string
+      additionalProperties: false
+    PPRevalueResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/RevaluePaymentInfo'
+        Balance:
+          $ref: '#/components/schemas/Balance'
+          nullable: true
+          description: |
+            Type of Balance object
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: string
+        PaymentInfo:
+          SrvTranId: 23658433596
+          RevalueAuthCode: 333333
+          RevalueAmount: 5
+          RevalueFinalAmount: 5
+          RRN: 111111
+          RevalueDateTime: 230221101008
+          AdditionalData: string
+        Balance:
+          RegularCreditType: 0
+          RegularCredit: 0
+          RevalueCredit: 0
+      additionalProperties: false
+    CCAuthRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        ECom3DSInfo:
+          $ref: '#/components/schemas/ECom3DSInfo'
+          nullable: true
+        DukptInfo:
+          $ref: '#/components/schemas/DukptInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: N99O4XURDQYJZIK4OTCAWF1RHHA40TZWVCRB
+          NayaxTransactionId: 3584697384
+          Amount: 5
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '071221132914'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: '0434324119376526'
+          FWVersion: 4.0.0.22-RC01 - Aug 25 2021
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+          Machine: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: CON
+          ExpYear: '22'
+          ExpMonth: '12'
+          EMVData: xxxxxxxx
+          BrandInfo:
+            PrimaryId: '6'
+            PrimaryDescription: VISA
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+      additionalProperties: false
+    CCAuthResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EMVTags:
+          $ref: '#/components/schemas/EMVTags'
+          nullable: true
+        ECom3DSResponseInfo:
+          $ref: '#/components/schemas/ECom3DSResponseInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '222222'
+          AuthCode: '333333'
+          AuthAmount: 5
+          SettAmount: 5
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '071221132914'
+          SettDateTime: 12/7/2021 10:29:16 AM
+          TraceNumber: '4444'
+          AuthSource: '555555'
+          AdditionalData: ''
+        EMVTags:
+          Tag91: A93381BFF8C5E9EC0012
+          Tag8A: '3030'
+          Tag71: 860D8424000008D466284E10D1FF7C
+          Tag72: 860D8424000008D466284E10D1FF7C
+        ECom3DSResponseInfo:
+          ECom3DSStatus: 2
+          ECom3DSRedirectUrl: https://the-verigication-example-url.com
+      additionalProperties: false
+    CCSettRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: '3584697388'
+          NayaxTransactionId: 3584697388
+          Amount: 3
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '071221133300'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: '0434324119376526'
+          FWVersion: 4.0.0.22-RC01 - Aug 25 2021
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: '54321'
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+          Machine: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: CON
+          ExpYear: '22'
+          ExpMonth: '12'
+          EMVData: ' xxxxxxxx'
+          BrandInfo:
+            PrimaryId: '6'
+            PrimaryDescription: VISA
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: '3584697388'
+          AuthCode: '333333'
+          AuthAmount: 5
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '071221133300'
+          SettDateTime: 12/7/2021 10
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    CCSettResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        Batch:
+          $ref: '#/components/schemas/Batch'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '3584697388'
+          AuthCode: '333333'
+          AuthAmount: 5
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '071221133300'
+          SettDateTime: 12/7/2021 10
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+        Batch:
+          BatchStatus: 0
+          BatchId: 0
+          AddToBatch: true
+          DeleteFromBatch: true
+          BatchTransactionId: string
+          OperationToPerform: 1
+      additionalProperties: false
+    CCCancelRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        ReasonCode: 0
+        ReasonText: Unknown Error
+        BasicInfo:
+          NayaxTransactionId: 3584688030
+          Amount: 0.1
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '291121220832'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: '0000000000000100'
+          FWVersion: ''
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: '54321'
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: MCR
+          ExpYear: '23'
+          ExpMonth: '01'
+          BrandInfo:
+            PrimaryId: '8'
+            PrimaryDescription: MASTERCARD
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '291121220832'
+          SettDateTime: 11/29/2021 7
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    CCCancelResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+      additionalProperties: false
+    CCSaleRequest:
+      type: object
+      properties:
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        Products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        ECom3DSInfo:
+          $ref: '#/components/schemas/ECom3DSInfo'
+          nullable: true
+        DukptInfo:
+          $ref: '#/components/schemas/DukptInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        BasicInfo:
+          TransactionId: PLXHYOGU9GOLIY6UISVYKNJHU705VSCPUR0F
+          NayaxTransactionId: 3584688038
+          Amount: 3.9
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '291121220837'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: '0000000000000100'
+          FWVersion: unknown
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+          Machine: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: CON
+          ExpYear: '23'
+          ExpMonth: '01'
+          EMVData: xxxxxxxx
+          BrandInfo:
+            PrimaryId: '8'
+            PrimaryDescription: MASTERCARD
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+      additionalProperties: false
+    CCSaleResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EMVTags:
+          $ref: '#/components/schemas/EMVTags'
+          nullable: true
+        ECom3DSResponseInfo:
+          $ref: '#/components/schemas/ECom3DSResponseInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '222222'
+          AuthCode: '333333'
+          AuthAmount: 3.9
+          SettAmount: 3.9
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '291121220837'
+          SettDateTime: 11/29/2021 7:08:37 PM
+          TraceNumber: '4444'
+          AuthSource: '555555'
+          AdditionalData: ''
+        EMVTags:
+          Tag91: A93381BFF8C5E9EC0012
+          Tag8A: '3030'
+          Tag71: 860D8424000008D466284E10D1FF7C
+          Tag72: 860D8424000008D466284E10D1FF7C
+        ECom3DSResponseInfo:
+          ECom3DSStatus: 2
+          ECom3DSRedirectUrl: https://the-verigication-example-url.com
+      additionalProperties: false
+    CCVoidRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        ReasonCode: 50
+        BasicInfo:
+          TransactionId: '12345'
+          NayaxTransactionId: 3584701816
+          Amount: 3.9
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '081221130018'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: '0000000000000100'
+          FWVersion: ''
+        MachineInfo:
+          Id: 106791869
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: '54321'
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+          Machine: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: MCR
+          ExpYear: '23'
+          ExpMonth: '01'
+          BrandInfo:
+            PrimaryId: '8'
+            PrimaryDescription: MASTERCARD
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: '12345'
+          AuthCode: '12345'
+          AuthAmount: 3.9
+          SettAmount: 3.9
+          RRN: '12345'
+          Token: '12345'
+          AuthDateTime: '12345'
+          SettDateTime: '12345'
+          TraceNumber: '12345'
+          AuthSource: '12345'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    CCVoidResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+        PaymentInfo:
+          SrvTranId: '236584335969834429321847829253667359'
+          AuthCode: '333333'
+          AuthAmount: 0.1
+          SettAmount: 0.1
+          RRN: '111111'
+          Token: ''
+          AuthDateTime: '230221101008'
+          SettDateTime: '230221101009'
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    CCRefundRequest:
+      type: object
+      properties:
+        ReasonCode:
+          type: integer
+          format: int16
+        ReasonText:
+          type: string
+          nullable: true
+        BasicInfo:
+          $ref: '#/components/schemas/BasicInfo'
+          nullable: true
+        DeviceInfo:
+          $ref: '#/components/schemas/DeviceInfo'
+          nullable: true
+        MachineInfo:
+          $ref: '#/components/schemas/MachineInfo'
+          nullable: true
+        ActorInfo:
+          $ref: '#/components/schemas/ActorInfo'
+          nullable: true
+        CustomData:
+          $ref: '#/components/schemas/CustomData'
+          nullable: true
+        CardData:
+          $ref: '#/components/schemas/CardData'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+        EncryptInfo:
+          $ref: '#/components/schemas/EncryptInfo'
+          nullable: true
+      example:
+        ReasonCode: 12
+        ReasonText: Cashless Refunded by Operator
+        BasicInfo:
+          TransactionId: S9IUQSOA46Z7MHZ51JQXB20HWRKEDC1F9LLV
+          NayaxTransactionId: 3584667527
+          Amount: 3.9
+          CurrencyCode: ILS
+          CurrencyNumeric: '376'
+          SiteId: 1
+          MachineAuTime: '201121220429'
+          TimeoutMS: 15000
+          PaymentMethodID: 1
+        DeviceInfo:
+          HwSerial: ''
+          FWVersion: ''
+        MachineInfo:
+          Id: 0
+          Name: Itai_TestPayCC V2
+          TerminalId: '8888888844'
+          DecimalPlace: 2
+          Offset: '3.00'
+          City: Abbeville
+          ZipCode: '54321'
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        ActorInfo:
+          Id: 2001537302
+          Name: TestPayCC V2 OP
+          MerchantId: '999999888885'
+          DynamicURL: ''
+          Country:
+            Name: UNITED STATES
+            NumericCode: '840'
+            Alpha2Code: US
+            Alpha3Code: USA
+          GeoLocation:
+            State: State
+            City: Zambezi
+            CountryCode: ZM
+            ZipCode: '234234'
+            Address: River
+        CustomData:
+          Actor: '****'
+          Machine: '****'
+        CardData:
+          CardNumber: '****'
+          EntryMode: MCR
+          ExpYear: '23'
+          ExpMonth: '01'
+          BrandInfo:
+            PrimaryId: '8'
+            PrimaryDescription: MASTERCARD
+            SecondaryId: '0'
+            SecondaryDescription: ''
+          CardHolderName: Test Card Holder
+        PaymentInfo:
+          SrvTranId: S9IUQSOA46Z7MHZ51JQXB20HWRKEDC1F9LLV
+          AuthCode: '333333'
+          AuthAmount: 3.9
+          SettAmount: 3.9
+          RRN: '111111'
+          Token: Cortina V2 Stub Tester Token
+          AuthDateTime: '201121220429'
+          SettDateTime: 11/20/2021 7
+          TraceNumber: '4444'
+          AuthSource: '55555'
+          IsGatewayTimeout: false
+      additionalProperties: false
+    CCRefundResponse:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/Status'
+        Batch:
+          $ref: '#/components/schemas/Batch'
+          nullable: true
+        PaymentInfo:
+          $ref: '#/components/schemas/PaymentInfo'
+          nullable: true
+      example:
+        Status:
+          Verdict: Approved
+          Code: 0
+          StatusMessage: Cortina V2 Stub Tester
+      additionalProperties: false
+    OnboardingVersionResponse:
+      type: object
+      properties:
+        ProductVersion:
+          type: string
+          nullable: false
+        Copyright:
+          type: string
+          nullable: false
+        ApiVersion:
+          type: string
+          nullable: true
+      additionalProperties: false
+    OnboardingStatusEnum:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+      format: int32
+      description: |
+        * 0 - None
+        * 1 - Pending
+        * 2 - Success
+        * 3 - Failed
+        * 4 - Expired
+        * 5 - Skip
+    OnboardActorRequest:
+      type: object
+      nullable: true
+      properties:
+        OnboardingBasicInfo:
+          $ref: '#/components/schemas/OnboardingBasicInfo'
+        ActorInfo:
+          $ref: '#/components/schemas/OnboardActorInfo'
+        OperatorInfo:
+          $ref: '#/components/schemas/OnboardOperatorInfo'
+        DistributorInfo:
+          $ref: '#/components/schemas/OnboardDistributorInfo'
+        UpdateInfo:
+          $ref: '#/components/schemas/OnboardUpdateInfo'
+        CustomData:
+          $ref: '#/components/schemas/OnboardCustomData'
+    OnboardActorResponse:
+      type: object
+      properties:
+        OnboardStatus:
+          $ref: '#/components/schemas/OnboardStatus'
+        ActorOnboardingData:
+          $ref: '#/components/schemas/ActorOnboardingData'
+    OnboardMachineRequest:
+      type: object
+      nullable: true
+      properties:
+        OnboardingBasicInfo:
+          $ref: '#/components/schemas/OnboardingBasicInfo'
+        MachineInfo:
+          $ref: '#/components/schemas/OnboardMachineInfo'
+        ActorInfo:
+          $ref: '#/components/schemas/OnboardActorInfo'
+        OperatorInfo:
+          $ref: '#/components/schemas/OnboardOperatorInfo'
+        DistributorInfo:
+          $ref: '#/components/schemas/OnboardDistributorInfo'
+        UpdateInfo:
+          $ref: '#/components/schemas/OnboardUpdateInfo'
+        CustomData:
+          $ref: '#/components/schemas/OnboardCustomData'
+    OnboardMachineResponse:
+      type: object
+      nullable: true
+      properties:
+        OnboardStatus:
+          $ref: '#/components/schemas/OnboardStatus'
+        MachineOnboardingData:
+          $ref: '#/components/schemas/MachineOnboardingData'
+    OnboardCountryInfo:
+      type: object
+      nullable: true
+      description: |
+        Actor and Machine Country information
+      properties:
+        Name:
+          type: string
+          nullable: true
+          description: |
+            String
+            Mandatory
+            Country Full Name
+        NumericCode:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            ISO-3166-1 format: Numeric-3 code
+        Alpha2Code:
+          type: string
+          nullable: true
+          description: |
+            String(2)
+            Mandatory
+            ISO-3166-1 format: Alpha-2 code
+        Alpha3Code:
+          type: string
+          nullable: true
+          description: |
+            String(3)
+            Mandatory
+            ISO-3166-1 format: Alpha-3 code
+      additionalProperties: false
+    OnboardGeoLocation:
+      type: object
+      description: Actor and Machine Geo location information
+      nullable: true
+      properties:
+        State:
+          type: string
+          nullable: true
+          description: |
+            - String
+            - Optional
+            - Actor geo state code as defined in the Nayax backoffice
+        City:
+          type: string
+          nullable: true
+          description: |
+            - String(255)
+            - Optional
+            - City as defined in the Nayax backoffice
+        CountryCode:
+          type: string
+          nullable: true
+          description: |
+            String
+            Optional
+            Country code (ISO3) as defined in the Nayax backoffice
+        ZipCode:
+          type: string
+          nullable: true
+          description: |
+            String(255)
+            Optional
+            Zip code defined in the Nayax backoffice
+        Address:
+          type: string
+          nullable: true
+          description: |
+            String(255)
+            Optional
+            Address as defined in the Nayax backoffice
+        Latitude:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Machine Location Latitude as defined in the Nayax backoffice
+        Longitude:
+          type: number
+          format: double
+          nullable: true
+          description: |
+            - Machine Location Longitude as defined in the Nayax backoffice
+      additionalProperties: false
+    OnboardingBasicInfo:
+      type: object
+      nullable: true
+      description: Describing the onboarding Operation details
+      properties:
+        OnboardingOperation:
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+          type: integer
+          format: int32
+          description: |
+            Indicates the possible onboarding operation:
+                1 - Register
+                2 - Unregister
+                3 - Update
+                4 - GetStatus
+             - enum
+             - Mandatory
+             - Indicates the possible onboarding operation.
+        OnboardingRequestId:
+          type: integer
+          nullable: true
+          description: |
+            - Mandatory
+            - GUID Generated by Nayax
+        TransactionID:
+          type: integer
+          format: int16
+          nullable: true
+          description: |
+            - Mandatory
+            - Generated by the integrator on startSession
+        SiteId:
+          type: integer
+          format: int16
+          nullable: true
+          description: Mandatory
+        TimeoutMS:
+          type: integer
+          format: int32
+          nullable: false
+        RequestTime:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - The date time string of when the Onboarding took place
+            - Format: ddMMyyHHmmss
+        PaymentMethodID:
+          type: integer
+          format: int16
+          nullable: false
+          description: |
+            - Mandatory
+        BillingProviderID:
+          type: integer
+          format: int16
+          nullable: false
+          description: |
+            - Mandatory
+        OnboardingTransactionId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - TransactionId from provider
+      additionalProperties: false
+    OnboardActorInfo:
+      type: object
+      nullable: true
+      description: Actor info for onboarding
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Actor ID as saved as defined in the Nayax backoffice
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Direct Merchant name as defined in the Nayax backoffice
+        OperatorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator ID as defined in the Nayax backoffice
+        OperatorName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator name  as defined in the Nayax backoffice
+        MerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Merchant identifier as defined in the Nayax backoffice
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+        Country:
+          $ref: '#/components/schemas/OnboardCountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/OnboardGeoLocation'
+        MCC:
+          type: integer
+          format: int32
+          description: >
+            - Optional
+
+            - classify merchants and businesses by the type of goods or services
+            provided. Payment brands, issuers and acquirers.
+          nullable: true
+        URL:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+        Key:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        AppId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPath:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPass:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        ApiKey:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        OnboardingStatus:
+          $ref: '#/components/schemas/OnboardingStatusEnum'
+        MerchantPhoneCountryCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        MerchantContactPhone:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        MerchantMobileCountryCode:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        MerchantContactMobile:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        ContactName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 200
+        MerchantEmail:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 400
+      additionalProperties: false
+    OnboardOperatorInfo:
+      type: object
+      nullable: true
+      description: Operator info for onboarding
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Actor ID as saved as defined in the Nayax backoffice
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Optional 
+            - Length: 255
+            - Direct Merchant name as defined in the Nayax backoffice
+        OperatorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator ID as defined in the Nayax backoffice
+        OperatorName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator name  as defined in the Nayax backoffice
+        MerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Merchant identifier as defined in the Nayax backoffice
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+        Country:
+          $ref: '#/components/schemas/OnboardCountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/OnboardGeoLocation'
+        MCC:
+          type: integer
+          format: int32
+          description: >
+            - Optional
+
+            - classify merchants and businesses by the type of goods or services
+            provided. Payment brands, issuers and acquirers.
+          nullable: true
+        URL:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+        Key:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        AppId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPath:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPass:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        ApiKey:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        OnboardingStatus:
+          $ref: '#/components/schemas/OnboardingStatusEnum'
+      additionalProperties: false
+    OnboardDistributorInfo:
+      type: object
+      nullable: true
+      description: Distributor info for onboarding
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Actor ID as saved as defined in the Nayax backoffice
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Direct Merchant name as defined in the Nayax backoffice
+        OperatorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator ID as defined in the Nayax backoffice
+        OperatorName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant Operator name  as defined in the Nayax backoffice
+        MerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Merchant identifier as defined in the Nayax backoffice
+        DynamicURL:
+          type: string
+          nullable: true
+          description: |
+            - Optional, support different url's.
+            - Length: 255
+            - Actor level url configuration
+        Country:
+          $ref: '#/components/schemas/OnboardCountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/OnboardGeoLocation'
+        MCC:
+          type: integer
+          format: int32
+          description: >
+            - Optional
+
+            - classify merchants and businesses by the type of goods or services
+            provided. Payment brands, issuers and acquirers.
+          nullable: true
+        URL:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+        Key:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        AppId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPath:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPass:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        ApiKey:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        OnboardingStatus:
+          $ref: '#/components/schemas/OnboardingStatusEnum'
+      additionalProperties: false
+    ActorOnboardingData:
+      type: object
+      nullable: true
+      description: Echo and/or Updated onboarding actor data (Merchant data)
+      properties:
+        URL:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        MerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        SubMerchantId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 50
+        SubMerchantNumber:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+        Key:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        AppId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPath:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        CertPass:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 250
+        ApiKey:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        OnboardingTransactionId:
+          type: integer
+          format: int32
+          nullable: true
+          description: |
+            - Optional
+        CustomData:
+          $ref: '#/components/schemas/OnboardCustomData'
+      additionalProperties: false
+    OnboardMachineInfo:
+      type: object
+      nullable: true
+      description: Machine info for onboarding
+      properties:
+        Id:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Mandatory
+            - Machine entity unique ID allocated in the Nayax backoffice.
+        Name:
+          type: string
+          nullable: true
+          description: |
+            - Mandatory
+            - Length: 255
+            - Machine Name as defined in the Nayax backoffice
+        ExternalId:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - Length: 200
+
+            - Optional filed, it reflects the Machine External ID as it has been
+            provided by the operator in the Nayax back-office system (Machine
+            number - operator).
+        Type:
+          type: string
+          nullable: true
+          description: |
+            - Length: 50
+            - Machine Type as defined in the Nayax backoffice
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional, Contact Nayax TPOC to define.
+            - Length: 255
+            - Optinal Terminal identifier as deifned in the Nayax backoffice.
+        Offset:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - UTC timezone offset
+        GroupId:
+          type: string
+          nullable: true
+        OperatorId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Merchant ID as defined in the Nayax backoffice
+        Region:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Region as defined in the Nayax backoffice
+        City:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Machine City as defined in the Nayax backoffice
+        ZipCode:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+            - Machine ZipCode as defined in the Nayax backoffice
+        Country:
+          $ref: '#/components/schemas/OnboardCountryInfo'
+        GeoLocation:
+          $ref: '#/components/schemas/OnboardGeoLocation'
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 25
+        QrString:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+        OnboardingStatus:
+          $ref: '#/components/schemas/OnboardingStatusEnum'
+      additionalProperties: false
+    MachineOnboardingData:
+      type: object
+      nullable: true
+      description: Echo and/or Updated onboarding machine data
+      properties:
+        MachineId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+        UserName:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 40
+        Password:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 25
+        QrString:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+        TerminalId:
+          type: string
+          nullable: true
+          description: |
+            - Optional
+            - Length: 255
+        ActorId:
+          type: integer
+          format: int64
+          nullable: true
+          description: |
+            - Optional
+        CustomData:
+          $ref: '#/components/schemas/OnboardCustomData'
+      additionalProperties: false
+    OnboardStatus:
+      type: object
+      description: Transaction status
+      properties:
+        Verdict:
+          type: string
+          nullable: false
+          description: |
+            - Mandatory
+            - Const string values:
+            - Status of the request ('Approved'/'Declined')
+        Code:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+          type: integer
+          format: int32
+          description: |
+            Indicates the onboarding status:
+                0 - Null-none
+                1 - Pending
+                2 - Success
+                3 - Failed
+                4 - Expired
+                5 - Skip
+             - enum
+             - Mandatory
+             - Indicates the onboarding status.
+        StatusMessage:
+          type: string
+          nullable: true
+          description: >
+            - Optional
+
+            - Length: 255
+
+            - Onboarding status message free text field / additional varying
+            data
+      additionalProperties: false
+    OnboardCustomData:
+      type: object
+      nullable: true
+      description: Custom Fields Information, Contact Nayax TPOC to define.
+      properties:
+        DirectActor:
+          type: string
+          nullable: true
+          description: |
+            Direct actor custom data (String in json format)
+        Operator:
+          type: string
+          nullable: true
+          description: |
+            Operator custom data (String in json format)
+        Distributor:
+          type: string
+          nullable: true
+          description: |
+            Distributor custom data (String in json format)
+        Actor:
+          type: string
+          nullable: true
+          description: |
+            Actor custom data (String in json format)
+        Machine:
+          type: string
+          nullable: true
+          description: |
+            Machine custom data (String in json format)
+      additionalProperties: false
+    OnboardUpdateInfo:
+      type: array
+      nullable: true
+      items:
+        type: string
+      additionalProperties: false
+x-tagGroups:
+  - name: Nayax Cortina API
+    tags:
+      - Cortina
+      - Cortina Credit Card
+      - Cortina Prepaid
+      - StaticQR
+      - DynamicQR
+  - name: Cortina Onboarding API
+    tags:
+      - Cortina Onboarding
