@@ -211,7 +211,7 @@ paths:
             format: int64
       requestBody:
         required: true
-        description: The payment methods to be created.
+        description: The payment methods to be created
         content:
           application/json:
             schema:
