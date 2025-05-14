@@ -270,6 +270,87 @@
       }
     }
 
+    footer {
+      .footer_section {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin: 0 auto;
+        padding: 1rem 30px;
+        max-width: var(--container-lg);
+      }
+
+      .footer_text_container {
+        display: flex;
+        align-items: center;
+        font-family: Inter;
+      }
+
+      .footer_text {
+        margin-right: 1rem;
+        font-size: 0.9rem;
+        color: inherit;
+      }
+
+      .footer_links_container {
+        display: flex;
+        align-items: center;
+      }
+
+      .footer_list_items {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .footer_list_item {
+        margin: 0 0.5rem;
+        position: relative;
+        font-size: 16px;
+        margin-top: 0 !important;
+      }
+
+      .footer_list_item:not(:last-child)::after {
+        content: "│";
+        /* nice thin separator */
+        position: absolute;
+        margin-left: 3px;
+        /* adjust to sit between items */
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ccc;
+        /* separator color */
+      }
+
+      .footer_list_item a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .footer_list_item a:hover {
+        color: #ff367d !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .footer_section {
+        justify-content: center !important;
+      }
+
+      .footer_text_container {
+        /* stack the text and the links */
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer_text {
+        white-space: nowrap;
+        margin-bottom: 0.5rem;
+      }
+    }
+
     @media (max-width: 1300px) {
       .rdmd-html {
         background-size: contain;
@@ -1226,6 +1307,55 @@
     </div>
 
   </main>
+  <footer>
+    <section class="footer_section">
+      <div class="footer_text_container">
+        <div class="footer_text">
+          All rights reserved © 2025
+        </div>
+        <div class="footer_links_container">
+          <ul class="footer_list_items">
+            <li class="footer_list_item">
+              <a href="/legal/nayax-general-privacy-policy/">
+
+                <span class="footer_list_item_text">Privacy Policy</span>
+              </a>
+            </li>
+            <li class="footer_list_item">
+              <a href="https://www.nayax.com/cookie-policy/">
+
+                <span class="footer_list_item_text">Cookie Policy</span>
+              </a>
+            </li>
+            <li class="footer_list_item">
+              <a href="https://developerhub.nayax.com/docs/terms-of-service">
+
+                <span class="footer_list_item_text">Term of Service</span>
+              </a>
+            </li>
+            <li class="footer_list_item">
+              <a href="/wp-content/uploads/2023/09/Quality-Policy-Statement-2024.pdf" target="_blank">
+
+                <span class="footer_list_item_text">Quality Policy</span>
+              </a>
+            </li>
+            <li class="footer_list_item">
+              <a href="https://www.nayax.com/code-of-ethics/">
+
+                <span class="footer_list_item_text">Code of Ethics</span>
+              </a>
+            </li>
+            <li class="footer_list_item">
+              <a href="https://www.nayax.com/whistleblowing-reporting-form/">
+
+                <span class="footer_list_item_text">Whistleblowing</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </footer>
 </body>
 
 </html>
